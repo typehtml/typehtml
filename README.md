@@ -26,7 +26,7 @@ class Heading {
 * All code is written in and for TypeScript. 
 
 ## Why?
-[I absolutely love react and recently shared my love as well.](https://medium.com/@basarat/typescript-developers-love-react-9871b494bc1a#.ybe5nkjvi). That said:
+I absolutely love react and [recently shared my love as well](https://medium.com/@basarat/typescript-developers-love-react-9871b494bc1a#.ybe5nkjvi). That said:
 
 * Every single time I need to run `npm install react react-dom @type/react @types/react-dom` a part of me dies a little. 
 * Having external type definitions for a library is not enough. You need to think TypeScript first when designing the API.
