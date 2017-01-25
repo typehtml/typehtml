@@ -13,9 +13,12 @@ or pure function components created using classes
 ```tsx
 class Heading {
   props: {text:string}
+
   render() {
-    return <h1>{this.props.text}</h1>
+    return <h1 onClick={this.handleClick}>{this.props.text}</h1>
   }
+
+  handleClick = () => console.log('hello')
 }
 ```
 
