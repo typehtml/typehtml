@@ -2,15 +2,15 @@
 
 > I am just dreaming of a better world here 🌹
 
-Imagine the following API for pure function components
+Imagine the following API for creating component using functions
 
-```tsx
+```ts
 const Heading = ({text}) => <h1>{text}</h1>
 ```
 
-or pure function components created using classes 
+or using classes 
 
-```tsx
+```ts
 class Heading {
   props: {text:string}
 
@@ -25,6 +25,8 @@ class Heading {
 * All state is powered by mobx. 
 * All code is written in and for TypeScript. 
 
+> Like to see this dream become a reality? [Go ahead and ⭐ it!](https://github.com/typehtml/typehtml/stargazers)
+
 ## Why?
 I absolutely love react and [recently shared my love as well](https://medium.com/@basarat/typescript-developers-love-react-9871b494bc1a#.ybe5nkjvi). That said:
 
@@ -32,4 +34,5 @@ I absolutely love react and [recently shared my love as well](https://medium.com
 * Having external type definitions for a library is not enough. You need to think TypeScript first when designing the API.
 * It also gives an opportunity for people to complain about TypeScript whereas in reality the alternative is really an non-analysed mess (if the compiler can't analyse it, neither can new dev to the code, have empathy).
 * React has stuff I no longer need e.g. [setState](https://medium.com/@mweststrate/3-reasons-why-i-stopped-using-react-setstate-ab73fc67a42e#.dbzy2qwoh) and [abstractions to support react native](https://www.youtube.com/watch?v=dRo_egw7tBc&feature=youtu.be&t=35m17s). Learn once and *rewrite* wastes human resources.
+* Simplified type definitions because components using functions and classes have the same features.
 * Also the React codebase would benefit from [TypeScript / More type annotations](https://www.youtube.com/watch?v=dRo_egw7tBc&feature=youtu.be&t=20m42s)
