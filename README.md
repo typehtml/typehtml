@@ -25,6 +25,8 @@ class Heading {
 * All state is powered by mobx. 
 * All code is written in and for TypeScript. 
 
+![](https://raw.githubusercontent.com/typehtml/typehtml.github.io/master/screens/demo.gif)
+
 > Like to see this dream become a reality? [Go ahead and ⭐ it!](https://github.com/typehtml/typehtml/stargazers)
 
 ## Why?
