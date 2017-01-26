@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "jsx": "react",
-    "jsxFactory": "Th.createElement",
+    "reactNamespace": "Th",
     "outDir": "lib"
   },
   "include": [

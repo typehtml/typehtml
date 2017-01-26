@@ -4,5 +4,4 @@
  */
 import * as Th from '../index';
 
-
-<div>Hello world</div>
+<div>Hello worlds</div>
