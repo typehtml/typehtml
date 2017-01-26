@@ -203,6 +203,61 @@ declare global {
       var: types.HTMLAttributes<HTMLElement>;
       video: types.HTMLAttributes<HTMLVideoElement>;
       wbr: types.HTMLAttributes<HTMLElement>;
+
+      // SVG
+      svg: types.SVGAttributes<SVGElement>;
+      circle: types.SVGAttributes<SVGCircleElement>;
+      clipPath: types.SVGAttributes<SVGClipPathElement>;
+      defs: types.SVGAttributes<SVGDefsElement>;
+      desc: types.SVGAttributes<SVGDescElement>;
+      ellipse: types.SVGAttributes<SVGEllipseElement>;
+      feBlend: types.SVGAttributes<SVGFEBlendElement>;
+      feColorMatrix: types.SVGAttributes<SVGFEColorMatrixElement>;
+      feComponentTransfer: types.SVGAttributes<SVGFEComponentTransferElement>;
+      feComposite: types.SVGAttributes<SVGFECompositeElement>;
+      feConvolveMatrix: types.SVGAttributes<SVGFEConvolveMatrixElement>;
+      feDiffuseLighting: types.SVGAttributes<SVGFEDiffuseLightingElement>;
+      feDisplacementMap: types.SVGAttributes<SVGFEDisplacementMapElement>;
+      feDistantLight: types.SVGAttributes<SVGFEDistantLightElement>;
+      feFlood: types.SVGAttributes<SVGFEFloodElement>;
+      feFuncA: types.SVGAttributes<SVGFEFuncAElement>;
+      feFuncB: types.SVGAttributes<SVGFEFuncBElement>;
+      feFuncG: types.SVGAttributes<SVGFEFuncGElement>;
+      feFuncR: types.SVGAttributes<SVGFEFuncRElement>;
+      feGaussianBlur: types.SVGAttributes<SVGFEGaussianBlurElement>;
+      feImage: types.SVGAttributes<SVGFEImageElement>;
+      feMerge: types.SVGAttributes<SVGFEMergeElement>;
+      feMergeNode: types.SVGAttributes<SVGFEMergeNodeElement>;
+      feMorphology: types.SVGAttributes<SVGFEMorphologyElement>;
+      feOffset: types.SVGAttributes<SVGFEOffsetElement>;
+      fePointLight: types.SVGAttributes<SVGFEPointLightElement>;
+      feSpecularLighting: types.SVGAttributes<SVGFESpecularLightingElement>;
+      feSpotLight: types.SVGAttributes<SVGFESpotLightElement>;
+      feTile: types.SVGAttributes<SVGFETileElement>;
+      feTurbulence: types.SVGAttributes<SVGFETurbulenceElement>;
+      filter: types.SVGAttributes<SVGFilterElement>;
+      foreignObject: types.SVGAttributes<SVGForeignObjectElement>;
+      g: types.SVGAttributes<SVGSVGElement>;
+      image: types.SVGAttributes<SVGImageElement>;
+      line: types.SVGAttributes<SVGLineElement>;
+      linearGradient: types.SVGAttributes<SVGLinearGradientElement>;
+      marker: types.SVGAttributes<SVGMarkerElement>;
+      mask: types.SVGAttributes<SVGMaskElement>;
+      metadata: types.SVGAttributes<SVGMetadataElement>;
+      path: types.SVGAttributes<SVGPathElement>;
+      pattern: types.SVGAttributes<SVGPatternElement>;
+      polygon: types.SVGAttributes<SVGPolygonElement>;
+      polyline: types.SVGAttributes<SVGPolylineElement>;
+      radialGradient: types.SVGAttributes<SVGRadialGradientElement>;
+      rect: types.SVGAttributes<SVGRectElement>;
+      stop: types.SVGAttributes<SVGStopElement>;
+      switch: types.SVGAttributes<SVGSwitchElement>;
+      symbol: types.SVGAttributes<SVGSymbolElement>;
+      text: types.SVGAttributes<SVGTextContentElement>;
+      textPath: types.SVGAttributes<SVGTextPathElement>;
+      tspan: types.SVGAttributes<SVGTSpanElement>;
+      use: types.SVGAttributes<SVGUseElement>;
+      view: types.SVGAttributes<SVGViewElement>;
     }
   }
 }
