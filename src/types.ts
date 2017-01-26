@@ -46,27 +46,24 @@ export type ReactEventHandler<T> = EventHandler<SyntheticEvent<T>>;
 export type ClipboardEventHandler<T> = EventHandler<ClipboardEvent<T>>;
 
 // ----------------------------------------------------------------------
+// Key and Ref
+// ----------------------------------------------------------------------
+export type Key = string | number;
+export type Ref<T> = (instance: T) => any;
+
+// ----------------------------------------------------------------------
 // Attributes
 // ----------------------------------------------------------------------
 
-
-/** TODO: define all the dom attributes we support */
-export interface DOMAttributes<T> {
-  children?: ThNode;
-  dangerouslySetInnerHTML?: {
-    __html: string;
-  };
-
-  // Clipboard Events
-  onCopy?: ClipboardEventHandler<T>;
-  onCopyCapture?: ClipboardEventHandler<T>;
-  onCut?: ClipboardEventHandler<T>;
-  onCutCapture?: ClipboardEventHandler<T>;
-  onPaste?: ClipboardEventHandler<T>;
-  onPasteCapture?: ClipboardEventHandler<T>;
+/**
+ * The core attributes on all things
+ */
+export interface IntrinsicAttributes<T> {
+  key?: Key;
+  ref?: Ref<T>;
 }
 
-export interface HTMLAttributes<T> extends DOMAttributes<T> {
+export interface HTMLAttributes<T> extends IntrinsicAttributes<T> {
   // Standard HTML Attributes
   accept?: string;
   acceptCharset?: string;
@@ -213,4 +210,20 @@ export interface HTMLAttributes<T> extends DOMAttributes<T> {
   results?: number;
   security?: string;
   unselectable?: boolean;
+
+  // Other attributes we support
+  children?: ThNode;
+  dangerouslySetInnerHTML?: {
+    __html: string;
+  };
+
+  // Clipboard Events
+  onCopy?: ClipboardEventHandler<T>;
+  onCopyCapture?: ClipboardEventHandler<T>;
+  onCut?: ClipboardEventHandler<T>;
+  onCutCapture?: ClipboardEventHandler<T>;
+  onPaste?: ClipboardEventHandler<T>;
+  onPasteCapture?: ClipboardEventHandler<T>;
+
+  /** TODO: define all the dom attributes we support */
 }
