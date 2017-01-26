@@ -36,3 +36,4 @@ I absolutely love react and [recently shared my love as well](https://medium.com
 * React has stuff I no longer need e.g. [setState](https://medium.com/@mweststrate/3-reasons-why-i-stopped-using-react-setstate-ab73fc67a42e#.dbzy2qwoh) and [abstractions to support react native](https://www.youtube.com/watch?v=dRo_egw7tBc&feature=youtu.be&t=35m17s). Learn once and *rewrite* wastes human resources.
 * Simplified type definitions because components using functions and classes have the same features.
 * Also the React codebase would benefit from [TypeScript / More type annotations](https://www.youtube.com/watch?v=dRo_egw7tBc&feature=youtu.be&t=20m42s)
+* Context is just a fancy global (and an untyped one at that). And there are better ways to handle globals, so that further simplifies the type definitions.
