@@ -1,4 +1,9 @@
 {
+  "compilerOptions": {
+    "jsx": "react",
+    "jsxFactory": "createElement",
+    "outDir": "lib"
+  },
   "include": [
     "src"
   ]

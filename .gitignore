@@ -1,1 +1,5 @@
+# IDE
 .alm
+
+# Our build assets to deploy
+lib
