@@ -7,16 +7,15 @@
 // ----------------------------------------------------------------------
 
 type Key = string | number;
-type Ref<T> = string | ((instance: T) => any);
-
+type Ref<T> = (instance: T) => any;
 
 interface ThElement<P> {
-  type: string | ComponentClass<P> | StatelessComponent<P>;
+  type: string | ComponentClass<P> | ComponentFunction<P>;
   props: P;
   key: Key | null;
 }
 
-interface StatelessComponent<P> {
+interface ComponentFunction<P> {
   (props: P & { children?: ThNode }, context?: any): ThElement<any>;
   defaultProps?: P;
   displayName?: string;
@@ -266,21 +265,41 @@ interface HTMLAttributes<T> extends DOMAttributes<T> {
 interface HTMLProps<T> extends HTMLAttributes<T>, Attributes<T> {
 }
 
-/** DOM element is what createElement returns */
-export interface DOMElement<P extends DOMAttributes<T>, T extends Element> extends ThElement<P> {
-  type: string;
-  ref: Ref<T>;
-}
-
 // ----------------------------------------------------------------------
 // Creation
 // ----------------------------------------------------------------------
 
-/** Takes JSX and returns a handle to the DOMElement */
+/** Return from creating a native dom element */
+export interface DOMElement<P extends DOMAttributes<T>, T extends Element> extends ThElement<P> {
+  type: string;
+  ref: Ref<T>;
+}
+/** Return from creating a Function component */
+export interface ComponentFunctionElement<P> extends ThElement<P> {
+  type: ComponentFunction<P>;
+  ref: Ref<P>;
+}
+/** Return from creating a Class component */
+export interface ComponentClassElement<P> extends ThElement<P> {
+  type: ComponentClass<P>;
+  ref: Ref<P>;
+}
+
+/** 
+ * Takes JSX and returns a handle to the DOMElement
+ **/
 export function createElement<P extends DOMAttributes<T>, T extends Element>(
-    type: string,
-    props?: Attributes<T> & P,
-    ...children: ThNode[]): DOMElement<P, T>;
+  type: string,
+  props?: Attributes<T> & P,
+  ...children: ThNode[]): DOMElement<P, T>; // native dom element support
+export function createElement<P>(
+  type: ComponentFunction<P>,
+  props?: Attributes<P> & P,
+  ...children: ThNode[]): ComponentFunctionElement<P>;
+export function createElement<P>(
+  type: ComponentClass<P>,
+  props?: Attributes<P> & P,
+  ...children: ThNode[]): ComponentClassElement<P>;
 
 //////////////////////
 // JSX
