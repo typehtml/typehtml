@@ -17,26 +17,26 @@ interface ThElement<P> {
 }
 
 interface ComponentFunction<P> {
-  (props: P & { children?: types.ThNode }, context?: any): ThElement<any>;
+  (props: P & { children?: types.ThNode }): ThElement<any>;
   defaultProps?: P;
   displayName?: string;
 }
 
 interface ComponentClass<P> {
-  new (props?: P, context?: any): Component<P>;
+  new (props?: P): Component<P>;
   defaultProps?: P;
   displayName?: string;
 }
 
 // Base component interface JS classes
-interface Component<P> extends ComponentLifecycle<P> {
-  constructor(props?: P, context?: any);
-  forceUpdate(callBack?: () => any): void;
-  render(): JSX.Element | null;
+interface Component<P> {
   props: Readonly<{ children?: types.ThNode }> & Readonly<P>;
-}
+  constructor(props?: P);
+  render(): JSX.Element | null;
 
-interface ComponentLifecycle<P> {
+  /**
+   * LifeCycle
+   */
   componentWillMount?(): void;
   componentDidMount?(): void;
   componentWillReceiveProps?(nextProps: P): void;
