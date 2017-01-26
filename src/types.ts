@@ -46,7 +46,7 @@ export type ReactEventHandler<T> = EventHandler<SyntheticEvent<T>>;
 export type ClipboardEventHandler<T> = EventHandler<ClipboardEvent<T>>;
 
 // ----------------------------------------------------------------------
-// Event System
+// Attributes
 // ----------------------------------------------------------------------
 
 
