@@ -277,8 +277,10 @@ export interface DOMElement<P extends DOMAttributes<T>, T extends Element> exten
 // ----------------------------------------------------------------------
 
 /** Takes JSX and returns a handle to the DOMElement */
-export function createElement(node: any): DOMElement<any, any>;
-
+export function createElement<P extends DOMAttributes<T>, T extends Element>(
+    type: string,
+    props?: Attributes<T> & P,
+    ...children: ThNode[]): DOMElement<P, T>;
 
 //////////////////////
 // JSX
@@ -289,7 +291,7 @@ declare global {
     interface ElementAttributesProperty { props: {}; }
     interface IntrinsicAttributes extends Attributes<void> { }
     interface IntrinsicClassAttributes<T> extends Attributes<T> { }
-    interface InstrinsicElements {
+    interface IntrinsicElements {
       div: HTMLProps<HTMLDivElement>;
     }
   }
