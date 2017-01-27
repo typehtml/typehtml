@@ -1,6 +1,12 @@
 import * as types from '../types';
 
+/**
+ * NO_OP is used to denote that nothing should be done
+ * e.g. the last render was the same as the new one.
+ */
 export const NO_OP = '$NO_OP';
+export type NO_OP = typeof NO_OP;
+
 export const ERROR_MSG = 'a runtime error occured! Use Inferno in development environment to find the error.';
 
 export const isBrowser = typeof window !== 'undefined' && window.document;

@@ -65,7 +65,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 const documentBody = isBrowser ? document.body : null;
 
-export function render(input: VNode<any> | typeof NO_OP, parentDom?: Element): ThChildren {
+export function render(input: VNode<any> | NO_OP, parentDom?: Element): ThChildren {
   if (documentBody === parentDom) {
     if (process.env.NODE_ENV !== 'production') {
       throwError('you cannot render() to the "document.body". Use an empty element as a container instead.');
