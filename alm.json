@@ -1,7 +1,7 @@
 {
   "tests": {
     "include": [
-      "src/tests"
+      "src/tests/mocha"
     ]
   }
 }
