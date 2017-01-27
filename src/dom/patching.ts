@@ -471,7 +471,7 @@ export function patchNonKeyedChildren(lastChildren, nextChildren, dom, lifecycle
 export function patchKeyedChildren(
   a: VNode<any>[],
   b: VNode<any>[],
-  dom,
+  dom: Element,
   lifecycle: Lifecycle,
   isSVG: boolean,
   isRecycling: boolean
