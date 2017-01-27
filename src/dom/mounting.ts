@@ -1,6 +1,6 @@
 import { VNode, VNodeFlags, ComponentClass } from '../types';
 import {
-  copyPropsTo
+  copyDefaultProps
 } from '../vdom/normalization';
 import options from '../vdom/options';
 import { cloneVNode, isVNode } from '../vdom/VNodes';
@@ -166,7 +166,7 @@ export function mountComponent(vNode: VNode<any>, parentDom: Element, lifecycle:
   let dom;
 
   if (!isUndefined(defaultProps)) {
-    copyPropsTo(defaultProps, props);
+    copyDefaultProps(defaultProps, props);
     vNode.props = props;
   }
   if (isClass) {

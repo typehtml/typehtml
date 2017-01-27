@@ -24,7 +24,7 @@ export function isStringOrNumber(obj: any): obj is string | number {
 }
 
 export function isNullOrUndef(obj: any): obj is null | undefined {
-  return isUndefined(obj) || isNull(obj);
+  return obj == null;
 }
 
 export function isInvalid(obj: any): boolean {

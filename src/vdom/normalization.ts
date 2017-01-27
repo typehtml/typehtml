@@ -126,10 +126,10 @@ function normalizeProps(vNode: VNode<any>, props: VNodeProps, children: ThChildr
   }
 }
 
-export function copyPropsTo(copyFrom: VNodeProps, copyTo: VNodeProps) {
-  for (let prop in copyFrom) {
-    if (isUndefined(copyTo[prop])) {
-      copyTo[prop] = copyFrom[prop];
+export function copyDefaultProps(defaultProps: VNodeProps, props: VNodeProps) {
+  for (let prop in defaultProps) {
+    if (isUndefined(props[prop])) {
+      props[prop] = defaultProps[prop];
     }
   }
 }

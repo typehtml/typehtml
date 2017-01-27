@@ -1,6 +1,6 @@
 import { VNode, VNodeFlags, Component } from '../types';
 import {
-  copyPropsTo
+  copyDefaultProps
 } from '../vdom/normalization';
 import options from '../vdom/options';
 import {
@@ -284,7 +284,7 @@ export function patchComponent(lastVNode: VNode<any>, nextVNode, parentDom, life
   const defaultProps = nextType.defaultProps;
 
   if (!isUndefined(defaultProps)) {
-    copyPropsTo(defaultProps, nextProps);
+    copyDefaultProps(defaultProps, nextProps);
     nextVNode.props = nextProps;
   }
 

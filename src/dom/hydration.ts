@@ -1,7 +1,7 @@
 import { VNode, VNodeFlags, ThChildren, ComponentClass } from '../types';
 
 import {
-  copyPropsTo
+  copyDefaultProps
 } from '../vdom/normalization';
 import {
   EMPTY_OBJ,
@@ -67,7 +67,7 @@ function hydrateComponent(vNode: VNode<any>, dom: Element, lifecycle: Lifecycle,
     const defaultProps = (type as any).defaultProps;
 
     if (!isUndefined(defaultProps)) {
-      copyPropsTo(defaultProps, props);
+      copyDefaultProps(defaultProps, props);
       vNode.props = props;
     }
     const instance = createClassComponentInstance(vNode, type as ComponentClass<any>, props, _isSVG);

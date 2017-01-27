@@ -1,6 +1,6 @@
 import { VNodeFlags, VNode, ComponentClass, ComponentFunction } from '../types';
 import {
-  copyPropsTo
+  copyDefaultProps
 } from '../vdom/normalization';
 import { isUnitlessNumber } from '../dom/constants';
 import {
@@ -49,7 +49,7 @@ function renderVNodeToString(vNode: VNode<any>, firstChild: boolean): string {
     // Primitive node doesn't have defaultProps, only Component
     const type = vNode.type as (ComponentClass<any> | ComponentFunction<any>);
     if (!isNullOrUndef(type.defaultProps)) {
-      copyPropsTo(type.defaultProps, props);
+      copyDefaultProps(type.defaultProps, props);
       vNode.props = props;
     }
 
