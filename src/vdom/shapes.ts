@@ -1,4 +1,4 @@
-import { VNode, VNodeFlags, VNodeProps as Props, Ref, ThChildren } from '../types';
+import { VNode, VNodeFlags, VNodeProps as Props, Ref, ThChildren, Key } from '../types';
 export { VNode, VNodeFlags, Props, Ref, ThChildren };
 import {
 	isArray,
@@ -23,13 +23,6 @@ export interface IProps {
 export interface VType {
 	flags: VNodeFlags;
 }
-
-export type InfernoInput = VNode<any> | VNode<any>[] | null | string | string[] | number | number[];
-
-
-export type Key = string | number | null;
-export type Type = string | Function | null;
-
 
 function _normalizeVNodes(nodes: any[], result: VNode<any>[], i: number): void {
 	for (; i < nodes.length; i++) {
