@@ -161,7 +161,7 @@ export interface VType {
 // Event System
 // ----------------------------------------------------------------------
 
-export interface SyntheticEventBase<CURRENT, TARGET> {
+export interface SyntheticEventBase<CURRENT> {
   bubbles: boolean;
   currentTarget: EventTarget & CURRENT;
   cancelable: boolean;
@@ -174,12 +174,12 @@ export interface SyntheticEventBase<CURRENT, TARGET> {
   stopPropagation(): void;
   isPropagationStopped(): boolean;
   persist(): void;
-  target: EventTarget & TARGET;
+  target: EventTarget;
   timeStamp: Date;
   type: string;
 }
 
-export interface SyntheticEvent<T> extends SyntheticEventBase<T, EventTarget> {
+export interface SyntheticEvent<T> extends SyntheticEventBase<T> {
 }
 
 export interface ClipboardEvent<T> extends SyntheticEvent<T> {
