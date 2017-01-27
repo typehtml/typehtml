@@ -7,7 +7,7 @@ export = function(config) {
       'Chrome'
     ],
     preprocessors: {
-      'src/**/*': ['webpack']
+      '**/*': ['webpack']
     },
     webpack: {
       module: {
