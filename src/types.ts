@@ -69,16 +69,24 @@ export interface Component<P> {
 // VNode
 // ----------------------------------------------------------------------
 
-export type ThInput = VNode | null | string | number;
+/** The type passed to createElement */
 export type Type = string | ComponentClass<any> | ComponentFunction<any> | null;
 
+/** The main input to 'render' */
+export type ThInput =
+  DOMElement<any, any>
+  | ComponentClassElement<any>
+  | ComponentFunctionElement<any>
+  | VNode
+  | JSX.Element;
+
 export interface Refs {
-	onComponentDidMount?: (domNode: Element) => void;
-	onComponentWillMount?(): void;
-	onComponentShouldUpdate?(lastProps, nextProps): boolean;
-	onComponentWillUpdate?(lastProps, nextProps): void;
-	onComponentDidUpdate?(lastProps, nextProps): void;
-	onComponentWillUnmount?(domNode: Element): void;
+  onComponentDidMount?: (domNode: Element) => void;
+  onComponentWillMount?(): void;
+  onComponentShouldUpdate?(lastProps, nextProps): boolean;
+  onComponentWillUpdate?(lastProps, nextProps): void;
+  onComponentDidUpdate?(lastProps, nextProps): void;
+  onComponentWillUnmount?(domNode: Element): void;
 }
 
 export type VNodeProps = {
@@ -126,14 +134,14 @@ export interface VNode {
 // ----------------------------------------------------------------------
 
 export interface Styles {
-	[key: string]: number | string;
+  [key: string]: number | string;
 }
 
 export interface IProps {
-	[index: string]: any;
+  [index: string]: any;
 }
 export interface VType {
-	flags: VNodeFlags;
+  flags: VNodeFlags;
 }
 
 
