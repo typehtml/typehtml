@@ -20,13 +20,9 @@ import {
   unmount
 } from './unmounting';
 
-export function createClassComponentInstance(vNode: VNode, Component, props: Props, context: Object, isSVG: boolean) {
-  if (isUndefined(context)) {
-    context = {};
-  }
-  const instance = new Component(props, context);
+export function createClassComponentInstance(vNode: VNode, Component, props: Props, isSVG: boolean) {
+  const instance = new Component(props);
 
-  instance.context = context;
   if (instance.props === EMPTY_OBJ) {
     instance.props = props;
   }
@@ -42,16 +38,8 @@ export function createClassComponentInstance(vNode: VNode, Component, props: Pro
     instance.componentWillMount();
   }
 
-  const childContext = instance.getChildContext();
-
-  if (!isNullOrUndef(childContext)) {
-    instance._childContext = Object.assign({}, context, childContext);
-  } else {
-    instance._childContext = context;
-  }
-
   options.beforeRender && options.beforeRender(instance);
-  let input = instance.render(props, instance.state, context);
+  let input = instance.render(props, instance.state);
 
   options.afterRender && options.afterRender(instance);
   if (isArray(input)) {
@@ -79,8 +67,8 @@ export function createClassComponentInstance(vNode: VNode, Component, props: Pro
   instance._lastInput = input;
   return instance;
 }
-export function replaceLastChildAndUnmount(lastInput, nextInput, parentDom, lifecycle: Lifecycle, context: Object, isSVG: boolean, isRecycling: boolean) {
-  replaceVNode(parentDom, mount(nextInput, null, lifecycle, context, isSVG), lastInput, lifecycle, isRecycling);
+export function replaceLastChildAndUnmount(lastInput, nextInput, parentDom, lifecycle: Lifecycle, isSVG: boolean, isRecycling: boolean) {
+  replaceVNode(parentDom, mount(nextInput, null, lifecycle, isSVG), lastInput, lifecycle, isRecycling);
 }
 
 export function replaceVNode(parentDom, dom, vNode, lifecycle: Lifecycle, isRecycling) {
@@ -97,8 +85,8 @@ export function replaceVNode(parentDom, dom, vNode, lifecycle: Lifecycle, isRecy
   unmount(vNode, null, lifecycle, false, isRecycling);
 }
 
-export function createFunctionalComponentInput(vNode: VNode, component, props: Props, context: Object) {
-  let input = component(props, context);
+export function createFunctionalComponentInput(vNode: VNode, component, props: Props) {
+  let input = component(props);
 
   if (isArray(input)) {
     if (process.env.NODE_ENV !== 'production') {
@@ -156,9 +144,9 @@ export function documentCreateElement(tag, isSVG): Element {
   }
 }
 
-export function replaceWithNewNode(lastNode, nextNode, parentDom, lifecycle: Lifecycle, context: Object, isSVG: boolean, isRecycling: boolean) {
+export function replaceWithNewNode(lastNode, nextNode, parentDom, lifecycle: Lifecycle, isSVG: boolean, isRecycling: boolean) {
   unmount(lastNode, null, lifecycle, false, isRecycling);
-  const dom = mount(nextNode, null, lifecycle, context, isSVG);
+  const dom = mount(nextNode, null, lifecycle, isSVG);
 
   nextNode.dom = dom;
   replaceChild(parentDom, dom, lastNode.dom);

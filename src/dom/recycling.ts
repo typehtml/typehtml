@@ -17,7 +17,7 @@ interface Pools {
 	keyed: Map<string | number, VNode[]>;
 }
 
-export function recycleElement(vNode: VNode, lifecycle: Lifecycle, context: Object, isSVG: boolean) {
+export function recycleElement(vNode: VNode, lifecycle: Lifecycle, isSVG: boolean) {
 	const tag = vNode.type as string | null;
 	const key = vNode.key;
 	const pools: Pools = elementPools.get(tag);
@@ -29,7 +29,7 @@ export function recycleElement(vNode: VNode, lifecycle: Lifecycle, context: Obje
 			const recycledVNode = pool.pop();
 
 			if (!isUndefined(recycledVNode)) {
-				patchElement(recycledVNode, vNode, null, lifecycle, context, isSVG, true);
+				patchElement(recycledVNode, vNode, null, lifecycle, isSVG, true);
 				return vNode.dom;
 			}
 		}
@@ -62,7 +62,7 @@ export function poolElement(vNode: VNode) {
 	}
 }
 
-export function recycleComponent(vNode: VNode, lifecycle: Lifecycle, context: Object, isSVG: boolean) {
+export function recycleComponent(vNode: VNode, lifecycle: Lifecycle, isSVG: boolean) {
 	const type = vNode.type as Function;
 	const key = vNode.key;
 	const pools: Pools = componentPools.get(type);
@@ -80,7 +80,6 @@ export function recycleComponent(vNode: VNode, lifecycle: Lifecycle, context: Ob
 					vNode,
 					null,
 					lifecycle,
-					context,
 					isSVG,
 					flags & VNodeFlags.ComponentClass,
 					true

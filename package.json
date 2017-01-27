@@ -9,7 +9,7 @@
   "scripts": {
     "karma:firefox": "karma start lib/tests/karma/karma.config.js --browsers=Firefox",
     "karma:chrome": "karma start lib/tests/karma/karma.config.js --browsers=Chrome",
-    "karma:all": "npm run karma:firefox && npm run karma:chrome",
+    "karma": "npm run karma:firefox && npm run karma:chrome",
     "build": "tsc -p .",
     "unittest": "mocha ./lib/tests/mocha/**/*.js",
     "test": "npm run build && npm run unittest",

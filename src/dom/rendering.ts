@@ -103,7 +103,7 @@ export function render(input: ThInput, parentDom?: Element | SVGAElement): ThChi
 				input = cloneVNode(input as VNode);
 			}
 			if (!hydrateRoot(input, parentDom, lifecycle)) {
-				mount(input as VNode, parentDom, lifecycle, {}, false);
+				mount(input as VNode, parentDom, lifecycle, false);
 			}
 			root = setRoot(parentDom, input, lifecycle);
 			lifecycle.trigger();
@@ -119,7 +119,7 @@ export function render(input: ThInput, parentDom?: Element | SVGAElement): ThChi
 			if ((input as VNode).dom) {
 				input = cloneVNode(input as VNode);
 			}
-			patch(root.input as VNode, input as VNode, parentDom, lifecycle, {}, false, false);
+			patch(root.input as VNode, input as VNode, parentDom, lifecycle, false, false);
 		}
 		lifecycle.trigger();
 		root.input = input;
