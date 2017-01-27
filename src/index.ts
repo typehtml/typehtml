@@ -6,5 +6,11 @@ import * as types from './types';
 /** 
  * Takes JSX and returns a handle to the DOMElement
  **/
-import { createElement} from './vdom/createElement';
+import { createElement } from './vdom/createElement';
 export { createElement };
+
+/** 
+ * Takes JSX and renders it to a string
+ */
+import { renderToString, renderToStaticMarkup } from './server/renderToString';
+export { renderToString, renderToStaticMarkup };
