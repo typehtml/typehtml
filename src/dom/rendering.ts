@@ -10,7 +10,6 @@ import {
 	warning
 } from '../vdom/shared';
 
-import options from '../vdom/options';
 import { cloneVNode } from '../vdom/VNodes';
 import hydrateRoot from './hydration';
 import { Lifecycle } from './lifecycle';
@@ -28,8 +27,6 @@ interface Root {
 // given there shouldn't be THAT many roots on the page, the difference
 // in performance is huge: https://esbench.com/bench/5802a691330ab09900a1a2da
 export const roots: Root[] = [];
-
-options.roots = roots;
 
 function getRoot(dom: Element): Root | null {
 	for (const root of roots) {
