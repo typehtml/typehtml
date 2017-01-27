@@ -69,7 +69,7 @@ import { componentToDOMNodeMap } from './rendering';
 import { unmount } from './unmounting';
 import processElement from './wrappers/processElement';
 
-export function patch(lastVNode: VNode, nextVNode: VNode, parentDom: Element, lifecycle: Lifecycle, isSVG: boolean, isRecycling: boolean) {
+export function patch(lastVNode: VNode<any>, nextVNode: VNode<any>, parentDom: Element, lifecycle: Lifecycle, isSVG: boolean, isRecycling: boolean) {
 	if (lastVNode !== nextVNode) {
 		const lastFlags = lastVNode.flags;
 		const nextFlags = nextVNode.flags;
@@ -146,7 +146,7 @@ function unmountChildren(children, dom: Element, lifecycle: Lifecycle, isRecycli
 	}
 }
 
-export function patchElement(lastVNode: VNode, nextVNode: VNode, parentDom: Node, lifecycle: Lifecycle, isSVG: boolean, isRecycling: boolean) {
+export function patchElement(lastVNode: VNode<any>, nextVNode: VNode<any>, parentDom: Node, lifecycle: Lifecycle, isSVG: boolean, isRecycling: boolean) {
 	const nextTag = nextVNode.type;
 	const lastTag = lastVNode.type;
 
@@ -428,7 +428,7 @@ export function patchComponent(lastVNode, nextVNode, parentDom, lifecycle: Lifec
 	return false;
 }
 
-export function patchText(lastVNode: VNode, nextVNode: VNode) {
+export function patchText(lastVNode: VNode<any>, nextVNode: VNode<any>) {
 	const nextText = nextVNode.children as string;
 	const dom = lastVNode.dom;
 
@@ -439,7 +439,7 @@ export function patchText(lastVNode: VNode, nextVNode: VNode) {
 	}
 }
 
-export function patchVoid(lastVNode: VNode, nextVNode: VNode) {
+export function patchVoid(lastVNode: VNode<any>, nextVNode: VNode<any>) {
 	nextVNode.dom = lastVNode.dom;
 }
 
@@ -476,8 +476,8 @@ export function patchNonKeyedChildren(lastChildren, nextChildren, dom, lifecycle
 }
 
 export function patchKeyedChildren(
-	a: VNode[],
-	b: VNode[],
+	a: VNode<any>[],
+	b: VNode<any>[],
 	dom,
 	lifecycle: Lifecycle,
 	isSVG: boolean,
@@ -602,7 +602,7 @@ export function patchKeyedChildren(
 	} else {
 		aLength = aEnd - aStart + 1;
 		bLength = bEnd - bStart + 1;
-		const aNullable: Array<VNode | null> = a;
+		const aNullable: Array<VNode<any> | null> = a;
 		const sources = new Array(bLength);
 
 		// Mark all nodes as inserted.

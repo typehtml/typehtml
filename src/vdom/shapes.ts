@@ -24,14 +24,14 @@ export interface VType {
 	flags: VNodeFlags;
 }
 
-export type InfernoInput = VNode | VNode[] | null | string | string[] | number | number[];
+export type InfernoInput = VNode<any> | VNode<any>[] | null | string | string[] | number | number[];
 
 
 export type Key = string | number | null;
 export type Type = string | Function | null;
 
 
-function _normalizeVNodes(nodes: any[], result: VNode[], i: number): void {
+function _normalizeVNodes(nodes: any[], result: VNode<any>[], i: number): void {
 	for (; i < nodes.length; i++) {
 		let n = nodes[i];
 
@@ -44,20 +44,20 @@ function _normalizeVNodes(nodes: any[], result: VNode[], i: number): void {
 				} else if (isVNode(n) && n.dom) {
 					n = cloneVNode(n);
 				}
-				result.push((applyKeyIfMissing(i, n as VNode)));
+				result.push((applyKeyIfMissing(i, n as VNode<any>)));
 			}
 		}
 	}
 }
 
-function applyKeyIfMissing(index: number, vNode: VNode): VNode {
+function applyKeyIfMissing(index: number, vNode: VNode<any>): VNode<any> {
 	if (isNull(vNode.key)) {
 		vNode.key = `.${ index }`;
 	}
 	return vNode;
 }
 
-export function normalizeVNodes(nodes: any[]): VNode[] {
+export function normalizeVNodes(nodes: any[]): VNode<any>[] {
 	let newNodes;
 
 	// we assign $ which basically means we've flagged this array for future note
@@ -74,37 +74,37 @@ export function normalizeVNodes(nodes: any[]): VNode[] {
 		const n = nodes[i];
 
 		if (isInvalid(n) || Array.isArray(n)) {
-			const result = (newNodes || nodes).slice(0, i) as VNode[];
+			const result = (newNodes || nodes).slice(0, i) as VNode<any>[];
 
 			_normalizeVNodes(nodes, result, i);
 			return result;
 		} else if (isStringOrNumber(n)) {
 			if (!newNodes) {
-				newNodes = nodes.slice(0, i) as VNode[];
+				newNodes = nodes.slice(0, i) as VNode<any>[];
 			}
 			newNodes.push(applyKeyIfMissing(i, createTextVNode(n)));
 		} else if ((isVNode(n) && n.dom) || (isNull(n.key) && !(n.flags & VNodeFlags.HasNonKeyedChildren))) {
 			if (!newNodes) {
-				newNodes = nodes.slice(0, i) as VNode[];
+				newNodes = nodes.slice(0, i) as VNode<any>[];
 			}
 			newNodes.push(applyKeyIfMissing(i, cloneVNode(n)));
 		} else if (newNodes) {
 			newNodes.push(applyKeyIfMissing(i, cloneVNode(n)));
 		}
 	}
-	return newNodes || nodes as VNode[];
+	return newNodes || nodes as VNode<any>[];
 }
 
 function normalizeChildren(children: ThChildren | null) {
 	if (isArray(children)) {
 		return normalizeVNodes(children);
-	} else if (isVNode(children as VNode) && (children as VNode).dom) {
-		return cloneVNode(children as VNode);
+	} else if (isVNode(children as VNode<any>) && (children as any as VNode<any>).dom) {
+		return cloneVNode(children as VNode<any>);
 	}
 	return children;
 }
 
-function normalizeProps(vNode: VNode, props: Props, children: ThChildren) {
+function normalizeProps(vNode: VNode<any>, props: Props, children: ThChildren) {
 	if (!(vNode.flags & VNodeFlags.Component) && isNullOrUndef(children) && !isNullOrUndef(props.children)) {
 		vNode.children = props.children;
 	}
@@ -127,7 +127,7 @@ export function copyPropsTo(copyFrom: Props, copyTo: Props) {
 	}
 }
 
-function normalizeElement(type: string, vNode: VNode) {
+function normalizeElement(type: string, vNode: VNode<any>) {
 	if (type === 'svg') {
 		vNode.flags = VNodeFlags.SvgElement;
 	} else if (type === 'input') {
@@ -143,7 +143,7 @@ function normalizeElement(type: string, vNode: VNode) {
 	}
 }
 
-export function normalize(vNode: VNode): void {
+export function normalize(vNode: VNode<any>): void {
 	const props = vNode.props;
 	const type = vNode.type;
 	let children = vNode.children;
@@ -176,11 +176,11 @@ export function createVNode(
 	key?: Key,
 	ref?: Ref<any>,
 	noNormalise?: boolean
-): VNode {
+): VNode<Props> {
 	if (flags & VNodeFlags.ComponentUnknown) {
 		flags = isStatefulComponent(type) ? VNodeFlags.ComponentClass : VNodeFlags.ComponentFunction;
 	}
-	const vNode: VNode = {
+	const vNode: VNode<Props> = {
 		children: isUndefined(children) ? null : children,
 		dom: null,
 		events: events || null,
@@ -196,14 +196,14 @@ export function createVNode(
 	return vNode;
 }
 
-export function createVoidVNode(): VNode {
+export function createVoidVNode(): VNode<any> {
 	return createVNode(VNodeFlags.Void);
 }
 
-export function createTextVNode(text: string | number): VNode {
+export function createTextVNode(text: string | number): VNode<any> {
 	return createVNode(VNodeFlags.Text, null, null, text);
 }
 
-export function isVNode(o: VNode): boolean {
+export function isVNode(o: VNode<any>): boolean {
 	return !!o.flags;
 }

@@ -1,4 +1,4 @@
-import { ThInput, ThChildren, VNode, VNodeFlags } from '../types';
+import { VNode, ThChildren, VNodeFlags } from '../types';
 
 import {
 	isBrowser,
@@ -20,7 +20,7 @@ import { unmount } from './unmounting';
 
 interface Root {
 	dom: Node | SVGAElement;
-	input: ThInput;
+	input: VNode<any>;
 	lifecycle: Lifecycle;
 }
 
@@ -55,7 +55,7 @@ function getRoot(dom): Root | null {
 	return null;
 }
 
-function setRoot(dom: Node | SVGAElement, input: ThInput, lifecycle: Lifecycle): Root {
+function setRoot(dom: Node | SVGAElement, input: VNode<any>, lifecycle: Lifecycle): Root {
 	const root: Root = {
 		dom,
 		input,
@@ -83,7 +83,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 const documentBody = isBrowser ? document.body : null;
 
-export function render(input: ThInput, parentDom?: Element | SVGAElement): ThChildren {
+export function render(input: VNode<any>, parentDom?: Element | SVGAElement): ThChildren {
 	if (documentBody === parentDom) {
 		if (process.env.NODE_ENV !== 'production') {
 			throwError('you cannot render() to the "document.body". Use an empty element as a container instead.');
@@ -99,11 +99,11 @@ export function render(input: ThInput, parentDom?: Element | SVGAElement): ThChi
 		const lifecycle = new Lifecycle();
 
 		if (!isInvalid(input)) {
-			if ((input as VNode).dom) {
-				input = cloneVNode(input as VNode);
+			if ((input as VNode<any>).dom) {
+				input = cloneVNode(input as VNode<any>);
 			}
 			if (!hydrateRoot(input, parentDom, lifecycle)) {
-				mount(input as VNode, parentDom, lifecycle, false);
+				mount(input as VNode<any>, parentDom, lifecycle, false);
 			}
 			root = setRoot(parentDom, input, lifecycle);
 			lifecycle.trigger();
@@ -113,19 +113,19 @@ export function render(input: ThInput, parentDom?: Element | SVGAElement): ThChi
 
 		lifecycle.listeners = [];
 		if (isNullOrUndef(input)) {
-			unmount(root.input as VNode, parentDom, lifecycle, false, false);
+			unmount(root.input as VNode<any>, parentDom, lifecycle, false, false);
 			removeRoot(root);
 		} else {
-			if ((input as VNode).dom) {
-				input = cloneVNode(input as VNode);
+			if ((input as VNode<any>).dom) {
+				input = cloneVNode(input as VNode<any>);
 			}
-			patch(root.input as VNode, input as VNode, parentDom, lifecycle, false, false);
+			patch(root.input as VNode<any>, input as VNode<any>, parentDom, lifecycle, false, false);
 		}
 		lifecycle.trigger();
 		root.input = input;
 	}
 	if (root) {
-		const rootInput: VNode = root.input as VNode;
+		const rootInput: VNode<any> = root.input as VNode<any>;
 
 		if (rootInput && (rootInput.flags & VNodeFlags.Component)) {
 			return rootInput.children;

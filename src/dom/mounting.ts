@@ -35,7 +35,7 @@ import {
 } from './utils';
 import processElement from './wrappers/processElement';
 
-export function mount(vNode: VNode, parentDom: Element, lifecycle: Lifecycle, isSVG: boolean) {
+export function mount(vNode: VNode<any>, parentDom: Element, lifecycle: Lifecycle, isSVG: boolean) {
 	const flags = vNode.flags;
 
 	if (flags & VNodeFlags.Element) {
@@ -58,7 +58,7 @@ export function mount(vNode: VNode, parentDom: Element, lifecycle: Lifecycle, is
 	}
 }
 
-export function mountText(vNode: VNode, parentDom: Element): any {
+export function mountText(vNode: VNode<any>, parentDom: Element): any {
 	const dom = document.createTextNode(vNode.children as string);
 
 	vNode.dom = dom as any;
@@ -68,7 +68,7 @@ export function mountText(vNode: VNode, parentDom: Element): any {
 	return dom;
 }
 
-export function mountVoid(vNode: VNode, parentDom: Element) {
+export function mountVoid(vNode: VNode<any>, parentDom: Element) {
 	const dom = document.createTextNode('');
 
 	vNode.dom = dom as any;
@@ -78,7 +78,7 @@ export function mountVoid(vNode: VNode, parentDom: Element) {
 	return dom;
 }
 
-export function mountElement(vNode: VNode, parentDom: Element, lifecycle: Lifecycle, isSVG: boolean) {
+export function mountElement(vNode: VNode<any>, parentDom: Element, lifecycle: Lifecycle, isSVG: boolean) {
 	if (options.recyclingEnabled) {
 		const dom = recycleElement(vNode, lifecycle, isSVG);
 
@@ -108,7 +108,7 @@ export function mountElement(vNode: VNode, parentDom: Element, lifecycle: Lifecy
 		} else if (isArray(children)) {
 			mountArrayChildren(children, dom, lifecycle, isSVG);
 		} else if (isVNode(children as any)) {
-			mount(children as VNode, dom, lifecycle, isSVG);
+			mount(children as VNode<any>, dom, lifecycle, isSVG);
 		}
 	}
 	let hasControlledValue = false;
@@ -150,7 +150,7 @@ export function mountArrayChildren(children, dom: Element, lifecycle: Lifecycle,
 	}
 }
 
-export function mountComponent(vNode: VNode, parentDom: Element, lifecycle: Lifecycle, isSVG: boolean, isClass: number) {
+export function mountComponent(vNode: VNode<any>, parentDom: Element, lifecycle: Lifecycle, isSVG: boolean, isClass: number) {
 	if (options.recyclingEnabled) {
 		const dom = recycleComponent(vNode, lifecycle, isSVG);
 
@@ -207,7 +207,7 @@ export function mountComponent(vNode: VNode, parentDom: Element, lifecycle: Life
 	return dom;
 }
 
-export function mountClassComponentCallbacks(vNode: VNode, ref, instance, lifecycle: Lifecycle) {
+export function mountClassComponentCallbacks(vNode: VNode<any>, ref, instance, lifecycle: Lifecycle) {
 	if (ref) {
 		if (isFunction(ref)) {
 			ref(instance);

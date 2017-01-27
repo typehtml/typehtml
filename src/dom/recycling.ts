@@ -13,11 +13,11 @@ const componentPools = new Map<Function | null, Pools>();
 const elementPools = new Map<string | null, Pools>();
 
 interface Pools {
-	nonKeyed: VNode[];
-	keyed: Map<string | number, VNode[]>;
+	nonKeyed: VNode<any>[];
+	keyed: Map<string | number, VNode<any>[]>;
 }
 
-export function recycleElement(vNode: VNode, lifecycle: Lifecycle, isSVG: boolean) {
+export function recycleElement(vNode: VNode<any>, lifecycle: Lifecycle, isSVG: boolean) {
 	const tag = vNode.type as string | null;
 	const key = vNode.key;
 	const pools: Pools = elementPools.get(tag);
@@ -37,7 +37,7 @@ export function recycleElement(vNode: VNode, lifecycle: Lifecycle, isSVG: boolea
 	return null;
 }
 
-export function poolElement(vNode: VNode) {
+export function poolElement(vNode: VNode<any>) {
 	const tag = vNode.type as string | null;
 	const key = vNode.key;
 	let pools: Pools = elementPools.get(tag);
@@ -45,7 +45,7 @@ export function poolElement(vNode: VNode) {
 	if (isUndefined(pools)) {
 		pools = {
 			nonKeyed: [],
-			keyed: new Map<string | number, VNode[]>()
+			keyed: new Map<string | number, VNode<any>[]>()
 		};
 		elementPools.set(tag, pools);
 	}
@@ -62,7 +62,7 @@ export function poolElement(vNode: VNode) {
 	}
 }
 
-export function recycleComponent(vNode: VNode, lifecycle: Lifecycle, isSVG: boolean) {
+export function recycleComponent(vNode: VNode<any>, lifecycle: Lifecycle, isSVG: boolean) {
 	const type = vNode.type as Function;
 	const key = vNode.key;
 	const pools: Pools = componentPools.get(type);
@@ -94,7 +94,7 @@ export function recycleComponent(vNode: VNode, lifecycle: Lifecycle, isSVG: bool
 	return null;
 }
 
-export function poolComponent(vNode: VNode) {
+export function poolComponent(vNode: VNode<any>) {
 	const type = vNode.type;
 	const key = vNode.key;
 	const hooks = vNode.ref as Refs;
@@ -113,7 +113,7 @@ export function poolComponent(vNode: VNode) {
 	if (isUndefined(pools)) {
 		pools = {
 			nonKeyed: [],
-			keyed: new Map<string | number, VNode[]>()
+			keyed: new Map<string | number, VNode<any>[]>()
 		};
 		componentPools.set(type as Function, pools);
 	}

@@ -1,22 +1,22 @@
 /** Everything that can be rendered */
-export type ThChildren = string | number | VNode | Array<string | VNode> | null;
+export type ThChildren = string | number | VNode<any> | Array<string | VNode<any>> | null;
 
 // ----------------------------------------------------------------------
 // Elements
 // ----------------------------------------------------------------------
 
 /** Return from creating a native dom element */
-export interface DOMElement<P extends HTMLAttributes<T>, T extends Element> extends ThElement<P> {
+export interface DOMElement<P extends HTMLAttributes<T>, T extends Element> {
   type: string;
   ref: Ref<T>;
 }
 /** Return from creating a Function component */
-export interface ComponentFunctionElement<P> extends ThElement<P> {
+export interface ComponentFunctionElement<P> {
   type: ComponentFunction<P>;
   ref: Ref<P>;
 }
 /** Return from creating a Class component */
-export interface ComponentClassElement<P> extends ThElement<P> {
+export interface ComponentClassElement<P> {
   type: ComponentClass<P>;
   ref: Ref<P>;
 }
@@ -26,7 +26,7 @@ export interface ComponentClassElement<P> extends ThElement<P> {
 // ----------------------------------------------------------------------
 
 export interface ComponentFunction<P> {
-  (props: P & { children?: ThChildren }): ThElement<any>;
+  (props: P & { children?: ThChildren }): VNode<any>;
   defaultProps?: P;
   displayName?: string;
 }
@@ -67,14 +67,6 @@ export interface Component<P> {
 /** The type passed to createElement */
 export type Type<P> = string | ComponentClass<P> | ComponentFunction<P>;
 
-/** The main input to 'render' */
-export type ThInput =
-  | ThElement<any>
-  | DOMElement<any, any>
-  | ComponentClassElement<any>
-  | ComponentFunctionElement<any>
-  | VNode;
-
 export interface Refs {
   onComponentDidMount?: (domNode: Element) => void;
   onComponentWillMount?(): void;
@@ -112,14 +104,9 @@ export const enum VNodeFlags {
   Component = ComponentFunction | ComponentClass | ComponentUnknown
 }
 
-/** TODO: consolidate ThElement and VNode types */
-export interface ThElement<P> {
+/** The core result of a call to createElement */
+export interface VNode<P> {
   type: Type<P>;
-  props: P;
-  key: Key | null;
-}
-export interface VNode {
-  type: Type<any>;
   ref: Ref<any>;
   key: Key;
   flags: VNodeFlags;
@@ -128,8 +115,8 @@ export interface VNode {
   dom: Element | null;
   events: Object | null;
 
-  props: VNodeProps | null;
-  parentVNode?: VNode;
+  props: VNodeProps & P;
+  parentVNode?: VNode<P>;
 }
 
 // ----------------------------------------------------------------------
@@ -628,7 +615,7 @@ export interface SVGAttributes<T> extends HTMLAttributes<T> {
 // ----------------------------------------------------------------------
 declare global {
   namespace JSX {
-    interface Element extends ThElement<any> { }
+    interface Element extends VNode<any> { }
     interface ElementAttributesProperty { props: {}; }
     interface IntrinsicAttributes extends ThAttributes<void> { }
     interface IntrinsicClassAttributes<T> extends ThAttributes<T> { }

@@ -20,7 +20,7 @@ import {
 import { componentToDOMNodeMap } from './rendering';
 import { removeChild } from './utils';
 
-export function unmount(vNode: VNode, parentDom: Element, lifecycle: Lifecycle, canRecycle: boolean, isRecycling: boolean) {
+export function unmount(vNode: VNode<any>, parentDom: Element, lifecycle: Lifecycle, canRecycle: boolean, isRecycling: boolean) {
   const flags = vNode.flags;
 
   if (flags & VNodeFlags.Component) {
@@ -32,7 +32,7 @@ export function unmount(vNode: VNode, parentDom: Element, lifecycle: Lifecycle, 
   }
 }
 
-function unmountVoidOrText(vNode: VNode, parentDom: Element) {
+function unmountVoidOrText(vNode: VNode<any>, parentDom: Element) {
   if (parentDom) {
     removeChild(parentDom, vNode.dom);
   }
@@ -40,7 +40,7 @@ function unmountVoidOrText(vNode: VNode, parentDom: Element) {
 
 const alreadyUnmounted = new WeakMap();
 
-export function unmountComponent(vNode: VNode, parentDom: Element, lifecycle: Lifecycle, canRecycle: boolean, isRecycling: boolean) {
+export function unmountComponent(vNode: VNode<any>, parentDom: Element, lifecycle: Lifecycle, canRecycle: boolean, isRecycling: boolean) {
   const instance = vNode.children as any;
   const flags = vNode.flags;
   const isStatefulComponent = flags & VNodeFlags.ComponentClass;
@@ -94,7 +94,7 @@ export function unmountComponent(vNode: VNode, parentDom: Element, lifecycle: Li
   }
 }
 
-export function unmountElement(vNode: VNode, parentDom: Element, lifecycle: Lifecycle, canRecycle: boolean, isRecycling: boolean) {
+export function unmountElement(vNode: VNode<any>, parentDom: Element, lifecycle: Lifecycle, canRecycle: boolean, isRecycling: boolean) {
   const dom = vNode.dom;
   const ref = vNode.ref as any;
   const events = vNode.events;
@@ -135,11 +135,11 @@ function unmountChildren(children: ThChildren, lifecycle: Lifecycle, isRecycling
       const child = children[i];
 
       if (!isInvalid(child) && isObject(child)) {
-        unmount(child as VNode, null, lifecycle, false, isRecycling);
+        unmount(child as VNode<any>, null, lifecycle, false, isRecycling);
       }
     }
   } else if (isObject(children)) {
-    unmount(children as VNode, null, lifecycle, false, isRecycling);
+    unmount(children as VNode<any>, null, lifecycle, false, isRecycling);
   }
 }
 

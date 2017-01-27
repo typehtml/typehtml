@@ -21,11 +21,11 @@ export function createVNode(
 	key?: Key,
 	ref?: Ref<any>,
 	noNormalise?: boolean
-): VNode {
+): VNode<any> {
 	if (flags & VNodeFlags.ComponentUnknown) {
 		flags = isStatefulComponent(type) ? VNodeFlags.ComponentClass : VNodeFlags.ComponentFunction;
 	}
-	const vNode: VNode = {
+	const vNode: VNode<any> = {
 		children: isUndefined(children) ? null : children,
 		dom: null,
 		events: events || null,
@@ -44,7 +44,7 @@ export function createVNode(
 	return vNode;
 }
 
-export function cloneVNode(vNodeToClone: VNode, props?: VNodeProps, ..._children: ThChildren[]): VNode {
+export function cloneVNode(vNodeToClone: VNode<any>, props?: VNodeProps, ..._children: ThChildren[]): VNode<any> {
 	let children: any = _children;
 
 	if (_children.length > 0 && !isNull(_children[0])) {
@@ -55,7 +55,7 @@ export function cloneVNode(vNodeToClone: VNode, props?: VNodeProps, ..._children
 			children = _children[0];
 		}
 		if (isUndefined(props.children)) {
-			props.children = children as VNode;
+			props.children = children as VNode<any>;
 		} else {
 			if (isArray(children)) {
 				if (isArray(props.children)) {
@@ -137,14 +137,14 @@ export function cloneVNode(vNodeToClone: VNode, props?: VNodeProps, ..._children
 	return newVNode;
 }
 
-export function createVoidVNode(): VNode {
+export function createVoidVNode(): VNode<any> {
 	return createVNode(VNodeFlags.Void);
 }
 
-export function createTextVNode(text: string | number): VNode {
+export function createTextVNode(text: string | number): VNode<any> {
 	return createVNode(VNodeFlags.Text, null, null, text, null, null, null, true);
 }
 
-export function isVNode(o: VNode): boolean {
+export function isVNode(o: VNode<any>): boolean {
 	return !!o.flags;
 }

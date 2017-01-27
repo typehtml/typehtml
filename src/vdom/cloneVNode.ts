@@ -14,7 +14,7 @@ import {
 	isInvalid
 } from './shared';
 
-export default function cloneVNode(vNodeToClone: VNode, props?: Props, ..._children: ThChildren[]): VNode {
+export default function cloneVNode(vNodeToClone: VNode<Props>, props?: Props, ..._children: ThChildren[]): VNode<Props> {
 	let children: any = _children;
 
 	if (_children.length > 0 && !isNull(_children[0])) {
@@ -25,7 +25,7 @@ export default function cloneVNode(vNodeToClone: VNode, props?: Props, ..._child
 			children = _children[0];
 		}
 		if (isUndefined(props.children)) {
-			props.children = children as VNode;
+			props.children = children;
 		} else {
 			if (isArray(children)) {
 				if (isArray(props.children)) {

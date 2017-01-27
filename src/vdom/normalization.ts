@@ -12,13 +12,13 @@ import {
 } from './shared';
 import { cloneVNode, createTextVNode, isVNode } from './VNodes';
 
-function applyKey(key: string, vNode: VNode) {
+function applyKey(key: string, vNode: VNode<any>) {
   vNode.key = key;
 
   return vNode;
 }
 
-function applyKeyIfMissing(key: string | number, vNode: VNode): VNode {
+function applyKeyIfMissing(key: string | number, vNode: VNode<any>): VNode<any> {
   if (isNumber(key)) {
     key = `.${key}`;
   }
@@ -28,13 +28,13 @@ function applyKeyIfMissing(key: string | number, vNode: VNode): VNode {
   return vNode;
 }
 
-function applyKeyPrefix(key: string, vNode: VNode): VNode {
+function applyKeyPrefix(key: string, vNode: VNode<any>): VNode<any> {
   vNode.key = key + vNode.key;
 
   return vNode;
 }
 
-function _normalizeVNodes(nodes: any[], result: VNode[], index: number, currentKey) {
+function _normalizeVNodes(nodes: any[], result: VNode<any>[], index: number, currentKey) {
   for (; index < nodes.length; index++) {
     let n = nodes[index];
     const key = `${currentKey}.${index}`;
@@ -49,9 +49,9 @@ function _normalizeVNodes(nodes: any[], result: VNode[], index: number, currentK
           n = cloneVNode(n);
         }
         if (isNull(n.key) || n.key[0] === '.') {
-          n = applyKey(key, n as VNode);
+          n = applyKey(key, n as VNode<any>);
         } else {
-          n = applyKeyPrefix(currentKey, n as VNode);
+          n = applyKeyPrefix(currentKey, n as VNode<any>);
         }
 
         result.push(n);
@@ -60,7 +60,7 @@ function _normalizeVNodes(nodes: any[], result: VNode[], index: number, currentK
   }
 }
 
-export function normalizeVNodes(nodes: any[]): VNode[] {
+export function normalizeVNodes(nodes: any[]): VNode<any>[] {
   let newNodes;
 
   // we assign $ which basically means we've flagged this array for future note
@@ -77,18 +77,18 @@ export function normalizeVNodes(nodes: any[]): VNode[] {
     const n = nodes[i];
 
     if (isInvalid(n) || isArray(n)) {
-      const result = (newNodes || nodes).slice(0, i) as VNode[];
+      const result = (newNodes || nodes).slice(0, i) as VNode<any>[];
 
       _normalizeVNodes(nodes, result, i, ``);
       return result;
     } else if (isStringOrNumber(n)) {
       if (!newNodes) {
-        newNodes = nodes.slice(0, i) as VNode[];
+        newNodes = nodes.slice(0, i) as VNode<any>[];
       }
       newNodes.push(applyKeyIfMissing(i, createTextVNode(n)));
     } else if ((isVNode(n) && n.dom) || (isNull(n.key) && !(n.flags & VNodeFlags.HasNonKeyedChildren))) {
       if (!newNodes) {
-        newNodes = nodes.slice(0, i) as VNode[];
+        newNodes = nodes.slice(0, i) as VNode<any>[];
       }
       newNodes.push(applyKeyIfMissing(i, cloneVNode(n)));
     } else if (newNodes) {
@@ -96,20 +96,20 @@ export function normalizeVNodes(nodes: any[]): VNode[] {
     }
   }
 
-  return newNodes || nodes as VNode[];
+  return newNodes || nodes as VNode<any>[];
 }
 
 function normalizeChildren(children: ThChildren | null) {
   if (isArray(children)) {
     return normalizeVNodes(children);
-  } else if (isVNode(children as VNode) && (children as VNode).dom) {
-    return cloneVNode(children as VNode);
+  } else if (isVNode(children as VNode<any>) && (children as VNode<any>).dom) {
+    return cloneVNode(children as VNode<any>);
   }
 
   return children;
 }
 
-function normalizeProps(vNode: VNode, props: VNodeProps, children: ThChildren) {
+function normalizeProps(vNode: VNode<any>, props: VNodeProps, children: ThChildren) {
   if (!(vNode.flags & VNodeFlags.Component) && isNullOrUndef(children) && !isNullOrUndef(props.children)) {
     vNode.children = props.children;
   }
@@ -134,7 +134,7 @@ export function copyPropsTo(copyFrom: VNodeProps, copyTo: VNodeProps) {
   }
 }
 
-function normalizeElement(type: string, vNode: VNode) {
+function normalizeElement(type: string, vNode: VNode<any>) {
   if (type === 'svg') {
     vNode.flags = VNodeFlags.SvgElement;
   } else if (type === 'input') {
@@ -150,7 +150,7 @@ function normalizeElement(type: string, vNode: VNode) {
   }
 }
 
-export function normalize(vNode: VNode): void {
+export function normalize(vNode: VNode<any>): void {
   const props = vNode.props;
   const hasProps = !isNull(props);
   const type = vNode.type;

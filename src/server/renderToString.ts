@@ -39,7 +39,7 @@ function renderStylesToString(styles) {
   }
 }
 
-function renderVNodeToString(vNode: VNode, firstChild: boolean): string {
+function renderVNodeToString(vNode: VNode<any>, firstChild: boolean): string {
   const flags = vNode.flags;
   const type = vNode.type;
   const props = vNode.props || EMPTY_OBJ;
@@ -120,13 +120,13 @@ function renderVNodeToString(vNode: VNode, firstChild: boolean): string {
             if (isStringOrNumber(child)) {
               renderedString += escapeText(child);
             } else if (!isInvalid(child)) {
-              renderedString += renderVNodeToString(child as VNode, i === 0);
+              renderedString += renderVNodeToString(child as VNode<any>, i === 0);
             }
           }
         } else if (isStringOrNumber(children)) {
           renderedString += escapeText(children);
         } else {
-          renderedString += renderVNodeToString(children as VNode, true);
+          renderedString += renderVNodeToString(children as VNode<any>, true);
         }
       } else if (html) {
         renderedString += html;
@@ -150,6 +150,6 @@ function renderVNodeToString(vNode: VNode, firstChild: boolean): string {
   }
 }
 
-export function renderToString(input: any): string {
+export function renderToString(input: VNode<any>): string {
   return renderVNodeToString(input, true);
 }

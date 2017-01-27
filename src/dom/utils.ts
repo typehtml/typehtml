@@ -20,7 +20,7 @@ import {
   unmount
 } from './unmounting';
 
-export function createClassComponentInstance(vNode: VNode, Component, props: Props, isSVG: boolean) {
+export function createClassComponentInstance(vNode: VNode<any>, Component, props: Props, isSVG: boolean) {
   const instance = new Component(props);
 
   if (instance.props === EMPTY_OBJ) {
@@ -85,7 +85,7 @@ export function replaceVNode(parentDom, dom, vNode, lifecycle: Lifecycle, isRecy
   unmount(vNode, null, lifecycle, false, isRecycling);
 }
 
-export function createFunctionalComponentInput(vNode: VNode, component, props: Props) {
+export function createFunctionalComponentInput(vNode: VNode<any>, component, props: Props) {
   let input = component(props);
 
   if (isArray(input)) {
@@ -180,7 +180,7 @@ export function removeChildren(dom: Element, children, lifecycle: Lifecycle, isR
   }
 }
 
-export function isKeyed(lastChildren: VNode[], nextChildren: VNode[]): boolean {
+export function isKeyed(lastChildren: VNode<any>[], nextChildren: VNode<any>[]): boolean {
   return nextChildren.length && !isNullOrUndef(nextChildren[0]) && !isNullOrUndef(nextChildren[0].key)
     && lastChildren.length && !isNullOrUndef(lastChildren[0]) && !isNullOrUndef(lastChildren[0].key);
 }

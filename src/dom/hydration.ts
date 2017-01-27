@@ -58,7 +58,7 @@ export function normalizeChildNodes(parentDom) {
   }
 }
 
-function hydrateComponent(vNode: VNode, dom: Element, lifecycle: Lifecycle, isSVG: boolean, isClass: number): Element {
+function hydrateComponent(vNode: VNode<any>, dom: Element, lifecycle: Lifecycle, isSVG: boolean, isClass: number): Element {
   const type = vNode.type;
   const props = vNode.props || EMPTY_OBJ;
   const ref = vNode.ref;
@@ -103,7 +103,7 @@ function hydrateComponent(vNode: VNode, dom: Element, lifecycle: Lifecycle, isSV
   return dom;
 }
 
-function hydrateElement(vNode: VNode, dom: Element, lifecycle: Lifecycle, isSVG: boolean): Element {
+function hydrateElement(vNode: VNode<any>, dom: Element, lifecycle: Lifecycle, isSVG: boolean): Element {
   const tag = vNode.type;
   const children = vNode.children;
   const props = vNode.props;
@@ -158,10 +158,10 @@ function hydrateChildren(children: ThChildren, parentDom: Element, lifecycle: Li
 
       if (!isNull(child) && isObject(child)) {
         if (dom) {
-          dom = hydrate(child as VNode, dom as Element, lifecycle, isSVG);
+          dom = hydrate(child as VNode<any>, dom as Element, lifecycle, isSVG);
           dom = dom.nextSibling;
         } else {
-          mount(child as VNode, parentDom, lifecycle, isSVG);
+          mount(child as VNode<any>, parentDom, lifecycle, isSVG);
         }
       }
     }
@@ -175,7 +175,7 @@ function hydrateChildren(children: ThChildren, parentDom: Element, lifecycle: Li
     }
     dom = dom.nextSibling;
   } else if (isObject(children)) {
-    hydrate(children as VNode, dom as Element, lifecycle, isSVG);
+    hydrate(children as VNode<any>, dom as Element, lifecycle, isSVG);
     dom = dom.nextSibling;
   }
   // clear any other DOM nodes, there should be only a single entry for the root
@@ -186,7 +186,7 @@ function hydrateChildren(children: ThChildren, parentDom: Element, lifecycle: Li
   }
 }
 
-function hydrateText(vNode: VNode, dom: Element): Element {
+function hydrateText(vNode: VNode<any>, dom: Element): Element {
   if (dom.nodeType !== 3) {
     const newDom = mountText(vNode, null);
 
@@ -203,12 +203,12 @@ function hydrateText(vNode: VNode, dom: Element): Element {
   return dom;
 }
 
-function hydrateVoid(vNode: VNode, dom: Element): Element {
+function hydrateVoid(vNode: VNode<any>, dom: Element): Element {
   vNode.dom = dom;
   return dom;
 }
 
-function hydrate(vNode: VNode, dom: Element, lifecycle: Lifecycle, isSVG: boolean): Element {
+function hydrate(vNode: VNode<any>, dom: Element, lifecycle: Lifecycle, isSVG: boolean): Element {
   const flags = vNode.flags;
 
   if (flags & VNodeFlags.Component) {
