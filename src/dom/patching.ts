@@ -482,8 +482,8 @@ export function patchKeyedChildren(
   let bEnd = bLength - 1;
   let aStart = 0;
   let bStart = 0;
-  let i;
-  let j;
+  let i: number;
+  let j: number;
   let aNode;
   let bNode;
   let nextNode;
@@ -596,7 +596,7 @@ export function patchKeyedChildren(
     aLength = aEnd - aStart + 1;
     bLength = bEnd - bStart + 1;
     const aNullable: Array<VNode<any> | null> = a;
-    const sources = new Array(bLength);
+    const sources: number[] = new Array(bLength);
 
     // Mark all nodes as inserted.
     for (i = 0; i < bLength; i++) {
@@ -632,7 +632,7 @@ export function patchKeyedChildren(
         }
       }
     } else {
-      const keyIndex = new Map();
+      const keyIndex = new Map<string | number, number>();
 
       for (i = bStart; i <= bEnd; i++) {
         node = b[i];
@@ -727,9 +727,9 @@ export function patchKeyedChildren(
 /**
  * https://en.wikipedia.org/wiki/Longest_increasing_subsequence
  */
-function lis_algorithm(a: any[]): any[] {
+function lis_algorithm(a: number[]): number[] {
   const p = a.slice(0);
-  const result: any[] = [0];
+  const result: number[] = [0];
   let i;
   let j;
   let u;
