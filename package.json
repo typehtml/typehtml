@@ -8,7 +8,7 @@
   },
   "scripts": {
     "build": "tsc -p .",
-    "unittest": "mocha ./lib/tests/**/*.js",
+    "unittest": "mocha ./lib/tests/mocha/**/*.js",
     "test": "npm run build && npm run unittest",
     "start": "npm run build -- -w & npm run unittest -- --watch"
   },
