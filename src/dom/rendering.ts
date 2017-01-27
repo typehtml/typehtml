@@ -19,7 +19,7 @@ import { patch } from './patching';
 import { unmount } from './unmounting';
 
 interface Root {
-	dom: Node | SVGAElement;
+	dom: Element;
 	input: VNode<any>;
 	lifecycle: Lifecycle;
 }
@@ -40,7 +40,7 @@ function getRoot(dom: Element): Root | null {
 	return null;
 }
 
-function setRoot(dom: Node | SVGAElement, input: VNode<any>, lifecycle: Lifecycle): Root {
+function setRoot(dom: Element, input: VNode<any>, lifecycle: Lifecycle): Root {
 	const root: Root = {
 		dom,
 		input,
