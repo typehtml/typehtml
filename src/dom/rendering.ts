@@ -17,17 +17,15 @@ import { mount } from './mounting';
 import { patch } from './patching';
 import { unmount } from './unmounting';
 
+// rather than use a Map, like we did before, we can use an array here
+// given there shouldn't be THAT many roots on the page, the difference
+// in performance is huge: https://esbench.com/bench/5802a691330ab09900a1a2da
 interface Root {
   dom: Element;
   input: VNode<any>;
   lifecycle: Lifecycle;
 }
-
-// rather than use a Map, like we did before, we can use an array here
-// given there shouldn't be THAT many roots on the page, the difference
-// in performance is huge: https://esbench.com/bench/5802a691330ab09900a1a2da
-export const roots: Root[] = [];
-
+const roots: Root[] = [];
 function getRoot(dom: Element): Root | null {
   for (const root of roots) {
     if (root.dom === dom) {
@@ -36,8 +34,7 @@ function getRoot(dom: Element): Root | null {
   }
   return null;
 }
-
-function setRoot(dom: Element, input: VNode<any>, lifecycle: Lifecycle): Root {
+function addRoot(dom: Element, input: VNode<any>, lifecycle: Lifecycle): Root {
   const root: Root = {
     dom,
     input,
@@ -47,7 +44,6 @@ function setRoot(dom: Element, input: VNode<any>, lifecycle: Lifecycle): Root {
   roots.push(root);
   return root;
 }
-
 function removeRoot(root: Root): void {
   for (let i = 0; i < roots.length; i++) {
     if (roots[i] === root) {
@@ -59,7 +55,7 @@ function removeRoot(root: Root): void {
 
 if (process.env.NODE_ENV !== 'production') {
   if (isBrowser && document.body === null) {
-    warning('TypeHtml warning: you cannot initialize inferno without "document.body". Wait on "DOMContentLoaded" event, add script to bottom of body, or use async/defer attributes on script tag.');
+    warning('TypeHtml warning: you cannot initialize without "document.body". Wait on "DOMContentLoaded" event, add script to bottom of body, or use async/defer attributes on script tag.');
   }
 }
 
@@ -89,7 +85,7 @@ export function render(input: VNode<any> | NO_OP, parentDom?: Element): ThChildr
       if (!hydrateRoot(input, parentDom, lifecycle)) {
         mount(input, parentDom, lifecycle, false);
       }
-      root = setRoot(parentDom, input, lifecycle);
+      root = addRoot(parentDom, input, lifecycle);
       lifecycle.trigger();
     }
   } else {
