@@ -165,15 +165,12 @@ export interface VType {
  * - Helps provide better safety access to currentTarget.
  * - Provides native event + data.
  **/
-export interface LinkEvent<CURRENT, E extends Event> {
-  currentTarget: EventTarget & CURRENT;
-  data: any;
-  event: E;
+export interface ThEvent<T> extends Event {
+  currentTarget: EventTarget & T;
 }
-
-export interface ThEvent<T> extends LinkEvent<T, Event> { }
-export interface ThClipboardEvent<T> extends LinkEvent<T, ClipboardEvent> { }
-
+export interface ThClipboardEvent<T> extends ClipboardEvent {
+  currentTarget: EventTarget & T;
+}
 
 // ----------------------------------------------------------------------
 // Event Handler Types
