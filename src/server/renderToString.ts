@@ -39,7 +39,7 @@ function renderStylesToString(styles) {
 	}
 }
 
-function renderVNodeToString(vNode, context, firstChild): string {
+function renderVNodeToString(vNode, firstChild): string {
 	const flags = vNode.flags;
 	const type = vNode.type;
 	const props = vNode.props || EMPTY_OBJ;
@@ -55,16 +55,11 @@ function renderVNodeToString(vNode, context, firstChild): string {
 		}
 
 		if (isClass) {
-			const instance = new type(props, context);
-			const childContext = instance.getChildContext();
+			const instance = new type(props);
 
-			if (!isNullOrUndef(childContext)) {
-				context = Object.assign({}, context, childContext);
-			}
 			if (instance.props === EMPTY_OBJ) {
 				instance.props = props;
 			}
-			instance.context = context;
 			instance._pendingSetState = true;
 			instance._unmounted = false;
 			if (isFunction(instance.componentWillMount)) {
@@ -77,14 +72,14 @@ function renderVNodeToString(vNode, context, firstChild): string {
 			if (isInvalid(nextVNode)) {
 				return '<!--!-->';
 			}
-			return renderVNodeToString(nextVNode, context, true);
+			return renderVNodeToString(nextVNode, true);
 		} else {
-			const nextVNode = type(props, context);
+			const nextVNode = type(props);
 
 			if (isInvalid(nextVNode)) {
 				return '<!--!-->';
 			}
-			return renderVNodeToString(nextVNode, context, true);
+			return renderVNodeToString(nextVNode, true);
 		}
 	} else if (flags & VNodeFlags.Element) {
 		let renderedString = `<${ type }`;
@@ -123,13 +118,13 @@ function renderVNodeToString(vNode, context, firstChild): string {
 						if (isStringOrNumber(child)) {
 							renderedString += escapeText(child);
 						} else if (!isInvalid(child)) {
-							renderedString += renderVNodeToString(child, context, i === 0);
+							renderedString += renderVNodeToString(child, i === 0);
 						}
 					}
 				} else if (isStringOrNumber(children)) {
 					renderedString += escapeText(children);
 				} else {
-					renderedString += renderVNodeToString(children, context, true);
+					renderedString += renderVNodeToString(children, true);
 				}
 			} else if (html) {
 				renderedString += html;
@@ -154,9 +149,9 @@ function renderVNodeToString(vNode, context, firstChild): string {
 }
 
 export function renderToString(input: any): string {
-	return renderVNodeToString(input, {}, true);
+	return renderVNodeToString(input, true);
 }
 
 export function renderToStaticMarkup(input: any): string {
-	return renderVNodeToString(input, {}, true);
+	return renderVNodeToString(input, true);
 }
