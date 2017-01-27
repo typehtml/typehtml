@@ -1,0 +1,15 @@
+# tests
+src/tests
+lib/tests
+lib.es2015/tests
+
+# build tools
+.travis.yml
+
+# editor settings
+.editorconfig
+.alm
+alm.json
+
+# npm 
+npm-debug.log*
