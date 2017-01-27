@@ -224,7 +224,7 @@ function hydrate(vNode: VNode<any>, dom: Element, lifecycle: Lifecycle, isSVG: b
   }
 }
 
-export default function hydrateRoot(input, parentDom: Node, lifecycle: Lifecycle) {
+export function hydrateRoot(input, parentDom: Node, lifecycle: Lifecycle) {
   let dom = parentDom && parentDom.firstChild as Element;
 
   if (dom) {
