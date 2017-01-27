@@ -1,4 +1,4 @@
-import { VNode, VNodeFlags, Component } from '../types';
+import { VNode, VNodeFlags, Component, ThChildren, VNodeEvents } from '../types';
 import {
   copyDefaultProps
 } from '../vdom/normalization';
@@ -135,7 +135,7 @@ export function patch(lastVNode: VNode<any>, nextVNode: VNode<any>, parentDom: E
   }
 }
 
-function unmountChildren(children, dom: Element, lifecycle: Lifecycle, isRecycling: boolean) {
+function unmountChildren(children: ThChildren, dom: Element, lifecycle: Lifecycle, isRecycling: boolean) {
   if (isVNode(children)) {
     unmount(children, dom, lifecycle, true, isRecycling);
   } else if (isArray(children)) {
@@ -275,7 +275,7 @@ function patchChildren(lastFlags: VNodeFlags, nextFlags: VNodeFlags, lastChildre
   }
 }
 
-export function patchComponent(lastVNode: VNode<any>, nextVNode, parentDom, lifecycle: Lifecycle, isSVG: boolean, isClass: number, isRecycling: boolean) {
+export function patchComponent(lastVNode: VNode<any>, nextVNode, parentDom: Element, lifecycle: Lifecycle, isSVG: boolean, isClass: number, isRecycling: boolean) {
   const lastType = lastVNode.type;
   const nextType = nextVNode.type;
   const nextProps = nextVNode.props || EMPTY_OBJ;
@@ -436,7 +436,7 @@ export function patchVoid(lastVNode: VNode<any>, nextVNode: VNode<any>) {
   nextVNode.dom = lastVNode.dom;
 }
 
-export function patchNonKeyedChildren(lastChildren, nextChildren, dom, lifecycle: Lifecycle, isSVG: boolean, isRecycling: boolean) {
+export function patchNonKeyedChildren(lastChildren, nextChildren, dom: Element, lifecycle: Lifecycle, isSVG: boolean, isRecycling: boolean) {
   const lastChildrenLength = lastChildren.length;
   const nextChildrenLength = nextChildren.length;
   const commonLength = lastChildrenLength > nextChildrenLength ? nextChildrenLength : lastChildrenLength;
@@ -834,7 +834,7 @@ export function patchProp(prop, lastValue, nextValue, dom: Element, isSVG: boole
   }
 }
 
-export function patchEvents(lastEvents, nextEvents, dom: Element) {
+export function patchEvents(lastEvents: VNodeEvents, nextEvents: VNodeEvents, dom: Element) {
   lastEvents = lastEvents || EMPTY_OBJ;
   nextEvents = nextEvents || EMPTY_OBJ;
 
@@ -918,11 +918,11 @@ export function patchStyle(lastAttrValue: string | Styles, nextAttrValue: string
   }
 }
 
-function removeProp(prop: string, lastValue, dom) {
+function removeProp(prop: string, lastValue: any, dom: Element | HTMLInputElement) {
   if (prop === 'className') {
     dom.removeAttribute('class');
   } else if (prop === 'value') {
-    dom.value = '';
+    (dom as HTMLInputElement).value = '';
   } else if (prop === 'style') {
     dom.removeAttribute('style');
   } else if (isAttrAnEvent(prop)) {

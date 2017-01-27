@@ -8,3 +8,4 @@
 
 # Cleanups
 * noImplicitAny at least on patching
+* kill `linkEvent`
