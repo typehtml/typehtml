@@ -97,7 +97,7 @@ export type VNodeProps = {
   children?: ThChildren;
   ref?: Ref<any>;
   key?: Key;
-  events?: Object | null;
+  events?: VNodeEvents;
 }
 
 export const enum VNodeFlags {
@@ -121,6 +121,11 @@ export const enum VNodeFlags {
   Component = ComponentFunction | ComponentClass | ComponentUnknown
 }
 
+/** The event attributes collected */
+export type VNodeEvents = {
+  [key: string]: (evt: Event | SyntheticEvent<Event>) => any
+}
+
 /** The core result of a call to createElement */
 export interface VNode<P> {
   type: Type<P>;
@@ -129,8 +134,8 @@ export interface VNode<P> {
   flags: VNodeFlags;
 
   children?: ThChildren;
-  dom: Element | null;
-  events: Object | null;
+  dom?: Element;
+  events?: VNodeEvents;
 
   props: VNodeProps & P;
   parentVNode?: VNode<P>;

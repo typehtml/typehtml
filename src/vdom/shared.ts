@@ -35,6 +35,7 @@ export function isFunction(obj: any): obj is Function {
   return typeof obj === 'function';
 }
 
+/** A attribute is an event if its starts with `on` */
 export function isAttrAnEvent(attr: string): boolean {
   return attr[0] === 'o' && attr[1] === 'n' && attr.length > 3;
 }
