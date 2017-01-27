@@ -3,7 +3,6 @@ import { VNode, VNodeFlags, ThChildren, ComponentClass } from '../types';
 import {
   copyPropsTo
 } from '../vdom/normalization';
-import options from '../vdom/options';
 import {
   EMPTY_OBJ,
   isArray,

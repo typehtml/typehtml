@@ -1,10 +1,5 @@
 import * as types from '../types';
-import {
-  Props,
-  ThChildren as ThChildren,
-  VNodeFlags,
-  VNode
-} from './shapes';
+import { VNodeFlags } from '../types';
 import { createVNode } from './VNodes';
 import {
   isAttrAnEvent,
@@ -27,7 +22,7 @@ const componentHooks = {
 export function createElement<P extends types.HTMLAttributes<T>, T extends Element>(
   name: string,
   props?: types.ThAttributes<T> & P,
-  ...children: types.ThChildren[]): types.DOMElement<P, T>; // native dom element support
+  ...children: types.ThChildren[]): types.DOMElement<T>;
 export function createElement<P>(
   name: types.ComponentFunction<P>,
   props?: types.ThAttributes<P> & P,

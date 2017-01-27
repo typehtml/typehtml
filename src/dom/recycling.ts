@@ -1,4 +1,4 @@
-import { VNode, Ref, VNodeFlags, Refs } from '../types';
+import { VNode, VNodeFlags, Refs } from '../types';
 import {
 	isNull,
 	isUndefined

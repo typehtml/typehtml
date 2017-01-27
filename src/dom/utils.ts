@@ -8,7 +8,6 @@ import {
   isInvalid,
   isNullOrUndef,
   isStringOrNumber,
-  isUndefined,
   throwError
 } from '../vdom/shared';
 import { svgNS } from './constants';

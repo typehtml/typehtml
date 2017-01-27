@@ -12,7 +12,7 @@ export type ThChildren =
 // ----------------------------------------------------------------------
 
 /** Return from creating a native dom element */
-export interface DOMElement<P extends HTMLAttributes<T>, T extends Element> {
+export interface DOMElement<T extends Element> {
   type: string;
   ref: Ref<T>;
 }
