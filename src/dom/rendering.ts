@@ -111,14 +111,3 @@ export function render(input: VNode<any> | NO_OP, parentDom?: Element): ThChildr
     }
   }
 }
-
-export function createRenderer(_parentDom) {
-  let parentDom = _parentDom || null;
-
-  return function renderer(lastInput, nextInput) {
-    if (!parentDom) {
-      parentDom = lastInput;
-    }
-    render(nextInput, parentDom);
-  };
-}
