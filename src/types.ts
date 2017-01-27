@@ -68,7 +68,18 @@ export interface Component<P> {
 // ----------------------------------------------------------------------
 // VNode
 // ----------------------------------------------------------------------
+
+export type ThInput = VNode | null | string | number;
 export type Type = string | ComponentClass<any> | ComponentFunction<any> | null;
+
+export interface Refs {
+	onComponentDidMount?: (domNode: Element) => void;
+	onComponentWillMount?(): void;
+	onComponentShouldUpdate?(lastProps, nextProps): boolean;
+	onComponentWillUpdate?(lastProps, nextProps): void;
+	onComponentDidUpdate?(lastProps, nextProps): void;
+	onComponentWillUnmount?(domNode: Element): void;
+}
 
 export type VNodeProps = {
   children?: ThChildren;
@@ -109,6 +120,22 @@ export interface VNode {
   type: Type;
   parentVNode?: VNode;
 }
+
+// ----------------------------------------------------------------------
+// vnode internal types
+// ----------------------------------------------------------------------
+
+export interface Styles {
+	[key: string]: number | string;
+}
+
+export interface IProps {
+	[index: string]: any;
+}
+export interface VType {
+	flags: VNodeFlags;
+}
+
 
 // ----------------------------------------------------------------------
 // Event System
