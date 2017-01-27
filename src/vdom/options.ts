@@ -1,6 +1,10 @@
 export default {
-	recyclingEnabled: true,
-	createVNode: null,
+  recyclingEnabled: true,
+
+  /** Called on new VNode creation */
+  createVNode: null,
+
+  /** Other life cycle hooks */
 	beforeRender: null,
 	afterRender: null,
 	afterMount: null,
