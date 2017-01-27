@@ -275,7 +275,7 @@ function patchChildren(lastFlags: VNodeFlags, nextFlags: VNodeFlags, lastChildre
   }
 }
 
-export function patchComponent(lastVNode, nextVNode, parentDom, lifecycle: Lifecycle, isSVG: boolean, isClass: number, isRecycling: boolean) {
+export function patchComponent(lastVNode, nextVNode, parentDom: Element, lifecycle: Lifecycle, isSVG: boolean, isClass: number, isRecycling: boolean) {
   const lastType = lastVNode.type;
   const nextType = nextVNode.type;
   const nextProps = nextVNode.props || EMPTY_OBJ;
