@@ -65,7 +65,6 @@ import {
 
 import {Styles} from '../types';
 import Lifecycle from './lifecycle';
-import { componentToDOMNodeMap } from './rendering';
 import { unmount } from './unmounting';
 import processElement from './wrappers/processElement';
 
@@ -370,7 +369,6 @@ export function patchComponent(lastVNode, nextVNode, parentDom, lifecycle: Lifec
 					lifecycle.fastUnmount = fastUnmount;
 					instance.componentDidUpdate(lastProps, lastState);
 					options.afterUpdate && options.afterUpdate(nextVNode);
-					options.findDOMNodeEnabled && componentToDOMNodeMap.set(instance, nextInput.dom);
 				}
 				nextVNode.dom = nextInput.dom;
 			}

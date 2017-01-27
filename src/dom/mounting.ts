@@ -25,7 +25,6 @@ import {
 	recycleComponent,
 	recycleElement
 } from './recycling';
-import { componentToDOMNodeMap } from './rendering';
 import {
 	appendChild,
 	createClassComponentInstance,
@@ -192,7 +191,6 @@ export function mountComponent(vNode: VNode<any>, parentDom: Element, lifecycle:
 			appendChild(parentDom, dom);
 		}
 		mountClassComponentCallbacks(vNode, ref, instance, lifecycle);
-		options.findDOMNodeEnabled && componentToDOMNodeMap.set(instance, dom);
 		vNode.children = instance;
 	} else {
 		const input = createFunctionalComponentInput(vNode, type, props);

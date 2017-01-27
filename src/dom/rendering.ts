@@ -28,21 +28,8 @@ interface Root {
 // given there shouldn't be THAT many roots on the page, the difference
 // in performance is huge: https://esbench.com/bench/5802a691330ab09900a1a2da
 export const roots: Root[] = [];
-export const componentToDOMNodeMap = new Map();
 
 options.roots = roots;
-
-export function findDOMNode(ref) {
-	if (!options.findDOMNodeEnabled) {
-		if (process.env.NODE_ENV !== 'production') {
-			throwError('findDOMNode() has been disabled, use Inferno.options.findDOMNodeEnabled = true; enabled findDOMNode(). Warning this can significantly impact performance!');
-		}
-		throwError();
-	}
-	const dom = ref && ref.nodeType ? ref : null;
-
-	return componentToDOMNodeMap.get(ref) || dom;
-}
 
 function getRoot(dom): Root | null {
 	for (let i = 0; i < roots.length; i++) {

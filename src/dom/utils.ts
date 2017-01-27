@@ -15,7 +15,6 @@ import { svgNS } from './constants';
 import Lifecycle from './lifecycle';
 import { mount } from './mounting';
 import { patch } from './patching';
-import { componentToDOMNodeMap } from './rendering';
 import {
   unmount
 } from './unmounting';
@@ -27,9 +26,6 @@ export function createClassComponentInstance(vNode: VNode<any>, Component: Compo
     instance.props = props;
   }
   instance._patch = patch;
-  if (options.findDOMNodeEnabled) {
-    instance._componentToDOMNodeMap = componentToDOMNodeMap;
-  }
 
   instance._unmounted = false;
   instance._isSVG = isSVG;

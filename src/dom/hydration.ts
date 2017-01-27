@@ -28,7 +28,6 @@ import {
   patchEvent,
   patchProp
 } from './patching';
-import { componentToDOMNodeMap } from './rendering';
 import {
   createClassComponentInstance,
   createFunctionalComponentInput,
@@ -91,7 +90,6 @@ function hydrateComponent(vNode: VNode<any>, dom: Element, lifecycle: Lifecycle,
     // higher lifecycle can fastUnmount only if previously it was able to and this children doesnt have any
     lifecycle.fastUnmount = prevFastUnmount && subLifecycle.fastUnmount;
     mountClassComponentCallbacks(vNode, ref, instance, lifecycle);
-    options.findDOMNodeEnabled && componentToDOMNodeMap.set(instance, dom);
     vNode.children = instance;
   } else {
     const input = createFunctionalComponentInput(vNode, type, props);

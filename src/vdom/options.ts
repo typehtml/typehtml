@@ -1,6 +1,5 @@
 export default {
 	recyclingEnabled: true,
-	findDOMNodeEnabled: false,
 	roots: null,
 	createVNode: null,
 	beforeRender: null,

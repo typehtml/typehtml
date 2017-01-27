@@ -17,7 +17,6 @@ import {
   poolComponent,
   poolElement
 } from './recycling';
-import { componentToDOMNodeMap } from './rendering';
 import { removeChild } from './utils';
 
 export function unmount(vNode: VNode<any>, parentDom: Element, lifecycle: Lifecycle, canRecycle: boolean, isRecycling: boolean) {
@@ -61,7 +60,6 @@ export function unmountComponent(vNode: VNode<any>, parentDom: Element, lifecycl
           ref(null);
         }
         instance._unmounted = true;
-        options.findDOMNodeEnabled && componentToDOMNodeMap.delete(instance);
 
         const subLifecycle = instance._lifecycle;
 

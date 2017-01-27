@@ -72,7 +72,6 @@ export interface Component<P> {
   _lastInput?: any;
   _vNode?: VNode<any>;
   _vComponent?: VNode<any>;
-  _componentToDOMNodeMap?: Map<any, Element>;
   _isSVG?: boolean;
   /** An instace of LifeCycle class */
   _lifecycle?: any;
