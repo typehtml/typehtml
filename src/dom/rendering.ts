@@ -77,6 +77,7 @@ export function render(input: VNode<any>, parentDom?: Element): ThChildren {
   }
   let root = getRoot(parentDom);
 
+  /** If there is no root means we are mounting for the first time */
   if (isNull(root)) {
     const lifecycle = new Lifecycle();
 
@@ -84,6 +85,7 @@ export function render(input: VNode<any>, parentDom?: Element): ThChildren {
       if ((input as VNode<any>).dom) {
         input = cloneVNode(input as VNode<any>);
       }
+      /** Hydrate or mount */
       if (!hydrateRoot(input, parentDom, lifecycle)) {
         mount(input as VNode<any>, parentDom, lifecycle, false);
       }
