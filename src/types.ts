@@ -2,7 +2,7 @@
 export type ThChildren = string | number | VNode | Array<string | VNode> | null;
 
 // ----------------------------------------------------------------------
-// Creation
+// Elements
 // ----------------------------------------------------------------------
 
 /** Return from creating a native dom element */
@@ -22,13 +22,8 @@ export interface ComponentClassElement<P> extends ThElement<P> {
 }
 
 // ----------------------------------------------------------------------
-// Elements
+// Elements creators
 // ----------------------------------------------------------------------
-export interface ThElement<P> {
-  type: Type<P>;
-  props: P;
-  key: Key | null;
-}
 
 export interface ComponentFunction<P> {
   (props: P & { children?: ThChildren }): ThElement<any>;
@@ -117,6 +112,12 @@ export const enum VNodeFlags {
   Component = ComponentFunction | ComponentClass | ComponentUnknown
 }
 
+/** TODO: consolidate ThElement and VNode types */
+export interface ThElement<P> {
+  type: Type<P>;
+  props: P;
+  key: Key | null;
+}
 export interface VNode {
   type: Type<any>;
   ref: Ref<any>;
