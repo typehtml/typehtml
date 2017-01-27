@@ -128,7 +128,7 @@ export interface VNode<P> {
   key: Key;
   flags: VNodeFlags;
 
-  children: ThChildren;
+  children?: ThChildren;
   dom: Element | null;
   events: Object | null;
 
