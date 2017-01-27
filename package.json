@@ -1,7 +1,7 @@
 {
   "name": "typehtml",
   "version": "0.0.0",
-  "description": "> I am just dreaming of a better world here 🌹",
+  "description": "Simple HTML with the safety of TypeScript",
   "main": "lib/index.js",
   "directories": {
     "doc": "docs"
@@ -12,7 +12,7 @@
     "karma": "npm run karma:firefox && npm run karma:chrome",
     "build": "tsc -p .",
     "unittest": "mocha ./lib/tests/mocha/**/*.js",
-    "test": "npm run build && npm run unittest",
+    "test": "npm run build && npm run unittest && npm run karma",
     "start": "npm run build -- -w & npm run unittest -- --watch"
   },
   "repository": {
