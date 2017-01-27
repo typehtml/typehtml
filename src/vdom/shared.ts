@@ -15,7 +15,7 @@ export function isStatefulComponent(o: any): boolean {
 	return !isUndefined(o.prototype) && !isUndefined(o.prototype.render);
 }
 
-export function isStringOrNumber(obj: any): boolean {
+export function isStringOrNumber(obj: any): obj is string|number {
 	return isString(obj) || isNumber(obj);
 }
 

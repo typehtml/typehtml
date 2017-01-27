@@ -1,5 +1,11 @@
 /** Everything that can be rendered */
-export type ThChildren = string | number | VNode<any> | Array<string | VNode<any>> | null;
+export type ThChildren =
+  string
+  | number
+  | VNode<any>
+  | Array<string | VNode<any>>
+  | Component<any>
+  | null;
 
 // ----------------------------------------------------------------------
 // Elements
@@ -58,6 +64,19 @@ export interface Component<P> {
    */
   _unmounted?: boolean;
   _pendingSetState?: boolean;
+
+  /**
+   * Used in internal patch tracking
+   **/
+  /** The patch function */
+  _patch?: any;
+  _lastInput?: any;
+  _vNode?: VNode<any>;
+  _vComponent?: VNode<any>;
+  _componentToDOMNodeMap?: Map<any, Element>;
+  _isSVG?: boolean;
+  /** An instace of LifeCycle class */
+  _lifecycle?: any;
 }
 
 // ----------------------------------------------------------------------

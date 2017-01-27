@@ -1,4 +1,4 @@
-import { VNode, VNodeFlags, ThChildren } from '../types';
+import { VNode, VNodeFlags, ThChildren, ComponentClass } from '../types';
 
 import {
   copyPropsTo
@@ -72,7 +72,7 @@ function hydrateComponent(vNode: VNode<any>, dom: Element, lifecycle: Lifecycle,
       copyPropsTo(defaultProps, props);
       vNode.props = props;
     }
-    const instance = createClassComponentInstance(vNode, type, props, _isSVG);
+    const instance = createClassComponentInstance(vNode, type as ComponentClass<any>, props, _isSVG);
     // If instance does not have componentWillUnmount specified we can enable fastUnmount
     const prevFastUnmount = lifecycle.fastUnmount;
     const input = instance._lastInput;

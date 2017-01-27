@@ -1,4 +1,4 @@
-import { VNode, VNodeFlags } from '../types';
+import { VNode, VNodeFlags, ComponentClass } from '../types';
 import {
 	copyPropsTo
 } from '../vdom/normalization';
@@ -172,7 +172,7 @@ export function mountComponent(vNode: VNode<any>, parentDom: Element, lifecycle:
 		vNode.props = props;
 	}
 	if (isClass) {
-		const instance = createClassComponentInstance(vNode, type, props, isSVG);
+		const instance = createClassComponentInstance(vNode, type as ComponentClass<any>, props, isSVG);
 		// If instance does not have componentWillUnmount specified we can enable fastUnmount
 		const input = instance._lastInput;
 		const prevFastUnmount = lifecycle.fastUnmount;

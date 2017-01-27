@@ -1,4 +1,4 @@
-import { VNode, VNodeProps as Props, VNodeFlags } from '../types';
+import { VNode, VNodeProps as Props, VNodeFlags, ComponentClass } from '../types';
 import options from '../vdom/options';
 import { cloneVNode, createTextVNode, createVoidVNode } from '../vdom/VNodes';
 import {
@@ -20,7 +20,7 @@ import {
   unmount
 } from './unmounting';
 
-export function createClassComponentInstance(vNode: VNode<any>, Component, props: Props, isSVG: boolean) {
+export function createClassComponentInstance(vNode: VNode<any>, Component: ComponentClass<Props>, props: Props, isSVG: boolean) {
   const instance = new Component(props);
 
   if (instance.props === EMPTY_OBJ) {
@@ -39,7 +39,7 @@ export function createClassComponentInstance(vNode: VNode<any>, Component, props
   }
 
   options.beforeRender && options.beforeRender(instance);
-  let input = instance.render(props, instance.state);
+  let input = instance.render();
 
   options.afterRender && options.afterRender(instance);
   if (isArray(input)) {
@@ -120,7 +120,7 @@ export function setTextContent(dom, text: string | number) {
   }
 }
 
-export function updateTextContent(dom, text: string) {
+export function updateTextContent(dom, text: string | number) {
   dom.firstChild.nodeValue = text;
 }
 
