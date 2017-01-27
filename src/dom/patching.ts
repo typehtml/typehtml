@@ -1,3 +1,7 @@
+/**
+ * @module
+ * Patching is the act of going from `old vdom, old dom` + `new vdom` => `new dom`.
+ */
 import { VNode, VNodeFlags, Component, ThChildren, VNodeEvents } from '../types';
 import {
   copyDefaultProps
@@ -854,7 +858,7 @@ export function patchEvents(lastEvents: VNodeEvents, nextEvents: VNodeEvents, do
   }
 }
 
-export function patchEvent(name: string, lastValue, nextValue, dom) {
+export function patchEvent(name: string, lastValue, nextValue, dom: Element & { _data?: any }) {
   if (lastValue !== nextValue) {
     const nameLowerCase = name.toLowerCase();
     const domEvent = dom[nameLowerCase];
