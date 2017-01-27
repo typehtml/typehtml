@@ -204,7 +204,16 @@ export type ClipboardEventHandler<T> = EventHandler<ClipboardEvent<T>>;
 // Key and Ref
 // ----------------------------------------------------------------------
 export type Key = string | number;
-export type Ref<T> = (instance: T) => any;
+export type Ref<T>
+  = (instance: T) => any
+    | {
+      onComponentWillMount: (instance: T) => any,
+      onComponentDidMount: (instance: T) => any,
+      onComponentWillUnmount: (instance: T) => any,
+      onComponentShouldUpdate: (instance: T) => any,
+      onComponentWillUpdate: (instance: T) => any,
+      onComponentDidUpdate: (instance: T) => any
+    };
 
 // ----------------------------------------------------------------------
 // Attributes

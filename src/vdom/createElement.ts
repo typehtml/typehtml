@@ -10,6 +10,11 @@ import {
   isStatefulComponent
 } from './shared';
 
+/**
+ * These hooks can be added on any component
+ * e.g.
+ * <Component ref={{onComponentWillMount:()=>whatEvs}}/>
+ */
 const componentHooks = {
   onComponentWillMount: true,
   onComponentDidMount: true,
