@@ -275,7 +275,7 @@ function patchChildren(lastFlags: VNodeFlags, nextFlags: VNodeFlags, lastChildre
   }
 }
 
-export function patchComponent(lastVNode, nextVNode, parentDom, lifecycle: Lifecycle, isSVG: boolean, isClass: number, isRecycling: boolean) {
+export function patchComponent(lastVNode: VNode<any>, nextVNode, parentDom, lifecycle: Lifecycle, isSVG: boolean, isClass: number, isRecycling: boolean) {
   const lastType = lastVNode.type;
   const nextType = nextVNode.type;
   const nextProps = nextVNode.props || EMPTY_OBJ;
@@ -292,7 +292,7 @@ export function patchComponent(lastVNode, nextVNode, parentDom, lifecycle: Lifec
     if (isClass) {
       replaceWithNewNode(lastVNode, nextVNode, parentDom, lifecycle, isSVG, isRecycling);
     } else {
-      const lastInput = lastVNode.children._lastInput || lastVNode.children;
+      const lastInput = (lastVNode.children as any)._lastInput || lastVNode.children;
       const nextInput = createFunctionalComponentInput(nextVNode, nextType, nextProps);
 
       unmount(lastVNode, null, lifecycle, false, isRecycling);
@@ -372,7 +372,7 @@ export function patchComponent(lastVNode, nextVNode, parentDom, lifecycle: Lifec
       const lastProps = lastVNode.props;
       const nextHooks = nextVNode.ref;
       const nextHooksDefined = !isNullOrUndef(nextHooks);
-      const lastInput = lastVNode.children;
+      const lastInput = lastVNode.children as VNode<any>;
       let nextInput = lastInput;
 
       nextVNode.dom = lastVNode.dom;
@@ -399,10 +399,10 @@ export function patchComponent(lastVNode, nextVNode, parentDom, lifecycle: Lifec
             throwError('a valid VNode (or null) must be returned from a component render. You may have returned an array or an invalid object.');
           }
           throwError();
-        } else if (isObject(nextInput) && nextInput.dom) {
+        } else if (isVNode(nextInput) && nextInput.dom) {
           nextInput = cloneVNode(nextInput);
         }
-        if (nextInput !== NO_OP) {
+        if ((nextInput as any) !== NO_OP) {
           patch(lastInput, nextInput, parentDom, lifecycle, isSVG, isRecycling);
           nextVNode.children = nextInput;
           if (nextHooksDefined && !isNullOrUndef(nextHooks.onComponentDidUpdate)) {

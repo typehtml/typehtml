@@ -1,12 +1,12 @@
 import { VNode, VNodeFlags, Ref, ThChildren } from '../types';
 import options from '../vdom/options';
+import { isVNode } from '../vdom/VNodes';
 import {
   isArray,
   isFunction,
   isInvalid,
   isNull,
   isNullOrUndef,
-  isVNode,
   throwError
 } from '../vdom/shared';
 import { Lifecycle } from './lifecycle';

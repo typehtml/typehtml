@@ -63,10 +63,6 @@ export function isObject(o: any): boolean {
   return typeof o === 'object';
 }
 
-export function isVNode(o: types.ThChildren): o is types.VNode<any> {
-  return typeof o === 'object';
-}
-
 export function throwError(message?: string) {
   if (!message) {
     message = ERROR_MSG;

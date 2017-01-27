@@ -145,6 +145,6 @@ export function createTextVNode(text: string | number): VNode<any> {
 	return createVNode(VNodeFlags.Text, null, null, text, null, null, null, true);
 }
 
-export function isVNode(o: VNode<any>): boolean {
-	return !!o.flags;
+export function isVNode(o: ThChildren): o is VNode<any> {
+	return typeof o === 'object' && !!(o as any).flags;
 }
