@@ -32,10 +32,10 @@ export function kebabize(prop: string): string {
 export const delegatedProps =
   constructDefaults('onClick,onMouseDown,onMouseUp,onMouseMove,onSubmit,onDblClick,onKeyDown,onKeyUp,onKeyPress', true);
 
-export const namespaces: Defaults<string> = {
-  ...constructDefaults('xlink:href,xlink:arcrole,xlink:actuate,xlink:role,xlink:titlef,xlink:type', xlinkNS),
-  ...constructDefaults('xml:base,xml:lang,xml:space', xmlNS)
-};
+export const namespaces: Defaults<string> = Object.assign({},
+  constructDefaults('xlink:href,xlink:arcrole,xlink:actuate,xlink:role,xlink:titlef,xlink:type', xlinkNS),
+  constructDefaults('xml:base,xml:lang,xml:space', xmlNS)
+);
 
 export const strictProps = constructDefaults('volume,defaultValue,defaultChecked', true);
 export const skipProps = constructDefaults('children,childrenType,ref,key,selected,checked,multiple', true);
