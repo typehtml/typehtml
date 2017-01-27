@@ -43,7 +43,7 @@ const alreadyUnmounted = new WeakMap();
 export function unmountComponent(vNode: VNode<any>, parentDom: Element, lifecycle: Lifecycle, canRecycle: boolean, isRecycling: boolean) {
   const instance = vNode.children as any;
   const flags = vNode.flags;
-  const isStatefulComponent = flags & VNodeFlags.ComponentClass;
+  const isComponentClass = flags & VNodeFlags.ComponentClass;
   const ref = vNode.ref as any;
   const dom = vNode.dom;
 
@@ -53,7 +53,7 @@ export function unmountComponent(vNode: VNode<any>, parentDom: Element, lifecycl
   alreadyUnmounted.set(vNode);
 
   if (!isRecycling) {
-    if (isStatefulComponent) {
+    if (isComponentClass) {
       if (!instance._unmounted) {
         options.beforeUnmount && options.beforeUnmount(vNode);
         instance.componentWillUnmount && instance.componentWillUnmount();
@@ -88,7 +88,7 @@ export function unmountComponent(vNode: VNode<any>, parentDom: Element, lifecycl
     }
     removeChild(parentDom, dom);
   }
-  if (options.recyclingEnabled && !isStatefulComponent && (parentDom || canRecycle)) {
+  if (options.recyclingEnabled && !isComponentClass && (parentDom || canRecycle)) {
     poolComponent(vNode);
   }
 }
