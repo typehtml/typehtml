@@ -6,7 +6,7 @@ import {
   isInvalid,
   isNull,
   isNullOrUndef,
-  isObject,
+  isVNode,
   throwError
 } from '../vdom/shared';
 import { Lifecycle } from './lifecycle';
@@ -131,12 +131,12 @@ function unmountChildren(children: ThChildren, lifecycle: Lifecycle, isRecycling
     for (let i = 0; i < children.length; i++) {
       const child = children[i];
 
-      if (!isInvalid(child) && isObject(child)) {
-        unmount(child as VNode<any>, null, lifecycle, false, isRecycling);
+      if (!isInvalid(child) && isVNode(child)) {
+        unmount(child, null, lifecycle, false, isRecycling);
       }
     }
-  } else if (isObject(children)) {
-    unmount(children as VNode<any>, null, lifecycle, false, isRecycling);
+  } else if (isVNode(children)) {
+    unmount(children, null, lifecycle, false, isRecycling);
   }
 }
 

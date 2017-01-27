@@ -7,7 +7,7 @@ import * as types from '../types';
 export const NO_OP = '$NO_OP';
 export type NO_OP = typeof NO_OP;
 
-export const ERROR_MSG = 'a runtime error occured! Use Inferno in development environment to find the error.';
+export const ERROR_MSG = 'A runtime error occured! Use in development environment to find the error.';
 
 export const isBrowser = typeof window !== 'undefined' && window.document;
 
@@ -60,6 +60,10 @@ export function isUndefined(obj: any): obj is undefined {
 }
 
 export function isObject(o: any): boolean {
+  return typeof o === 'object';
+}
+
+export function isVNode(o: types.ThChildren): o is types.VNode<any> {
   return typeof o === 'object';
 }
 
