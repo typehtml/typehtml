@@ -4,15 +4,53 @@ export type ThChildren = ThNode;
 
 
 // ----------------------------------------------------------------------
+// Elements
+// ----------------------------------------------------------------------
+export interface ThElement<P> {
+  type: string | ComponentClass<P> | ComponentFunction<P>;
+  props: P;
+  key: Key | null;
+}
+
+export interface ComponentFunction<P> {
+  (props: P & { children?: ThNode }): ThElement<any>;
+  defaultProps?: P;
+  displayName?: string;
+}
+
+export interface ComponentClass<P> {
+  new (props?: P): Component<P>;
+  defaultProps?: P;
+  displayName?: string;
+}
+
+// Base component interface JS classes
+export interface Component<P> {
+  props: Readonly<{ children?: ThNode }> & Readonly<P>;
+  constructor(props?: P);
+  render(): JSX.Element | null;
+
+  /**
+   * LifeCycle
+   */
+  componentWillMount?(): void;
+  componentDidMount?(): void;
+  componentWillReceiveProps?(nextProps: P): void;
+  componentWillUpdate?(nextProps: P): void;
+  componentDidUpdate?(prevProps: P): void;
+  componentWillUnmount?(): void;
+}
+
+// ----------------------------------------------------------------------
 // VNode
 // ----------------------------------------------------------------------
 export type Type = string | Function | null;
 
 export type VNodeProps = {
-	children?: ThChildren;
-	ref?: Ref<any>;
-	key?: Key;
-	events?: Object | null;
+  children?: ThChildren;
+  ref?: Ref<any>;
+  key?: Key;
+  events?: Object | null;
 }
 
 export const enum VNodeFlags {
@@ -104,12 +142,12 @@ export type Ref<T> = (instance: T) => any;
 /**
  * The core attributes on all things
  */
-export interface IntrinsicAttributes<T> {
+export interface ThAttributes<T> {
   key?: Key;
   ref?: Ref<T>;
 }
 
-export interface HTMLAttributes<T> extends IntrinsicAttributes<T> {
+export interface HTMLAttributes<T> extends ThAttributes<T> {
   // Standard HTML Attributes
   accept?: string;
   acceptCharset?: string;
@@ -521,4 +559,188 @@ export interface SVGAttributes<T> extends HTMLAttributes<T> {
   yChannelSelector?: string;
   z?: number | string;
   zoomAndPan?: string;
+}
+
+// ----------------------------------------------------------------------
+// JSX
+// ----------------------------------------------------------------------
+declare global {
+  namespace JSX {
+    interface Element extends ThElement<any> { }
+    interface ElementAttributesProperty { props: {}; }
+    interface IntrinsicAttributes extends ThAttributes<void> { }
+    interface IntrinsicClassAttributes<T> extends ThAttributes<T> { }
+    interface IntrinsicElements {
+      // HTML
+      a: HTMLAttributes<HTMLAnchorElement>;
+      abbr: HTMLAttributes<HTMLElement>;
+      address: HTMLAttributes<HTMLElement>;
+      area: HTMLAttributes<HTMLAreaElement>;
+      article: HTMLAttributes<HTMLElement>;
+      aside: HTMLAttributes<HTMLElement>;
+      audio: HTMLAttributes<HTMLAudioElement>;
+      b: HTMLAttributes<HTMLElement>;
+      base: HTMLAttributes<HTMLBaseElement>;
+      bdi: HTMLAttributes<HTMLElement>;
+      bdo: HTMLAttributes<HTMLElement>;
+      big: HTMLAttributes<HTMLElement>;
+      blockquote: HTMLAttributes<HTMLElement>;
+      body: HTMLAttributes<HTMLBodyElement>;
+      br: HTMLAttributes<HTMLBRElement>;
+      button: HTMLAttributes<HTMLButtonElement>;
+      canvas: HTMLAttributes<HTMLCanvasElement>;
+      caption: HTMLAttributes<HTMLElement>;
+      cite: HTMLAttributes<HTMLElement>;
+      code: HTMLAttributes<HTMLElement>;
+      col: HTMLAttributes<HTMLTableColElement>;
+      colgroup: HTMLAttributes<HTMLTableColElement>;
+      data: HTMLAttributes<HTMLElement>;
+      datalist: HTMLAttributes<HTMLDataListElement>;
+      dd: HTMLAttributes<HTMLElement>;
+      del: HTMLAttributes<HTMLElement>;
+      details: HTMLAttributes<HTMLElement>;
+      dfn: HTMLAttributes<HTMLElement>;
+      dialog: HTMLAttributes<HTMLElement>;
+      div: HTMLAttributes<HTMLDivElement>;
+      dl: HTMLAttributes<HTMLDListElement>;
+      dt: HTMLAttributes<HTMLElement>;
+      em: HTMLAttributes<HTMLElement>;
+      embed: HTMLAttributes<HTMLEmbedElement>;
+      fieldset: HTMLAttributes<HTMLFieldSetElement>;
+      figcaption: HTMLAttributes<HTMLElement>;
+      figure: HTMLAttributes<HTMLElement>;
+      footer: HTMLAttributes<HTMLElement>;
+      form: HTMLAttributes<HTMLFormElement>;
+      h1: HTMLAttributes<HTMLHeadingElement>;
+      h2: HTMLAttributes<HTMLHeadingElement>;
+      h3: HTMLAttributes<HTMLHeadingElement>;
+      h4: HTMLAttributes<HTMLHeadingElement>;
+      h5: HTMLAttributes<HTMLHeadingElement>;
+      h6: HTMLAttributes<HTMLHeadingElement>;
+      head: HTMLAttributes<HTMLHeadElement>;
+      header: HTMLAttributes<HTMLElement>;
+      hgroup: HTMLAttributes<HTMLElement>;
+      hr: HTMLAttributes<HTMLHRElement>;
+      html: HTMLAttributes<HTMLHtmlElement>;
+      i: HTMLAttributes<HTMLElement>;
+      iframe: HTMLAttributes<HTMLIFrameElement>;
+      img: HTMLAttributes<HTMLImageElement>;
+      input: HTMLAttributes<HTMLInputElement>;
+      ins: HTMLAttributes<HTMLModElement>;
+      kbd: HTMLAttributes<HTMLElement>;
+      keygen: HTMLAttributes<HTMLElement>;
+      label: HTMLAttributes<HTMLLabelElement>;
+      legend: HTMLAttributes<HTMLLegendElement>;
+      li: HTMLAttributes<HTMLLIElement>;
+      link: HTMLAttributes<HTMLLinkElement>;
+      main: HTMLAttributes<HTMLElement>;
+      map: HTMLAttributes<HTMLMapElement>;
+      mark: HTMLAttributes<HTMLElement>;
+      menu: HTMLAttributes<HTMLElement>;
+      menuitem: HTMLAttributes<HTMLElement>;
+      meta: HTMLAttributes<HTMLMetaElement>;
+      meter: HTMLAttributes<HTMLElement>;
+      nav: HTMLAttributes<HTMLElement>;
+      noindex: HTMLAttributes<HTMLElement>;
+      noscript: HTMLAttributes<HTMLElement>;
+      object: HTMLAttributes<HTMLObjectElement>;
+      ol: HTMLAttributes<HTMLOListElement>;
+      optgroup: HTMLAttributes<HTMLOptGroupElement>;
+      option: HTMLAttributes<HTMLOptionElement>;
+      output: HTMLAttributes<HTMLElement>;
+      p: HTMLAttributes<HTMLParagraphElement>;
+      param: HTMLAttributes<HTMLParamElement>;
+      picture: HTMLAttributes<HTMLElement>;
+      pre: HTMLAttributes<HTMLPreElement>;
+      progress: HTMLAttributes<HTMLProgressElement>;
+      q: HTMLAttributes<HTMLQuoteElement>;
+      rp: HTMLAttributes<HTMLElement>;
+      rt: HTMLAttributes<HTMLElement>;
+      ruby: HTMLAttributes<HTMLElement>;
+      s: HTMLAttributes<HTMLElement>;
+      samp: HTMLAttributes<HTMLElement>;
+      script: HTMLAttributes<HTMLElement>;
+      section: HTMLAttributes<HTMLElement>;
+      select: HTMLAttributes<HTMLSelectElement>;
+      small: HTMLAttributes<HTMLElement>;
+      source: HTMLAttributes<HTMLSourceElement>;
+      span: HTMLAttributes<HTMLSpanElement>;
+      strong: HTMLAttributes<HTMLElement>;
+      style: HTMLAttributes<HTMLStyleElement>;
+      sub: HTMLAttributes<HTMLElement>;
+      summary: HTMLAttributes<HTMLElement>;
+      sup: HTMLAttributes<HTMLElement>;
+      table: HTMLAttributes<HTMLTableElement>;
+      tbody: HTMLAttributes<HTMLTableSectionElement>;
+      td: HTMLAttributes<HTMLTableDataCellElement>;
+      textarea: HTMLAttributes<HTMLTextAreaElement>;
+      tfoot: HTMLAttributes<HTMLTableSectionElement>;
+      th: HTMLAttributes<HTMLTableHeaderCellElement>;
+      thead: HTMLAttributes<HTMLTableSectionElement>;
+      time: HTMLAttributes<HTMLElement>;
+      title: HTMLAttributes<HTMLTitleElement>;
+      tr: HTMLAttributes<HTMLTableRowElement>;
+      track: HTMLAttributes<HTMLTrackElement>;
+      u: HTMLAttributes<HTMLElement>;
+      ul: HTMLAttributes<HTMLUListElement>;
+      var: HTMLAttributes<HTMLElement>;
+      video: HTMLAttributes<HTMLVideoElement>;
+      wbr: HTMLAttributes<HTMLElement>;
+
+      // SVG
+      svg: SVGAttributes<SVGElement>;
+      circle: SVGAttributes<SVGCircleElement>;
+      clipPath: SVGAttributes<SVGClipPathElement>;
+      defs: SVGAttributes<SVGDefsElement>;
+      desc: SVGAttributes<SVGDescElement>;
+      ellipse: SVGAttributes<SVGEllipseElement>;
+      feBlend: SVGAttributes<SVGFEBlendElement>;
+      feColorMatrix: SVGAttributes<SVGFEColorMatrixElement>;
+      feComponentTransfer: SVGAttributes<SVGFEComponentTransferElement>;
+      feComposite: SVGAttributes<SVGFECompositeElement>;
+      feConvolveMatrix: SVGAttributes<SVGFEConvolveMatrixElement>;
+      feDiffuseLighting: SVGAttributes<SVGFEDiffuseLightingElement>;
+      feDisplacementMap: SVGAttributes<SVGFEDisplacementMapElement>;
+      feDistantLight: SVGAttributes<SVGFEDistantLightElement>;
+      feFlood: SVGAttributes<SVGFEFloodElement>;
+      feFuncA: SVGAttributes<SVGFEFuncAElement>;
+      feFuncB: SVGAttributes<SVGFEFuncBElement>;
+      feFuncG: SVGAttributes<SVGFEFuncGElement>;
+      feFuncR: SVGAttributes<SVGFEFuncRElement>;
+      feGaussianBlur: SVGAttributes<SVGFEGaussianBlurElement>;
+      feImage: SVGAttributes<SVGFEImageElement>;
+      feMerge: SVGAttributes<SVGFEMergeElement>;
+      feMergeNode: SVGAttributes<SVGFEMergeNodeElement>;
+      feMorphology: SVGAttributes<SVGFEMorphologyElement>;
+      feOffset: SVGAttributes<SVGFEOffsetElement>;
+      fePointLight: SVGAttributes<SVGFEPointLightElement>;
+      feSpecularLighting: SVGAttributes<SVGFESpecularLightingElement>;
+      feSpotLight: SVGAttributes<SVGFESpotLightElement>;
+      feTile: SVGAttributes<SVGFETileElement>;
+      feTurbulence: SVGAttributes<SVGFETurbulenceElement>;
+      filter: SVGAttributes<SVGFilterElement>;
+      foreignObject: SVGAttributes<SVGForeignObjectElement>;
+      g: SVGAttributes<SVGSVGElement>;
+      image: SVGAttributes<SVGImageElement>;
+      line: SVGAttributes<SVGLineElement>;
+      linearGradient: SVGAttributes<SVGLinearGradientElement>;
+      marker: SVGAttributes<SVGMarkerElement>;
+      mask: SVGAttributes<SVGMaskElement>;
+      metadata: SVGAttributes<SVGMetadataElement>;
+      path: SVGAttributes<SVGPathElement>;
+      pattern: SVGAttributes<SVGPatternElement>;
+      polygon: SVGAttributes<SVGPolygonElement>;
+      polyline: SVGAttributes<SVGPolylineElement>;
+      radialGradient: SVGAttributes<SVGRadialGradientElement>;
+      rect: SVGAttributes<SVGRectElement>;
+      stop: SVGAttributes<SVGStopElement>;
+      switch: SVGAttributes<SVGSwitchElement>;
+      symbol: SVGAttributes<SVGSymbolElement>;
+      text: SVGAttributes<SVGTextContentElement>;
+      textPath: SVGAttributes<SVGTextPathElement>;
+      tspan: SVGAttributes<SVGTSpanElement>;
+      use: SVGAttributes<SVGUseElement>;
+      view: SVGAttributes<SVGViewElement>;
+    }
+  }
 }
