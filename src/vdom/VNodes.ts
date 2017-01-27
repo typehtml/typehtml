@@ -14,7 +14,7 @@ import options from './options';
 
 export function createVNode(
 	flags: VNodeFlags,
-	type?: Type,
+	type?: Type<any>,
 	props?: VNodeProps,
 	children?: ThChildren,
 	events?,

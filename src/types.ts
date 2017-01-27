@@ -25,7 +25,7 @@ export interface ComponentClassElement<P> extends ThElement<P> {
 // Elements
 // ----------------------------------------------------------------------
 export interface ThElement<P> {
-  type: string | ComponentClass<P> | ComponentFunction<P>;
+  type: Type<P>;
   props: P;
   key: Key | null;
 }
@@ -70,7 +70,7 @@ export interface Component<P> {
 // ----------------------------------------------------------------------
 
 /** The type passed to createElement */
-export type Type = string | ComponentClass<any> | ComponentFunction<any> | null;
+export type Type<P> = string | ComponentClass<P> | ComponentFunction<P>;
 
 /** The main input to 'render' */
 export type ThInput =
@@ -118,14 +118,16 @@ export const enum VNodeFlags {
 }
 
 export interface VNode {
+  type: Type<any>;
+  ref: Ref<any>;
+  key: Key;
+  flags: VNodeFlags;
+
   children: ThChildren;
   dom: Element | null;
   events: Object | null;
-  flags: VNodeFlags;
-  key: Key;
+
   props: VNodeProps | null;
-  ref: Ref<any>;
-  type: Type;
   parentVNode?: VNode;
 }
 
