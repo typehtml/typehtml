@@ -224,7 +224,10 @@ function hydrate(vNode: VNode<any>, dom: Element, lifecycle: Lifecycle, isSVG: b
   }
 }
 
-export function hydrateRoot(input, parentDom: Node, lifecycle: Lifecycle) {
+/**
+ * Hydrates the root if there is already dom there
+ */
+export function hydrateRoot(input, parentDom: Node, lifecycle: Lifecycle): boolean {
   let dom = parentDom && parentDom.firstChild as Element;
 
   if (dom) {
