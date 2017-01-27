@@ -31,10 +31,8 @@ export const roots: Root[] = [];
 
 options.roots = roots;
 
-function getRoot(dom): Root | null {
-	for (let i = 0; i < roots.length; i++) {
-		const root = roots[i];
-
+function getRoot(dom: Element): Root | null {
+	for (const root of roots) {
 		if (root.dom === dom) {
 			return root;
 		}
@@ -70,7 +68,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 const documentBody = isBrowser ? document.body : null;
 
-export function render(input: VNode<any>, parentDom?: Element | SVGAElement): ThChildren {
+export function render(input: VNode<any>, parentDom?: Element): ThChildren {
 	if (documentBody === parentDom) {
 		if (process.env.NODE_ENV !== 'production') {
 			throwError('you cannot render() to the "document.body". Use an empty element as a container instead.');
