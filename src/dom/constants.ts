@@ -10,6 +10,11 @@ function constructDefaults<T extends string | true>(keys: string, value: T) {
 export const xlinkNS = 'http://www.w3.org/1999/xlink';
 export const xmlNS = 'http://www.w3.org/XML/1998/namespace';
 export const svgNS = 'http://www.w3.org/2000/svg';
+
+/**
+ * Other HTML props we kebabize before calling
+ * dom.setAttribute
+ */
 export const dehyphenProps = {
   httpEquiv: 'http-equiv',
   acceptCharset: 'accept-charset'

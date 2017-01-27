@@ -724,8 +724,10 @@ export function patchKeyedChildren(
   }
 }
 
-// // https://en.wikipedia.org/wiki/Longest_increasing_subsequence
-function lis_algorithm(a) {
+/**
+ * https://en.wikipedia.org/wiki/Longest_increasing_subsequence
+ */
+function lis_algorithm(a: any[]): any[] {
   const p = a.slice(0);
   const result: any[] = [0];
   let i;
@@ -801,7 +803,7 @@ export function patchProp(prop, lastValue, nextValue, dom: Element, isSVG: boole
         dom.className = nextValue;
       }
     } else if (prop === 'style') {
-      patchStyle(lastValue, nextValue, dom);
+      patchStyle(lastValue, nextValue, dom as HTMLElement);
     } else if (prop === 'dangerouslySetInnerHTML') {
       const lastHtml = lastValue && lastValue.__html;
       const nextHtml = nextValue && nextValue.__html;
@@ -890,7 +892,7 @@ export function patchEvent(name: string, lastValue, nextValue, dom) {
 
 // We are assuming here that we come from patchProp routine
 // -nextAttrValue cannot be null or undefined
-export function patchStyle(lastAttrValue: string | Styles, nextAttrValue: string | Styles, dom) {
+export function patchStyle(lastAttrValue: string | Styles, nextAttrValue: string | Styles, dom: HTMLElement) {
   if (isString(nextAttrValue)) {
     dom.style.cssText = nextAttrValue;
     return;
