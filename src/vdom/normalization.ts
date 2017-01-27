@@ -1,3 +1,6 @@
+/**
+ * @module normalize various renderables into VNodes
+ */
 import { VNode, ThChildren, VNodeFlags, VNodeProps } from '../types';
 import {
   isArray,

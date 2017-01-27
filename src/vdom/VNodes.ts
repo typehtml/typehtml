@@ -1,150 +1,150 @@
-import {VNode, VNodeFlags, Type, ThChildren, Key, Ref, VNodeProps} from '../types';
+import { VNode, VNodeFlags, Type, ThChildren, Key, Ref, VNodeProps } from '../types';
 import {
-	isArray,
-	isInvalid,
-	isNull,
-	isNullOrUndef,
-	isStatefulComponent,
-	isUndefined
+  isArray,
+  isInvalid,
+  isNull,
+  isNullOrUndef,
+  isStatefulComponent,
+  isUndefined
 } from './shared';
 import {
-	normalize
+  normalize
 } from './normalization';
 import options from './options';
 
 export function createVNode(
-	flags: VNodeFlags,
-	type?: Type<any>,
-	props?: VNodeProps,
-	children?: ThChildren,
-	events?,
-	key?: Key,
-	ref?: Ref<any>,
-	noNormalise?: boolean
+  flags: VNodeFlags,
+  type?: Type<any>,
+  props?: VNodeProps,
+  children?: ThChildren,
+  events?,
+  key?: Key,
+  ref?: Ref<any>,
+  noNormalise?: boolean
 ): VNode<any> {
-	if (flags & VNodeFlags.ComponentUnknown) {
-		flags = isStatefulComponent(type) ? VNodeFlags.ComponentClass : VNodeFlags.ComponentFunction;
-	}
-	const vNode: VNode<any> = {
-		children: isUndefined(children) ? null : children,
-		dom: null,
-		events: events || null,
-		flags,
-		key: isUndefined(key) ? null : key,
-		props: props || null,
-		ref: ref || null,
-		type
-	};
-	if (!noNormalise) {
-		normalize(vNode);
-	}
-	if (options.createVNode) {
-		options.createVNode(vNode);
-	}
-	return vNode;
+  if (flags & VNodeFlags.ComponentUnknown) {
+    flags = isStatefulComponent(type) ? VNodeFlags.ComponentClass : VNodeFlags.ComponentFunction;
+  }
+  const vNode: VNode<any> = {
+    children: isUndefined(children) ? null : children,
+    dom: null,
+    events: events || null,
+    flags,
+    key: isUndefined(key) ? null : key,
+    props: props || null,
+    ref: ref || null,
+    type
+  };
+  if (!noNormalise) {
+    normalize(vNode);
+  }
+  if (options.createVNode) {
+    options.createVNode(vNode);
+  }
+  return vNode;
 }
 
 export function cloneVNode(vNodeToClone: VNode<any>, props?: VNodeProps, ..._children: ThChildren[]): VNode<any> {
-	let children: any = _children;
+  let children: any = _children;
 
-	if (_children.length > 0 && !isNull(_children[0])) {
-		if (!props) {
-			props = {};
-		}
-		if (_children.length === 1) {
-			children = _children[0];
-		}
-		if (isUndefined(props.children)) {
-			props.children = children as VNode<any>;
-		} else {
-			if (isArray(children)) {
-				if (isArray(props.children)) {
-					props.children = props.children.concat(children) as any;
-				} else {
-					props.children = [props.children].concat(children) as any;
-				}
-			} else {
-				if (isArray(props.children)) {
-					props.children.push(children);
-				} else {
-					props.children = [props.children] as any;
-					(props.children as any[]).push(children);
-				}
-			}
-		}
-	}
-	children = null;
-	let newVNode;
+  if (_children.length > 0 && !isNull(_children[0])) {
+    if (!props) {
+      props = {};
+    }
+    if (_children.length === 1) {
+      children = _children[0];
+    }
+    if (isUndefined(props.children)) {
+      props.children = children as VNode<any>;
+    } else {
+      if (isArray(children)) {
+        if (isArray(props.children)) {
+          props.children = props.children.concat(children) as any;
+        } else {
+          props.children = [props.children].concat(children) as any;
+        }
+      } else {
+        if (isArray(props.children)) {
+          props.children.push(children);
+        } else {
+          props.children = [props.children] as any;
+          (props.children as any[]).push(children);
+        }
+      }
+    }
+  }
+  children = null;
+  let newVNode;
 
-	if (isArray(vNodeToClone)) {
-		const tmpArray = [];
-		for (let i = 0; i < vNodeToClone.length; i++) {
-			tmpArray.push(cloneVNode(vNodeToClone[i]));
-		}
+  if (isArray(vNodeToClone)) {
+    const tmpArray = [];
+    for (let i = 0; i < vNodeToClone.length; i++) {
+      tmpArray.push(cloneVNode(vNodeToClone[i]));
+    }
 
-		newVNode = tmpArray;
-	} else {
-		const flags = vNodeToClone.flags;
-		const events = vNodeToClone.events || (props && props.events) || null;
-		const key = !isNullOrUndef(vNodeToClone.key) ? vNodeToClone.key : (props ? props.key : null);
-		const ref = vNodeToClone.ref || (props ? props.ref : null);
+    newVNode = tmpArray;
+  } else {
+    const flags = vNodeToClone.flags;
+    const events = vNodeToClone.events || (props && props.events) || null;
+    const key = !isNullOrUndef(vNodeToClone.key) ? vNodeToClone.key : (props ? props.key : null);
+    const ref = vNodeToClone.ref || (props ? props.ref : null);
 
-		if (flags & VNodeFlags.Component) {
-			newVNode = createVNode(flags, vNodeToClone.type,
-				Object.assign({}, vNodeToClone.props, props),
-				null,
-				events,
-				key,
-				ref,
-				true
-			);
-			const newProps = newVNode.props;
+    if (flags & VNodeFlags.Component) {
+      newVNode = createVNode(flags, vNodeToClone.type,
+        Object.assign({}, vNodeToClone.props, props),
+        null,
+        events,
+        key,
+        ref,
+        true
+      );
+      const newProps = newVNode.props;
 
-			if (newProps) {
-				const newChildren = newProps.children;
-				// we need to also clone component children that are in props
-				// as the children may also have been hoisted
-				if (newChildren) {
-					if (isArray(newChildren)) {
-						for (let i = 0; i < newChildren.length; i++) {
-							const child = newChildren[i];
+      if (newProps) {
+        const newChildren = newProps.children;
+        // we need to also clone component children that are in props
+        // as the children may also have been hoisted
+        if (newChildren) {
+          if (isArray(newChildren)) {
+            for (let i = 0; i < newChildren.length; i++) {
+              const child = newChildren[i];
 
-							if (!isInvalid(child) && isVNode(child)) {
-								newProps.children[i] = cloneVNode(child);
-							}
-						}
-					} else if (isVNode(newChildren)) {
-						newProps.children = cloneVNode(newChildren);
-					}
-				}
-			}
-			newVNode.children = null;
-		} else if (flags & VNodeFlags.Element) {
-			children = (props && props.children) || vNodeToClone.children;
-			newVNode = createVNode(flags, vNodeToClone.type,
-				Object.assign({}, vNodeToClone.props, props),
-				children,
-				events,
-				key,
-				ref,
-				!children
-			);
-		} else if (flags & VNodeFlags.Text) {
-			newVNode = createTextVNode(vNodeToClone.children as string);
-		}
-	}
+              if (!isInvalid(child) && isVNode(child)) {
+                newProps.children[i] = cloneVNode(child);
+              }
+            }
+          } else if (isVNode(newChildren)) {
+            newProps.children = cloneVNode(newChildren);
+          }
+        }
+      }
+      newVNode.children = null;
+    } else if (flags & VNodeFlags.Element) {
+      children = (props && props.children) || vNodeToClone.children;
+      newVNode = createVNode(flags, vNodeToClone.type,
+        Object.assign({}, vNodeToClone.props, props),
+        children,
+        events,
+        key,
+        ref,
+        !children
+      );
+    } else if (flags & VNodeFlags.Text) {
+      newVNode = createTextVNode(vNodeToClone.children as string);
+    }
+  }
 
-	return newVNode;
+  return newVNode;
 }
 
 export function createVoidVNode(): VNode<any> {
-	return createVNode(VNodeFlags.Void);
+  return createVNode(VNodeFlags.Void);
 }
 
 export function createTextVNode(text: string | number): VNode<any> {
-	return createVNode(VNodeFlags.Text, null, null, text, null, null, null, true);
+  return createVNode(VNodeFlags.Text, null, null, text, null, null, null, true);
 }
 
 export function isVNode(o: ThChildren): o is VNode<any> {
-	return typeof o === 'object' && !!(o as any).flags;
+  return typeof o === 'object' && !!(o as any).flags;
 }
