@@ -1,4 +1,4 @@
-import { VNodeFlags } from '../types';
+import { VNodeFlags, VNode, ComponentClass, ComponentFunction } from '../types';
 import {
 	copyPropsTo
 } from '../vdom/normalization';
@@ -39,22 +39,23 @@ function renderStylesToString(styles) {
 	}
 }
 
-function renderVNodeToString(vNode, firstChild): string {
+function renderVNodeToString(vNode: VNode, firstChild: boolean): string {
 	const flags = vNode.flags;
 	const type = vNode.type;
 	const props = vNode.props || EMPTY_OBJ;
 	const children = vNode.children;
 
 	if (flags & VNodeFlags.Component) {
-		const isClass = flags & VNodeFlags.ComponentClass;
-
-		// Primitive node doesn't have defaultProps, only Component
+    // Primitive node doesn't have defaultProps, only Component
+    const type = vNode.type as (ComponentClass<any> | ComponentFunction<any>);
 		if (!isNullOrUndef(type.defaultProps)) {
 			copyPropsTo(type.defaultProps, props);
 			vNode.props = props;
 		}
 
-		if (isClass) {
+    const isClass = flags & VNodeFlags.ComponentClass;
+    if (isClass) {
+      const type = vNode.type as (ComponentClass<any>);
 			const instance = new type(props);
 
 			if (instance.props === EMPTY_OBJ) {
@@ -65,21 +66,22 @@ function renderVNodeToString(vNode, firstChild): string {
 			if (isFunction(instance.componentWillMount)) {
 				instance.componentWillMount();
 			}
-			const nextVNode = instance.render(props, vNode.context);
+			const nextVNode = instance.render();
 
 			instance._pendingSetState = false;
 			// In case render returns invalid stuff
 			if (isInvalid(nextVNode)) {
 				return '<!--!-->';
 			}
-			return renderVNodeToString(nextVNode, true);
-		} else {
+			return renderVNodeToString(nextVNode as any, true);
+    } else {
+      const type = vNode.type as (ComponentFunction<any>);
 			const nextVNode = type(props);
 
 			if (isInvalid(nextVNode)) {
 				return '<!--!-->';
 			}
-			return renderVNodeToString(nextVNode, true);
+			return renderVNodeToString(nextVNode as any, true);
 		}
 	} else if (flags & VNodeFlags.Element) {
 		let renderedString = `<${ type }`;
@@ -93,7 +95,7 @@ function renderVNodeToString(vNode, firstChild): string {
 				if (prop === 'dangerouslySetInnerHTML') {
 					html = value.__html;
 				} else if (prop === 'style') {
-					renderedString += ` style="${ renderStylesToString(props.style) }"`;
+          renderedString += ` style="${ renderStylesToString((props as any).style) }"`;
 				} else if (prop === 'className' && !isNullOrUndef(value)) {
 					renderedString += ` class="${ escapeText(value) }"`;
 				} else if (prop === 'children') {
@@ -118,13 +120,13 @@ function renderVNodeToString(vNode, firstChild): string {
 						if (isStringOrNumber(child)) {
 							renderedString += escapeText(child);
 						} else if (!isInvalid(child)) {
-							renderedString += renderVNodeToString(child, i === 0);
+							renderedString += renderVNodeToString(child as VNode, i === 0);
 						}
 					}
 				} else if (isStringOrNumber(children)) {
 					renderedString += escapeText(children);
 				} else {
-					renderedString += renderVNodeToString(children, true);
+					renderedString += renderVNodeToString(children as VNode, true);
 				}
 			} else if (html) {
 				renderedString += html;

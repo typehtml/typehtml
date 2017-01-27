@@ -57,12 +57,18 @@ export interface Component<P> {
   componentWillUpdate?(nextProps: P): void;
   componentDidUpdate?(prevProps: P): void;
   componentWillUnmount?(): void;
+
+  /**
+   * Used in internal tracking
+   */
+  _unmounted?: boolean;
+  _pendingSetState?: boolean;
 }
 
 // ----------------------------------------------------------------------
 // VNode
 // ----------------------------------------------------------------------
-export type Type = string | Function | null;
+export type Type = string | ComponentClass<any> | ComponentFunction<any> | null;
 
 export type VNodeProps = {
   children?: ThChildren;
