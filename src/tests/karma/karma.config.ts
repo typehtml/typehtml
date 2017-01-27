@@ -2,7 +2,7 @@ import path = require('path');
 
 export = function(config) {
   config.set({
-    basePath: path.join(__dirname, '..', '..'),
+    basePath: path.join(__dirname, '..', '..', '..'),
     browsers: [
       'Chrome'
     ],
@@ -14,8 +14,7 @@ export = function(config) {
         loaders: [
           {
             test: /\.tsx?$/,
-            loaders: ['ts-loader'],
-            exclude: /node_modules/
+            loaders: ['ts-loader']
           }
         ]
       },
