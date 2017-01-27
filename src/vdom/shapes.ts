@@ -1,5 +1,5 @@
-import { VNode, VNodeFlags, VNodeProps as Props, Ref, ThChildren, Key } from '../types';
-export { VNode, VNodeFlags, Props, Ref, ThChildren };
+import { VNode, VNodeFlags, VNodeProps, Ref, ThChildren, Key } from '../types';
+
 import {
 	isArray,
 	isInvalid,
@@ -12,17 +12,6 @@ import {
 } from './shared';
 
 import cloneVNode from './cloneVNode';
-
-export interface Styles {
-	[key: string]: number | string;
-}
-
-export interface IProps {
-	[index: string]: any;
-}
-export interface VType {
-	flags: VNodeFlags;
-}
 
 function _normalizeVNodes(nodes: any[], result: VNode<any>[], i: number): void {
 	for (; i < nodes.length; i++) {
@@ -97,7 +86,7 @@ function normalizeChildren(children: ThChildren | null) {
 	return children;
 }
 
-function normalizeProps(vNode: VNode<any>, props: Props, children: ThChildren) {
+function normalizeProps(vNode: VNode<any>, props: VNodeProps, children: ThChildren) {
 	if (!(vNode.flags & VNodeFlags.Component) && isNullOrUndef(children) && !isNullOrUndef(props.children)) {
 		vNode.children = props.children;
 	}
@@ -112,7 +101,7 @@ function normalizeProps(vNode: VNode<any>, props: Props, children: ThChildren) {
 	}
 }
 
-export function copyPropsTo(copyFrom: Props, copyTo: Props) {
+export function copyPropsTo(copyFrom: VNodeProps, copyTo: VNodeProps) {
 	for (let prop in copyFrom) {
 		if (isUndefined(copyTo[prop])) {
 			copyTo[prop] = copyFrom[prop];
@@ -163,17 +152,17 @@ export function normalize(vNode: VNode<any>): void {
 export function createVNode(
 	flags: VNodeFlags,
 	type?,
-	props?: Props,
+	props?: VNodeProps,
 	children?: ThChildren,
 	events?,
 	key?: Key,
 	ref?: Ref<any>,
 	noNormalise?: boolean
-): VNode<Props> {
+): VNode<VNodeProps> {
 	if (flags & VNodeFlags.ComponentUnknown) {
 		flags = isStatefulComponent(type) ? VNodeFlags.ComponentClass : VNodeFlags.ComponentFunction;
 	}
-	const vNode: VNode<Props> = {
+	const vNode: VNode<VNodeProps> = {
 		children: isUndefined(children) ? null : children,
 		dom: null,
 		events: events || null,
