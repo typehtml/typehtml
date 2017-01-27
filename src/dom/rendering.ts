@@ -96,7 +96,6 @@ export function render(input: VNode<any>, parentDom?: Element): ThChildren {
 	} else {
 		const lifecycle = root.lifecycle;
 
-		lifecycle.listeners = [];
 		if (isNullOrUndef(input)) {
 			unmount(root.input as VNode<any>, parentDom, lifecycle, false, false);
 			removeRoot(root);
