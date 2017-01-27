@@ -23,7 +23,7 @@ let classExample = <ClassExample text={"Hello world"} />
 
 import * as assert from 'assert';
 describe('Server rendering', () => {
-  it('should render to string', () => {
+  it('should render function component to string', () => {
     assert.equal(TH.renderToString(functionExample), '<div>Hello world</div>');
-  })
+  });
 });
