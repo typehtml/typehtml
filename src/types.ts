@@ -123,7 +123,7 @@ export const enum VNodeFlags {
 
 /** The event attributes collected */
 export type VNodeEvents = {
-  [key: string]: (evt: Event | SyntheticEvent<Event>) => any
+  [key: string]: ThEventHandler<any>
 }
 
 /** The core result of a call to createElement */
@@ -161,44 +161,30 @@ export interface VType {
 // Event System
 // ----------------------------------------------------------------------
 
-export interface SyntheticEventBase<CURRENT> {
-  bubbles: boolean;
+/**
+ * - Helps provide better safety access to currentTarget.
+ * - Provides native event + data.
+ **/
+export interface LinkEvent<CURRENT, E extends Event> {
   currentTarget: EventTarget & CURRENT;
-  cancelable: boolean;
-  defaultPrevented: boolean;
-  eventPhase: number;
-  isTrusted: boolean;
-  nativeEvent: Event;
-  preventDefault(): void;
-  isDefaultPrevented(): boolean;
-  stopPropagation(): void;
-  isPropagationStopped(): boolean;
-  persist(): void;
-  target: EventTarget;
-  timeStamp: Date;
-  type: string;
+  data: any;
+  event: E;
 }
 
-export interface SyntheticEvent<T> extends SyntheticEventBase<T> {
-}
-
-export interface ClipboardEvent<T> extends SyntheticEvent<T> {
-  clipboardData: DataTransfer;
-}
-
+export interface ThEvent<T> extends LinkEvent<T, Event> { }
+export interface ThClipboardEvent<T> extends LinkEvent<T, ClipboardEvent> { }
 
 
 // ----------------------------------------------------------------------
 // Event Handler Types
 // ----------------------------------------------------------------------
 
-export interface EventHandler<E extends SyntheticEvent<any>> {
+export interface EventHandler<E extends ThEvent<any>> {
   (event: E): void;
 }
 
-export type ReactEventHandler<T> = EventHandler<SyntheticEvent<T>>;
-
-export type ClipboardEventHandler<T> = EventHandler<ClipboardEvent<T>>;
+export type ThEventHandler<T> = EventHandler<ThEvent<T>>;
+export type ClipboardEventHandler<T> = EventHandler<ThClipboardEvent<T>>;
 
 // ----------------------------------------------------------------------
 // Key and Ref
