@@ -1,4 +1,4 @@
-import { VNode, VNodeFlags } from '../types';
+import { VNode, VNodeFlags, Component } from '../types';
 import {
   copyPropsTo
 } from '../vdom/normalization';
@@ -275,7 +275,7 @@ function patchChildren(lastFlags: VNodeFlags, nextFlags: VNodeFlags, lastChildre
   }
 }
 
-export function patchComponent(lastVNode, nextVNode, parentDom: Element, lifecycle: Lifecycle, isSVG: boolean, isClass: number, isRecycling: boolean) {
+export function patchComponent(lastVNode, nextVNode, parentDom, lifecycle: Lifecycle, isSVG: boolean, isClass: number, isRecycling: boolean) {
   const lastType = lastVNode.type;
   const nextType = nextVNode.type;
   const nextProps = nextVNode.props || EMPTY_OBJ;
@@ -308,7 +308,7 @@ export function patchComponent(lastVNode, nextVNode, parentDom: Element, lifecyc
         replaceWithNewNode(lastVNode, nextVNode, parentDom, lifecycle, isSVG, isRecycling);
         return false;
       }
-      const instance = lastVNode.children;
+      const instance = lastVNode.children as Component<any>;
 
       if (instance._unmounted) {
         if (isNull(parentDom)) {
@@ -326,22 +326,17 @@ export function patchComponent(lastVNode, nextVNode, parentDom: Element, lifecyc
           lastVNode.dom
         );
       } else {
-        const lastState = instance.state;
-        const nextState = instance.state;
         const lastProps = instance.props;
 
         nextVNode.children = instance;
         instance._isSVG = isSVG;
 
         const lastInput = instance._lastInput;
-        let nextInput = instance._updateComponent(lastState, nextState, lastProps, nextProps, false, false);
+        let nextInput = instance.render();
         let didUpdate = true;
 
         if (isInvalid(nextInput)) {
           nextInput = createVoidVNode();
-        } else if (nextInput === NO_OP) {
-          nextInput = lastInput;
-          didUpdate = false;
         } else if (isStringOrNumber(nextInput)) {
           nextInput = createTextVNode(nextInput);
         } else if (isArray(nextInput)) {
@@ -367,7 +362,7 @@ export function patchComponent(lastVNode, nextVNode, parentDom: Element, lifecyc
           patch(lastInput, nextInput, parentDom, lifecycle, isSVG, isRecycling);
           subLifecycle.fastUnmount = lifecycle.fastUnmount;
           lifecycle.fastUnmount = fastUnmount;
-          instance.componentDidUpdate(lastProps, lastState);
+          instance.componentDidUpdate(lastProps);
           options.afterUpdate && options.afterUpdate(nextVNode);
         }
         nextVNode.dom = nextInput.dom;

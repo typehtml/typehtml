@@ -32,7 +32,7 @@ export interface ComponentClassElement<P> {
 // ----------------------------------------------------------------------
 
 export interface ComponentFunction<P> {
-  (props: P & { children?: ThChildren }): VNode<any>;
+  (props: P & { children?: ThChildren }): VNode<any> | null;
   defaultProps?: P;
   displayName?: string;
 }
@@ -47,7 +47,7 @@ export interface ComponentClass<P> {
 export interface Component<P> {
   props: Readonly<{ children?: ThChildren }> & Readonly<P>;
   constructor(props?: P);
-  render(): JSX.Element | null;
+  render(): VNode<any> | null;
 
   /**
    * LifeCycle
