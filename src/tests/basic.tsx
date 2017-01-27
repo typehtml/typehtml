@@ -9,7 +9,8 @@ const FunctionExample = ({ text }: { text: string }) => <div>{text}</div>
 
 /** Or as a class */
 class ClassExample {
-  props: { text: string }
+  constructor(private props: { text: string }) { }
+
   render() {
     return <div>{this.props.text}</div>
   }
@@ -25,5 +26,9 @@ import * as assert from 'assert';
 describe('Server rendering', () => {
   it('should render function component to string', () => {
     assert.equal(TH.renderToString(functionExample), '<div>Hello world</div>');
+  });
+
+  it('should render class component to string', () => {
+    assert.equal(TH.renderToString(classExample), '<div>Hello world</div>');
   });
 });
