@@ -7,5 +7,3 @@
 
 # Cleanups
 * noImplicitAny at least on patching
-* kill `linkEvent`
-* Types: event delegation probably doesn't do synthetic events

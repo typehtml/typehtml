@@ -45,12 +45,7 @@ function dispatchEvent(event, dom, items, count, eventData) {
   if (eventsToTrigger) {
     count--;
     eventData.dom = dom;
-    // linkEvent object
-    if (eventsToTrigger.event) {
-      eventsToTrigger.event(eventsToTrigger.data, event);
-    } else {
-      eventsToTrigger(event);
-    }
+    eventsToTrigger(event);
     if (eventData.stopPropagation) {
       return;
     }

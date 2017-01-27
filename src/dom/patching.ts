@@ -858,7 +858,7 @@ export function patchEvents(lastEvents: VNodeEvents, nextEvents: VNodeEvents, do
   }
 }
 
-export function patchEvent(name: string, lastValue, nextValue, dom: Element & { _data?: any }) {
+export function patchEvent(name: string, lastValue, nextValue, dom: Element) {
   if (lastValue !== nextValue) {
     const nameLowerCase = name.toLowerCase();
     const domEvent = dom[nameLowerCase];
@@ -871,16 +871,7 @@ export function patchEvent(name: string, lastValue, nextValue, dom: Element & { 
     } else {
       if (lastValue !== nextValue) {
         if (!isFunction(nextValue) && !isNullOrUndef(nextValue)) {
-          const linkEvent = nextValue.event;
-
-          if (linkEvent && isFunction(linkEvent)) {
-            if (!dom._data) {
-              dom[nameLowerCase] = function(e) {
-                linkEvent(e.currentTarget._data, e);
-              };
-            }
-            dom._data = nextValue.data;
-          } else {
+          {
             if (process.env.NODE_ENV !== 'production') {
               throwError(`an event on a VNode "${name}". was not a function or a valid linkEvent.`);
             }
