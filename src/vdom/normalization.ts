@@ -102,8 +102,8 @@ export function normalizeVNodes(nodes: any[]): VNode<any>[] {
 function normalizeChildren(children: ThChildren | null) {
   if (isArray(children)) {
     return normalizeVNodes(children);
-  } else if (isVNode(children as VNode<any>) && (children as VNode<any>).dom) {
-    return cloneVNode(children as VNode<any>);
+  } else if (isVNode(children) && children.dom) {
+    return cloneVNode(children);
   }
 
   return children;
