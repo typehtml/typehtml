@@ -153,7 +153,3 @@ function renderVNodeToString(vNode: VNode, firstChild: boolean): string {
 export function renderToString(input: any): string {
   return renderVNodeToString(input, true);
 }
-
-export function renderToStaticMarkup(input: any): string {
-  return renderVNodeToString(input, true);
-}

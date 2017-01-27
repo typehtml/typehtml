@@ -12,5 +12,5 @@ export { createElement };
 /** 
  * Takes JSX and renders it to a string
  */
-import { renderToString, renderToStaticMarkup } from './server/renderToString';
-export { renderToString, renderToStaticMarkup };
+import { renderToString } from './server/renderToString';
+export { renderToString };
