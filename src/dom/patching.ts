@@ -64,7 +64,7 @@ import {
 } from './utils';
 
 import {Styles} from '../types';
-import Lifecycle from './lifecycle';
+import { Lifecycle } from './lifecycle';
 import { unmount } from './unmounting';
 import processElement from './wrappers/processElement';
 

@@ -1,4 +1,4 @@
-export default class Lifecycle {
+export class Lifecycle {
 	public listeners: Function[] = [];
 	public fastUnmount = true;
 

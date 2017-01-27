@@ -9,7 +9,7 @@ import {
   isObject,
   throwError
 } from '../vdom/shared';
-import Lifecycle from './lifecycle';
+import { Lifecycle } from './lifecycle';
 import {
   patchEvent
 } from './patching';

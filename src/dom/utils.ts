@@ -11,7 +11,7 @@ import {
   throwError
 } from '../vdom/shared';
 import { svgNS } from './constants';
-import Lifecycle from './lifecycle';
+import { Lifecycle } from './lifecycle';
 import { mount } from './mounting';
 import { patch } from './patching';
 import {

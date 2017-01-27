@@ -13,7 +13,7 @@ import {
 import options from '../vdom/options';
 import { cloneVNode } from '../vdom/VNodes';
 import hydrateRoot from './hydration';
-import Lifecycle from './lifecycle';
+import { Lifecycle } from './lifecycle';
 import { mount } from './mounting';
 import { patch } from './patching';
 import { unmount } from './unmounting';

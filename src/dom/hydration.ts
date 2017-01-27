@@ -14,7 +14,7 @@ import {
   warning
 } from '../vdom/shared';
 import { svgNS } from './constants';
-import Lifecycle from './lifecycle';
+import { Lifecycle } from './lifecycle';
 import {
   mount,
   mountClassComponentCallbacks,

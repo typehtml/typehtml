@@ -3,7 +3,7 @@ import {
 	isNull,
 	isUndefined
 } from '../vdom/shared';
-import Lifecycle from './lifecycle';
+import { Lifecycle } from './lifecycle';
 import {
 	patchComponent,
 	patchElement
