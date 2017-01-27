@@ -15,7 +15,7 @@ export const isBrowser = typeof window !== 'undefined' && window.document;
 // in Node 7 and the later versions of V8, slower in older versions though
 export const isArray = Array.isArray;
 
-export function isStatefulComponent(o: any): o is types.ComponentClass<any> {
+export function isComponentClass(o: any): o is types.ComponentClass<any> {
   return !isUndefined(o.prototype) && !isUndefined(o.prototype.render);
 }
 

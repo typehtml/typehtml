@@ -4,7 +4,7 @@ import {
 	isArray,
 	isInvalid,
 	isNullOrUndef,
-	isStatefulComponent,
+	isComponentClass,
 	isStringOrNumber,
 	isUndefined,
 	isString,
@@ -160,7 +160,7 @@ export function createVNode(
 	noNormalise?: boolean
 ): VNode<VNodeProps> {
 	if (flags & VNodeFlags.ComponentUnknown) {
-		flags = isStatefulComponent(type) ? VNodeFlags.ComponentClass : VNodeFlags.ComponentFunction;
+		flags = isComponentClass(type) ? VNodeFlags.ComponentClass : VNodeFlags.ComponentFunction;
 	}
 	const vNode: VNode<VNodeProps> = {
 		children: isUndefined(children) ? null : children,

@@ -7,7 +7,7 @@ import {
   isInvalid,
   isUndefined,
   isObject,
-  isStatefulComponent
+  isComponentClass
 } from './shared';
 
 /**
@@ -92,7 +92,7 @@ export function createElement(
       }
     }
   } else {
-    flags = isStatefulComponent(name) ? VNodeFlags.ComponentClass : VNodeFlags.ComponentFunction;
+    flags = isComponentClass(name) ? VNodeFlags.ComponentClass : VNodeFlags.ComponentFunction;
     if (!isUndefined(children)) {
       if (!props) {
         props = {};
