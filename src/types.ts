@@ -74,11 +74,11 @@ export type Type = string | ComponentClass<any> | ComponentFunction<any> | null;
 
 /** The main input to 'render' */
 export type ThInput =
-  DOMElement<any, any>
+  | ThElement<any>
+  | DOMElement<any, any>
   | ComponentClassElement<any>
   | ComponentFunctionElement<any>
-  | VNode
-  | JSX.Element;
+  | VNode;
 
 export interface Refs {
   onComponentDidMount?: (domNode: Element) => void;
