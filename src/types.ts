@@ -63,7 +63,6 @@ export interface Component<P> {
    * Used in internal tracking
    */
   _unmounted?: boolean;
-  _pendingSetState?: boolean;
 
   /**
    * Used in internal patch tracking

@@ -61,14 +61,12 @@ function renderVNodeToString(vNode: VNode<any>, firstChild: boolean): string {
       if (instance.props === EMPTY_OBJ) {
         instance.props = props;
       }
-      instance._pendingSetState = true;
       instance._unmounted = false;
       if (isFunction(instance.componentWillMount)) {
         instance.componentWillMount();
       }
       const nextVNode = instance.render();
 
-      instance._pendingSetState = false;
       // In case render returns invalid stuff
       if (isInvalid(nextVNode)) {
         return '<!--!-->';

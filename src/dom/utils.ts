@@ -32,7 +32,6 @@ export function createClassComponentInstance(vNode: VNode<any>, Component: Compo
   }
 
   instance._unmounted = false;
-  instance._pendingSetState = true;
   instance._isSVG = isSVG;
   if (isFunction(instance.componentWillMount)) {
     instance.componentWillMount();
@@ -63,7 +62,6 @@ export function createClassComponentInstance(vNode: VNode<any>, Component: Compo
       input.parentVNode = vNode;
     }
   }
-  instance._pendingSetState = false;
   instance._lastInput = input;
   return instance;
 }
