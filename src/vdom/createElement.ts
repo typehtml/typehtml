@@ -1,6 +1,6 @@
 import {
 	Props,
-	InfernoChildren,
+	ThChildren as ThChildren,
 	VNodeFlags,
 	VNode
 } from './shapes';
@@ -26,7 +26,7 @@ const componentHooks = {
 export default function createElement<T>(
 	name: string | Function,
 	props?: T & Props,
-	..._children: InfernoChildren[]
+	..._children: ThChildren[]
 ): VNode {
 	if (isInvalid(name) || isObject(name)) {
 		throw new Error('Inferno Error: createElement() name paramater cannot be undefined, null, false or true, It must be a string, class or function.');

@@ -29,12 +29,12 @@ export interface ComponentClassElement<P> extends types.ThElement<P> {
 export function createElement<P extends types.HTMLAttributes<T>, T extends Element>(
   type: string,
   props?: types.ThAttributes<T> & P,
-  ...children: types.ThNode[]): DOMElement<P, T>; // native dom element support
+  ...children: types.ThChildren[]): DOMElement<P, T>; // native dom element support
 export function createElement<P>(
   type: types.ComponentFunction<P>,
   props?: types.ThAttributes<P> & P,
-  ...children: types.ThNode[]): ComponentFunctionElement<P>;
+  ...children: types.ThChildren[]): ComponentFunctionElement<P>;
 export function createElement<P>(
   type: types.ComponentClass<P>,
   props?: types.ThAttributes<P> & P,
-  ...children: types.ThNode[]): ComponentClassElement<P>;
+  ...children: types.ThChildren[]): ComponentClassElement<P>;

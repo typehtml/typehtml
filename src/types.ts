@@ -1,7 +1,5 @@
 /** Everything that can be rendered */
-export type ThNode = /** TODO: remove any */ any | null | undefined;
-export type ThChildren = ThNode;
-
+export type ThChildren = string | number | VNode | Array<string | VNode> | null;
 
 // ----------------------------------------------------------------------
 // Elements
@@ -13,7 +11,7 @@ export interface ThElement<P> {
 }
 
 export interface ComponentFunction<P> {
-  (props: P & { children?: ThNode }): ThElement<any>;
+  (props: P & { children?: ThChildren }): ThElement<any>;
   defaultProps?: P;
   displayName?: string;
 }
@@ -26,7 +24,7 @@ export interface ComponentClass<P> {
 
 // Base component interface JS classes
 export interface Component<P> {
-  props: Readonly<{ children?: ThNode }> & Readonly<P>;
+  props: Readonly<{ children?: ThChildren }> & Readonly<P>;
   constructor(props?: P);
   render(): JSX.Element | null;
 
@@ -80,7 +78,7 @@ export interface VNode {
   events: Object | null;
   flags: VNodeFlags;
   key: Key;
-  props: VNodeProps | null; // TODO: props
+  props: VNodeProps | null;
   ref: Ref<any>;
   type: Type;
   parentVNode?: VNode;
@@ -296,7 +294,7 @@ export interface HTMLAttributes<T> extends ThAttributes<T> {
   unselectable?: boolean;
 
   // Other attributes we support
-  children?: ThNode;
+  children?: ThChildren;
   dangerouslySetInnerHTML?: {
     __html: string;
   };

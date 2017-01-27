@@ -1,5 +1,5 @@
-import { VNode, VNodeFlags, VNodeProps as Props, Ref } from '../types';
-export { VNode, VNodeFlags, Props, Ref };
+import { VNode, VNodeFlags, VNodeProps as Props, Ref, ThChildren } from '../types';
+export { VNode, VNodeFlags, Props, Ref, ThChildren };
 import {
 	isArray,
 	isInvalid,
@@ -28,7 +28,6 @@ export type InfernoInput = VNode | VNode[] | null | string | string[] | number |
 
 
 export type Key = string | number | null;
-export type InfernoChildren = string | number | VNode | Array<string | VNode> | null;
 export type Type = string | Function | null;
 
 
@@ -96,7 +95,7 @@ export function normalizeVNodes(nodes: any[]): VNode[] {
 	return newNodes || nodes as VNode[];
 }
 
-function normalizeChildren(children: InfernoChildren | null) {
+function normalizeChildren(children: ThChildren | null) {
 	if (isArray(children)) {
 		return normalizeVNodes(children);
 	} else if (isVNode(children as VNode) && (children as VNode).dom) {
@@ -105,7 +104,7 @@ function normalizeChildren(children: InfernoChildren | null) {
 	return children;
 }
 
-function normalizeProps(vNode: VNode, props: Props, children: InfernoChildren) {
+function normalizeProps(vNode: VNode, props: Props, children: ThChildren) {
 	if (!(vNode.flags & VNodeFlags.Component) && isNullOrUndef(children) && !isNullOrUndef(props.children)) {
 		vNode.children = props.children;
 	}
@@ -172,7 +171,7 @@ export function createVNode(
 	flags: VNodeFlags,
 	type?,
 	props?: Props,
-	children?: InfernoChildren,
+	children?: ThChildren,
 	events?,
 	key?: Key,
 	ref?: Ref<any>,

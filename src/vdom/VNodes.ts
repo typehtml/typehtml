@@ -1,4 +1,4 @@
-import {VNode, VNodeFlags, Type, ThNode, ThChildren, Key, Ref, VNodeProps} from '../types';
+import {VNode, VNodeFlags, Type, ThChildren, Key, Ref, VNodeProps} from '../types';
 import {
 	isArray,
 	isInvalid,
