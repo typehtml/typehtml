@@ -3,3 +3,6 @@
 
 # Our build assets to deploy
 lib
+
+# Node
+node_modules

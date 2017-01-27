@@ -2,7 +2,11 @@
   "compilerOptions": {
     "jsx": "react",
     "reactNamespace": "Th",
-    "outDir": "lib"
+    "outDir": "lib",
+    "lib": [
+      "es6",
+      "dom"
+    ]
   },
   "include": [
     "src"

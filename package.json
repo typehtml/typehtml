@@ -1,0 +1,25 @@
+{
+  "name": "typehtml",
+  "version": "0.0.0",
+  "description": "> I am just dreaming of a better world here 🌹",
+  "main": "lib/index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/typehtml/typehtml.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/typehtml/typehtml/issues"
+  },
+  "homepage": "https://github.com/typehtml/typehtml#readme",
+  "devDependencies": {
+    "@types/node": "^7.0.4"
+  }
+}
