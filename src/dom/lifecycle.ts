@@ -1,13 +1,20 @@
-export class Lifecycle {
-	public listeners: Function[] = [];
-	public fastUnmount = true;
+export type LifeCycleCallback = () => void;
 
-	addListener(callback) {
-		this.listeners.push(callback);
-	}
-	trigger() {
-		for (let i = 0; i < this.listeners.length; i++) {
-			this.listeners[i]();
-		}
-	}
+/**
+ * Used to collect functions in a single `trigger`
+ */
+export class Lifecycle {
+  public listeners: LifeCycleCallback[] = [];
+
+  /**
+   * If a component doesn't have a `componentWillUnmount` we can fastUnmount
+   */
+  public fastUnmount = true;
+
+  addListener(callback: LifeCycleCallback) {
+    this.listeners.push(callback);
+  }
+  trigger() {
+    this.listeners.forEach(listener => listener());
+  }
 }
