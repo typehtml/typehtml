@@ -65,14 +65,14 @@ if (process.env.NODE_ENV !== 'production') {
 
 const documentBody = isBrowser ? document.body : null;
 
-export function render(input: VNode<any>, parentDom?: Element): ThChildren {
+export function render(input: VNode<any> | typeof NO_OP, parentDom?: Element): ThChildren {
   if (documentBody === parentDom) {
     if (process.env.NODE_ENV !== 'production') {
       throwError('you cannot render() to the "document.body". Use an empty element as a container instead.');
     }
     throwError();
   }
-  if ((input as any) === NO_OP) {
+  if (input === NO_OP) {
     return;
   }
   let root = getRoot(parentDom);
@@ -82,12 +82,12 @@ export function render(input: VNode<any>, parentDom?: Element): ThChildren {
     const lifecycle = new Lifecycle();
 
     if (!isInvalid(input)) {
-      if ((input as VNode<any>).dom) {
-        input = cloneVNode(input as VNode<any>);
+      if (input.dom) {
+        input = cloneVNode(input);
       }
       /** Hydrate or mount */
       if (!hydrateRoot(input, parentDom, lifecycle)) {
-        mount(input as VNode<any>, parentDom, lifecycle, false);
+        mount(input, parentDom, lifecycle, false);
       }
       root = setRoot(parentDom, input, lifecycle);
       lifecycle.trigger();
@@ -96,19 +96,19 @@ export function render(input: VNode<any>, parentDom?: Element): ThChildren {
     const lifecycle = root.lifecycle;
 
     if (isNullOrUndef(input)) {
-      unmount(root.input as VNode<any>, parentDom, lifecycle, false, false);
+      unmount(root.input, parentDom, lifecycle, false, false);
       removeRoot(root);
     } else {
-      if ((input as VNode<any>).dom) {
-        input = cloneVNode(input as VNode<any>);
+      if (input.dom) {
+        input = cloneVNode(input);
       }
-      patch(root.input as VNode<any>, input as VNode<any>, parentDom, lifecycle, false, false);
+      patch(root.input, input, parentDom, lifecycle, false, false);
     }
     lifecycle.trigger();
     root.input = input;
   }
   if (root) {
-    const rootInput: VNode<any> = root.input as VNode<any>;
+    const rootInput: VNode<any> = root.input;
 
     if (rootInput && (rootInput.flags & VNodeFlags.Component)) {
       return rootInput.children;
