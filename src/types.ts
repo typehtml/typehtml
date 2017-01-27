@@ -2,6 +2,26 @@
 export type ThChildren = string | number | VNode | Array<string | VNode> | null;
 
 // ----------------------------------------------------------------------
+// Creation
+// ----------------------------------------------------------------------
+
+/** Return from creating a native dom element */
+export interface DOMElement<P extends HTMLAttributes<T>, T extends Element> extends ThElement<P> {
+  type: string;
+  ref: Ref<T>;
+}
+/** Return from creating a Function component */
+export interface ComponentFunctionElement<P> extends ThElement<P> {
+  type: ComponentFunction<P>;
+  ref: Ref<P>;
+}
+/** Return from creating a Class component */
+export interface ComponentClassElement<P> extends ThElement<P> {
+  type: ComponentClass<P>;
+  ref: Ref<P>;
+}
+
+// ----------------------------------------------------------------------
 // Elements
 // ----------------------------------------------------------------------
 export interface ThElement<P> {
