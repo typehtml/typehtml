@@ -5,3 +5,6 @@
 # Add Mobx
 * devdep + peerdep `>=3.0.0`
 * Use mobx.reaction around renders : https://github.com/mobxjs/mobx-react/blob/20bdcb39f43fc6466e050dca1711a64ad8d6252c/src/observer.js#L148
+
+# Cleanups
+* noImplicitAny at least on patching
