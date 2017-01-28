@@ -19,7 +19,7 @@ export function createElement(
   type: any,
   props?: any
 ): any {
-  /**  */
+  /** Normalize the children */
   let children: types.CreateElementChildren = null;
   if (arguments.length > 3 || !Array.isArray(children)) {
     children = Array.prototype.slice.call(arguments, 2);
