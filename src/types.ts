@@ -27,8 +27,12 @@ export type CreateElementChild =
 /**
  * These are always arrays because we use `...`
  * rest in our createChildren parameter to ensure its an array
+ *
+ * They can also be doubly arrays e.g.
+ * <div>{[1,2]}</div> =jsx> ("div",null,[1,2]) =rest params> [[1,2]]
  */
-export type CreateElementChildren = CreateElementChild[];
+export type CreateElementChildren =
+  Array<CreateElementChild | CreateElementChild[]>;
 
 // ----------------------------------------------------------------------
 // Elements

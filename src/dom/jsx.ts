@@ -102,7 +102,7 @@ namespace NormalizeChildren {
   }
 }
 
-function buildVnode(nsURI, defNS, modules, tag, attrs, children) {
+function buildVnode(nsURI, defNS, modules, tag, attrs, children: types.CreateElementChildren) {
   attrs = attrs || {};
   children = NormalizeChildren.maybeFlatten(children);
   if (typeof tag === 'string') {
