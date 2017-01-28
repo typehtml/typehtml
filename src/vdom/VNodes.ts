@@ -22,9 +22,13 @@ export function createVNode(
   ref?: Ref<any>,
   noNormalise?: boolean
 ): VNode<any> {
+
+  /** Set component flags */
   if (flags & VNodeFlags.ComponentUnknown) {
     flags = isComponentClass(type) ? VNodeFlags.ComponentClass : VNodeFlags.ComponentFunction;
   }
+
+  /** Create node */
   const vNode: VNode<any> = {
     children: isUndefined(children) ? null : children,
     dom: null,
@@ -35,12 +39,13 @@ export function createVNode(
     ref: ref || null,
     type
   };
-  if (!noNormalise) {
-    normalize(vNode);
-  }
-  if (options.createVNode) {
-    options.createVNode(vNode);
-  }
+
+  /** Normalize */
+  !noNormalise && normalize(vNode);
+
+  /** External create hook */
+  options.createVNode && options.createVNode(vNode);
+
   return vNode;
 }
 
@@ -142,7 +147,7 @@ export function createVoidVNode(): VNode<any> {
 }
 
 export function createTextVNode(text: string | number): VNode<any> {
-  return createVNode(VNodeFlags.Text, null, null, text, null, null, null, true);
+  return createVNode(VNodeFlags.Text, null, null, text, null, null, null, /** No normalize */ true);
 }
 
 export function isVNode(o: ThChildren): o is VNode<any> {

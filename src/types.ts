@@ -93,6 +93,10 @@ export interface Refs {
   onComponentWillUnmount?(domNode: Element): void;
 }
 
+/**
+ * These are used to detect key things in the props,
+ * that need to be moved (normalized) to VNode.
+ */
 export type VNodeProps = {
   children?: ThChildren;
   ref?: Ref<any>;

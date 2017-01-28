@@ -112,6 +112,11 @@ function normalizeChildren(children: ThChildren | null) {
   return children;
 }
 
+/**
+ * if the props contains ref, events, children or key,
+ * usually because the VNode was created using JSX spread props,
+ * we need to put these values back onto the root of the VNode.
+ */
 function normalizeProps(vNode: VNode<any>, props: VNodeProps, children: ThChildren) {
   if (!(vNode.flags & VNodeFlags.Component) && isNullOrUndef(children) && !isNullOrUndef(props.children)) {
     vNode.children = props.children;
@@ -137,6 +142,9 @@ export function copyDefaultProps(defaultProps: VNodeProps, props: VNodeProps) {
   }
 }
 
+/**
+ * Add flags for intrinsic elements
+ */
 function normalizeElement(type: string, vNode: VNode<any>) {
   if (type === 'svg') {
     vNode.flags = VNodeFlags.SvgElement;
