@@ -13,7 +13,7 @@
     "testem": "testem",
     "build": "tsc -p .",
     "unittest": "mocha ./lib/tests/mocha/**/*.js",
-    "test": "npm run build && npm run unittest && npm run karma",
+    "test": "npm run build && npm run unittest && npm run karma && npm run testem -- ci",
     "start": "npm run build -- -w & npm run unittest -- --watch"
   },
   "repository": {
