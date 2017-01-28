@@ -1,0 +1,12 @@
+{
+  "framework": "mocha",
+  "src_files": [
+    "lib/tests/testem/*.js"
+  ],
+  "serve_files": [
+    "browserified.js"
+  ],
+  "before_tests": "browserify -d lib/tests/testem/index.js -o browserified.js",
+  "on_exit": "rm browserified.js",
+  "launch_in_dev": [ "firefox", "chrome" ]
+}
