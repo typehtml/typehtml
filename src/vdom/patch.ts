@@ -12,4 +12,4 @@ export const patch = init([ // Init patch function with choosen modules
   propsModule,
   styleModule,
   eventListenersModule
-]) as (oldVNode: Element | VNode, vnode: VNode) => void;
+]);
