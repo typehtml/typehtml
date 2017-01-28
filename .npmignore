@@ -13,3 +13,6 @@ alm.json
 
 # npm 
 npm-debug.log*
+
+# Scratch files
+scratch
