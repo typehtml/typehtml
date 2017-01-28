@@ -2,7 +2,7 @@ import { h } from '../../vdom/h';
 import * as assert from 'assert';
 
 describe('h', () => {
-  var elm: HTMLDivElement;
+  let elm: HTMLDivElement;
   beforeEach(() => {
     elm = document.createElement('div');
   });
