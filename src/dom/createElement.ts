@@ -22,7 +22,7 @@ export function createElement(
   /** intrinsic elements */
   if (typeof type === 'string') {
     const { vnodeData, vnodeChildren } = mapPropsToHProps(props, children);
-    return h(type, { props: vnodeData }, children);
+    return h(type, vnodeData, children);
   };
 }
 
@@ -44,10 +44,16 @@ function mapPropsToHProps(
     = props != null
       ? {
         key: props.key || null,
-        class: props.className || null,
         hook: {
           create: props.ref || null
-        }
+        },
+        props: {
+          /** TODO all other props */
+        },
+        on: {
+          /** TODO event props */
+        },
+        class: ''/** TODO: class names */
       }
       : null;
 
