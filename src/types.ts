@@ -4,9 +4,8 @@ export { VNode };
 /** Everything that can be rendered */
 export type ThChildren =
   | string
-  | number
   | VNode
-  | Array<string | number | VNode>
+  | Array<string | VNode>
   | null;
 
 // ----------------------------------------------------------------------
@@ -14,17 +13,17 @@ export type ThChildren =
 // ----------------------------------------------------------------------
 
 /** Return from creating a native dom element */
-export interface DOMElement<T extends Element> {
+export interface DOMElement<T extends Element> extends VNode {
   type: string;
   ref: Ref<T>;
 }
 /** Return from creating a Function component */
-export interface ComponentFunctionElement<P> {
+export interface ComponentFunctionElement<P> extends VNode {
   type: ComponentFunction<P>;
   ref: Ref<P>;
 }
 /** Return from creating a Class component */
-export interface ComponentClassElement<P> {
+export interface ComponentClassElement<P> extends VNode {
   type: ComponentClass<P>;
   ref: Ref<P>;
 }
