@@ -44,7 +44,7 @@ I absolutely love react and [recently shared my love as well](https://medium.com
 
 Beyond being in / for TypeScript, the following are a few other differentiators.
 
-> It is nearly impossible to know without actually using if these ideas are good or bad. But some people have to do the dreaming.
+> It is nearly impossible to know yet if these ideas are good or bad. In a magical world where this idea performs well, it definitely results in less developer code.
 
 * Components are pure.
   * They are always a side effect of a mobx observed change.
