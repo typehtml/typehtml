@@ -30,9 +30,16 @@ export type CreateElementChild =
  *
  * They can also be doubly arrays e.g.
  * <div>{[1,2]}</div> =jsx> ("div",null,[1,2]) =rest params> [[1,2]]
+ *
+ * And really arbitrary e.g.
+ * <div>{[1,[2,3]]}</div>
  */
-export type CreateElementChildren =
-  Array<CreateElementChild | CreateElementChild[]>;
+export interface CreateElementChildren extends
+  Array<CreateElementChild | Array<CreateElementChildren>> { };
+
+export type CreateElementChildrenFlattened =
+  Array<CreateElementChild>
+  | null;
 
 // ----------------------------------------------------------------------
 // Elements

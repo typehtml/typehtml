@@ -76,35 +76,8 @@ function buildFromComponent(nsURI, defNS, modules, tag, attrs, children) {
 }
 
 
-namespace NormalizeChildren {
-  function flatten<T>(nested: T[], start: number, flat: T[]): void {
-    for (var i = start, len = nested.length; i < len; i++) {
-      var item = nested[i];
-      if (Array.isArray(item)) {
-        flatten(item, 0, flat);
-      } else {
-        flat.push(item);
-      }
-    }
-  }
-  export function maybeFlatten<T>(array?: T[] | T[][]): T[] {
-    if (array) {
-      for (var i = 0, len = array.length; i < len; i++) {
-        if (Array.isArray(array[i])) {
-          var flat = array.slice(0, i);
-          flatten<T>(array as any, i, flat as any);
-          array = flat;
-          break;
-        }
-      }
-    }
-    return array as any;
-  }
-}
-
 function buildVnode(nsURI, defNS, modules, tag, attrs, children: types.CreateElementChildren): VNode {
   attrs = attrs || {};
-  children = NormalizeChildren.maybeFlatten(children);
   if (typeof tag === 'string') {
     return buildFromStringTag(nsURI, defNS, modules, tag, attrs, children)
   } else {
@@ -112,11 +85,9 @@ function buildVnode(nsURI, defNS, modules, tag, attrs, children: types.CreateEle
   }
 }
 
-function JSX(nsURI?, defNS?, modules?) {
-  return function jsxWithCustomNS(tag, attrs, children: types.CreateElementChildren) {
-    return buildVnode(nsURI, defNS || 'props', modules || modulesNS, tag, attrs, children);
-  };
-}
-
-export const html = JSX(undefined);
-export const svg = JSX(SVGNS, 'attrs');
+export const html = (tag, attrs, children: types.CreateElementChildren) => {
+  return buildVnode(undefined, 'props', modulesNS, tag, attrs, children);
+};
+export const svg = (tag, attrs, children: types.CreateElementChildren) => {
+  return buildVnode(SVGNS, 'attrs', modulesNS, tag, attrs, children);
+};
