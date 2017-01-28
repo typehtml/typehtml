@@ -63,35 +63,34 @@ function _normalizeVNodes(nodes: any[], result: VNode<any>[], index: number, cur
   }
 }
 
-export function normalizeVNodes(nodes: any[]): VNode<any>[] {
-  let newNodes;
+export function normalizeVNodes(nodes: VNode<any>[]): VNode<any>[] {
+  let newNodes: VNode<any>[];
 
   // we assign $ which basically means we've flagged this array for future note
   // if it comes back again, we need to clone it, as people are using it
   // in an immutable way
-  // tslint:disable
   if (nodes['$']) {
     nodes = nodes.slice();
   } else {
     nodes['$'] = true;
   }
-  // tslint:enable
+
   for (let i = 0; i < nodes.length; i++) {
     const n = nodes[i];
 
     if (isInvalid(n) || isArray(n)) {
-      const result = (newNodes || nodes).slice(0, i) as VNode<any>[];
+      const result = (newNodes || nodes).slice(0, i);
 
       _normalizeVNodes(nodes, result, i, ``);
       return result;
     } else if (isStringOrNumber(n)) {
       if (!newNodes) {
-        newNodes = nodes.slice(0, i) as VNode<any>[];
+        newNodes = nodes.slice(0, i);
       }
       newNodes.push(applyKeyIfMissing(i, createTextVNode(n)));
     } else if ((isVNode(n) && n.dom) || (isNull(n.key) && !(n.flags & VNodeFlags.HasNonKeyedChildren))) {
       if (!newNodes) {
-        newNodes = nodes.slice(0, i) as VNode<any>[];
+        newNodes = nodes.slice(0, i);
       }
       newNodes.push(applyKeyIfMissing(i, cloneVNode(n)));
     } else if (newNodes) {
@@ -99,12 +98,12 @@ export function normalizeVNodes(nodes: any[]): VNode<any>[] {
     }
   }
 
-  return newNodes || nodes as VNode<any>[];
+  return newNodes || nodes;
 }
 
 function normalizeChildren(children: ThChildren | null) {
   if (isArray(children)) {
-    return normalizeVNodes(children);
+    return normalizeVNodes(children as VNode<any>[]);
   } else if (isVNode(children) && children.dom) {
     return cloneVNode(children);
   }
