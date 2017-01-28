@@ -2,12 +2,21 @@ import { Hooks } from './hooks';
 
 export type Key = string | number;
 
+/** For text vnodes, they might contain any of the following */
+export type TextType =
+  | string
+  | number
+  | boolean
+  | Symbol;
+
 export interface VNode {
-  sel: string | undefined;
-  data: VNodeData | undefined;
-  children: Array<VNode | string> | undefined;
-  key: Key;
-  text?: string | undefined;
+  sel?: string | undefined;
+  data?: VNodeData | undefined;
+  children?: Array<VNode | string> | undefined;
+  key?: Key;
+
+  /** For primitive vNodes. All it has is text */
+  text?: TextType;
 
   /** Only once mounted */
   elm?: Node;

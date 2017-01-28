@@ -1,13 +1,13 @@
 /**
  * https://github.com/yelouafi/snabbdom-jsx/blob/5c358839cb208bf76023ea2c0967091a52f9bc70/snabbdom-jsx.js
  */
-import { VNode } from '../vdom/vnode';
+import { VNode, TextType } from '../vdom/vnode';
 import * as types from '../types';
 
 const SVGNS = 'http://www.w3.org/2000/svg';
 const modulesNS = ['hook', 'on', 'style', 'class', 'props', 'attrs', 'dataset'];
 
-function isPrimitive(val: any) {
+function isPrimitive(val: any): val is TextType {
   return typeof val === 'string' ||
     typeof val === 'number' ||
     typeof val === 'boolean' ||
@@ -40,7 +40,7 @@ function normalizeAttrs(attrs, nsURI, defNS, modules) {
   }
 }
 
-function buildFromStringTag(nsURI, defNS, modules, tag, attrs, children): VNode {
+function buildFromStringTag(nsURI, defNS, modules, tag, attrs, children: types.CreateElementChildren): VNode {
   if (attrs.selector) {
     tag = tag + attrs.selector;
   }
@@ -61,7 +61,7 @@ function buildFromStringTag(nsURI, defNS, modules, tag, attrs, children): VNode 
   };
 }
 
-function buildFromComponent(nsURI, defNS, modules, tag, attrs, children) {
+function buildFromComponent(nsURI, defNS, modules, tag, attrs, children: types.CreateElementChildren) {
   var res;
   if (typeof tag === 'function')
     res = tag(attrs, children);

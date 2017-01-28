@@ -19,9 +19,10 @@ export type ThChildren =
  *   - number
  **/
 export type CreateElementChild =
-  | null
   | string
   | number
+  | boolean
+  | Symbol
   | VNode
 
 /**
@@ -34,10 +35,11 @@ export type CreateElementChild =
  * And really arbitrary e.g.
  * <div>{[1,[2,3]]}</div>
  */
-export interface CreateElementChildren extends
-  Array<CreateElementChild | Array<CreateElementChildren>> { };
+export interface CreateElementChildrenRaw extends
+  Array<CreateElementChild | Array<CreateElementChildrenRaw>> { };
 
-export type CreateElementChildrenFlattened =
+/** The normalized version of children */
+export type CreateElementChildren =
   Array<CreateElementChild>
   | null;
 
