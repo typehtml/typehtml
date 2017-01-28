@@ -8,5 +8,8 @@
   ],
   "before_tests": "browserify -d lib/tests/testem/index.js -o browserified.js",
   "on_exit": "rm browserified.js",
-  "launch_in_dev": [ "firefox", "chrome" ]
+  "launch_in_dev": [
+    "firefox",
+    "chrome"
+  ]
 }
