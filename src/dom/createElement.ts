@@ -1,6 +1,7 @@
 import * as types from '../types';
 import { VNodeData } from '../vdom/vnode';
 import { h } from '../vdom/h';
+import { html, svg } from './jsx';
 
 export function createElement<P extends types.HTMLAttributes<T>, T extends Element>(
   type: string,
@@ -21,8 +22,7 @@ export function createElement(
 ): any {
   /** intrinsic elements */
   if (typeof type === 'string') {
-    const { vnodeData, vnodeChildren } = mapPropsToHProps(props, children);
-    return h(type, vnodeData, children);
+    return html(type, props, children);
   };
 }
 

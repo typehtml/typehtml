@@ -2,7 +2,7 @@
  * Used as a sample what the code can look like.
  * It will not work without us actually writing the code
  */
-import * as TH from '../../index'
+import * as Th from '../../index'
 
 /** Create component as a function */
 const FunctionExample = ({ text }: { text: string }) => <div>{text}</div>

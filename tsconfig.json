@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "jsx": "react",
-    "reactNamespace": "TH",
+    "reactNamespace": "Th",
     "outDir": "lib",
     "lib": [
       "es6",

@@ -1,4 +1,4 @@
-import { h } from '../../vdom/h';
+import * as Th from '../../index';
 import * as assert from 'assert';
 
 describe('h', () => {
@@ -8,7 +8,7 @@ describe('h', () => {
   });
 
   it('can create vnode with proper tag', () => {
-    assert.equal(h('div').sel, 'div');
-    assert.equal(h('a').sel, 'a');
+    const x = <div/>;
+    assert.equal(x.sel, 'div');
   });
 })

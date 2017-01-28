@@ -6,9 +6,11 @@ export interface VNode {
   sel: string | undefined;
   data: VNodeData | undefined;
   children: Array<VNode | string> | undefined;
-  elm: Node | undefined;
-  text: string | undefined;
   key: Key;
+  text?: string | undefined;
+
+  /** Only once mounted */
+  elm?: Node;
 }
 
 export interface VNodeData {
