@@ -13,7 +13,8 @@ export { createElement };
 /**
  * Takes JSX and renders it to a string
  */
-export declare function renderToString(input: types.VNode): string;
+import { renderToString } from './server/renderToString';
+export { renderToString };
 
 
 /**
