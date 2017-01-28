@@ -1,10 +1,12 @@
+import { VNode } from './vdom/vnode';
+export { VNode };
+
 /** Everything that can be rendered */
 export type ThChildren =
-  string
+  | string
   | number
-  | VNode<any>
-  | Array<string | VNode<any>>
-  | Component<any>
+  | VNode
+  | Array<string | number | VNode>
   | null;
 
 // ----------------------------------------------------------------------
@@ -32,7 +34,7 @@ export interface ComponentClassElement<P> {
 // ----------------------------------------------------------------------
 
 export interface ComponentFunction<P> {
-  (props: P & { children?: ThChildren }): VNode<any> | null;
+  (props: P & { children?: ThChildren }): VNode;
   defaultProps?: P;
   displayName?: string;
 }
@@ -47,7 +49,7 @@ export interface ComponentClass<P> {
 export interface Component<P> {
   props: Readonly<{ children?: ThChildren }> & Readonly<P>;
   constructor(props?: P);
-  render(): VNode<any> | null;
+  render(): VNode;
 
   /**
    * LifeCycle
@@ -58,23 +60,6 @@ export interface Component<P> {
   componentWillUpdate?(nextProps: P): void;
   componentDidUpdate?(prevProps: P): void;
   componentWillUnmount?(): void;
-
-  /**
-   * Used in internal tracking
-   */
-  _unmounted?: boolean;
-
-  /**
-   * Used in internal patch tracking
-   **/
-  /** The patch function */
-  _patch?: any;
-  _lastInput?: any;
-  _vNode?: VNode<any>;
-  _vComponent?: VNode<any>;
-  _isSVG?: boolean;
-  /** An instace of LifeCycle class */
-  _lifecycle?: any;
 }
 
 // ----------------------------------------------------------------------
@@ -91,17 +76,6 @@ export interface Refs {
   onComponentWillUpdate?(lastProps, nextProps): void;
   onComponentDidUpdate?(lastProps, nextProps): void;
   onComponentWillUnmount?(domNode: Element): void;
-}
-
-/**
- * These are used to detect key things in the props,
- * that need to be moved (normalized) to VNode.
- */
-export type VNodeProps = {
-  children?: ThChildren;
-  ref?: Ref<any>;
-  key?: Key;
-  events?: VNodeEvents;
 }
 
 export const enum VNodeFlags {
@@ -123,29 +97,6 @@ export const enum VNodeFlags {
   Void = 1 << 12,
   Element = HtmlElement | SvgElement | MediaElement | InputElement | TextareaElement | SelectElement,
   Component = ComponentFunction | ComponentClass | ComponentUnknown
-}
-
-/** The event attributes collected */
-export type VNodeEvents = {
-  [key: string]: ThEventHandler<any>
-}
-
-/** The core result of a call to createElement */
-export interface VNode<P> {
-  type: Type<P>;
-  ref: Ref<any>;
-  key: Key;
-  flags: VNodeFlags;
-
-  children?: ThChildren;
-  /**
-   * This is present if the VNode is hoisted (aka mounted).
-   */
-  dom?: Element;
-  events?: VNodeEvents;
-
-  props: VNodeProps & P;
-  parentVNode?: VNode<P>;
 }
 
 // ----------------------------------------------------------------------
@@ -636,7 +587,7 @@ export interface SVGAttributes<T> extends HTMLAttributes<T> {
 // ----------------------------------------------------------------------
 declare global {
   namespace JSX {
-    interface Element extends VNode<any> { }
+    interface Element extends VNode { }
     interface ElementAttributesProperty { props: {}; }
     interface IntrinsicAttributes extends ThAttributes<void> { }
     interface IntrinsicClassAttributes<T> extends ThAttributes<T> { }

@@ -23,10 +23,10 @@ export declare function createElement<P>(
 /**
  * Takes JSX and renders it to a string
  */
-export declare function renderToString(input: types.VNode<any>): string;
+export declare function renderToString(input: types.VNode): string;
 
 
 /**
  * Takes JSX and renders it to a dom element
  */
-export declare function render(input: types.VNode<any>, parentDom: Element): void;
+export declare function render(input: types.VNode, parentDom: Element): void;
