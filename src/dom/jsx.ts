@@ -2,6 +2,8 @@
  * https://github.com/yelouafi/snabbdom-jsx/blob/5c358839cb208bf76023ea2c0967091a52f9bc70/snabbdom-jsx.js
  */
 import { VNode } from '../vdom/vnode';
+import * as types from '../types';
+
 const SVGNS = 'http://www.w3.org/2000/svg';
 const modulesNS = ['hook', 'on', 'style', 'class', 'props', 'attrs', 'dataset'];
 
@@ -111,9 +113,7 @@ function buildVnode(nsURI, defNS, modules, tag, attrs, children) {
 }
 
 function JSX(nsURI?, defNS?, modules?) {
-  return function jsxWithCustomNS(tag, attrs, children) {
-    if (arguments.length > 3 || !Array.isArray(children))
-      children = Array.prototype.slice.call(arguments, 2);
+  return function jsxWithCustomNS(tag, attrs, children: types.CreateElementChildren) {
     return buildVnode(nsURI, defNS || 'props', modules || modulesNS, tag, attrs, children);
   };
 }

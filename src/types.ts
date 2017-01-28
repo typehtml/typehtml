@@ -1,12 +1,34 @@
 import { VNode } from './vdom/vnode';
 export { VNode };
 
-/** Everything that can be rendered */
+/** Stored in VNodeChildren */
 export type ThChildren =
   | string
   | VNode
   | Array<string | VNode>
   | null;
+
+/**
+ * Everything that can be rendered
+ * It is called based on JSX Transformer:
+ * - <div/> : ("div", props, null)
+ * - <div>Hello</div> : ("div",null,"Hello")
+ * - <div><div/></div>: ("div",null,createElementCall)
+ * - <div>{variable}</div> :
+ *  Where variable can be:
+ *   - number
+ **/
+export type CreateElementChild =
+  | null
+  | string
+  | number
+  | VNode
+
+/**
+ * These are always arrays because we use `...`
+ * rest in our createChildren parameter to ensure its an array
+ */
+export type CreateElementChildren = CreateElementChild[];
 
 // ----------------------------------------------------------------------
 // Elements
