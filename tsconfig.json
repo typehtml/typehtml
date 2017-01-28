@@ -2,8 +2,6 @@
   "compilerOptions": {
     "jsx": "react",
     "reactNamespace": "TH",
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
     "outDir": "lib",
     "lib": [
       "es6",

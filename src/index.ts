@@ -7,17 +7,26 @@ export { types };
 /**
  * Takes JSX and returns a handle to the DOMElement
  **/
-import { createElement } from './vdom/createElement';
-export { createElement };
+export declare function createElement<P extends types.HTMLAttributes<T>, T extends Element>(
+  name: string,
+  props?: types.ThAttributes<T> & P,
+  ...children: types.ThChildren[]): types.DOMElement<T>;
+export declare function createElement<P>(
+  name: types.ComponentFunction<P>,
+  props?: types.ThAttributes<P> & P,
+  ...children: types.ThChildren[]): types.ComponentFunctionElement<P>;
+export declare function createElement<P>(
+  name: types.ComponentClass<P>,
+  props?: types.ThAttributes<P> & P,
+  ...children: types.ThChildren[]): types.ComponentClassElement<P>;
 
 /**
  * Takes JSX and renders it to a string
  */
-import { renderToString } from './server/renderToString';
-export { renderToString };
+export declare function renderToString(input: types.VNode<any>): string;
+
 
 /**
  * Takes JSX and renders it to a dom element
  */
-import { render } from './dom/rendering';
-export { render };
+export declare function render(input: types.VNode<any>, parentDom: Element): void;
