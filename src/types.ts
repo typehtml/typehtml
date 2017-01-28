@@ -138,6 +138,9 @@ export interface VNode<P> {
   flags: VNodeFlags;
 
   children?: ThChildren;
+  /**
+   * This is present if the VNode is hoisted (aka mounted).
+   */
   dom?: Element;
   events?: VNodeEvents;
 
