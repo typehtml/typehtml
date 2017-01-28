@@ -22,7 +22,7 @@ export function createElement(
   /** intrinsic elements */
   if (typeof type === 'string') {
     const { vnodeData, vnodeChildren } = mapPropsToHProps(props, children);
-    return h(type, vnodeData, children);
+    return h(type, { props: vnodeData }, children);
   };
 }
 
