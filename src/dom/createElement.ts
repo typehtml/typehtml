@@ -3,15 +3,15 @@ import { VNodeData } from '../vdom/vnode';
 import { h } from '../vdom/h';
 
 export function createElement<P extends types.HTMLAttributes<T>, T extends Element>(
-  name: string,
+  type: string,
   props?: types.ThAttributes<T> & P,
   ...children: types.ThChildren[]): types.DOMElement<T>;
 export function createElement<P>(
-  name: types.ComponentFunction<P>,
+  type: types.ComponentFunction<P>,
   props?: types.ThAttributes<P> & P,
   ...children: types.ThChildren[]): types.ComponentFunctionElement<P>;
 export function createElement<P>(
-  name: types.ComponentClass<P>,
+  type: types.ComponentClass<P>,
   props?: types.ThAttributes<P> & P,
   ...children: types.ThChildren[]): types.ComponentClassElement<P>;
 export function createElement(
@@ -20,9 +20,9 @@ export function createElement(
   ...children: any[]
 ): any {
   /** intrinsic elements */
-  if (typeof name === 'string') {
+  if (typeof type === 'string') {
     const { vnodeData, vnodeChildren } = mapPropsToHProps(props, children);
-    return h(name, vnodeData, children);
+    return h(type, vnodeData, children);
   };
 }
 
@@ -36,16 +36,20 @@ function mapPropsToHProps(
   /** Expand the type of props to be the most permissive */
   const props = _props as types.SVGAttributes<any>;
 
-  /** Normalize children, preferring the props over nested */
-  const vnodeChildren = props.children || children;
+  /** Normalize children, preferring the props version over nested */
+  const vnodeChildren = props != null && props.children ? props.children : children;
 
-  const VNodeData: VNodeData = {
-    key: props.key || null,
-    class: props.className || null,
-    hook: {
-      create: props.ref || null
-    }
-  }
+  /** Map our props to VNode Data */
+  const VNodeData: VNodeData
+    = props != null
+      ? {
+        key: props.key || null,
+        class: props.className || null,
+        hook: {
+          create: props.ref || null
+        }
+      }
+      : null;
 
   return { vnodeChildren, vnodeData: {} };
 }
