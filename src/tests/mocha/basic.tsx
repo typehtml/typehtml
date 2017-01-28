@@ -16,6 +16,9 @@ class ClassExample {
   }
 }
 
+/** Use native */
+let nativeExample = <div>Hello world</div>
+
 /** Use a function */
 let functionExample = <FunctionExample text={"Hello world"} />
 

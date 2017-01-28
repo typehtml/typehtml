@@ -165,6 +165,7 @@ export type Ref<T>
 export interface ThAttributes<T> {
   key?: Key;
   ref?: Ref<T>;
+  children?: ThChildren[];
 }
 
 export interface HTMLAttributes<T> extends ThAttributes<T> {
@@ -316,7 +317,6 @@ export interface HTMLAttributes<T> extends ThAttributes<T> {
   unselectable?: boolean;
 
   // Other attributes we support
-  children?: ThChildren;
   dangerouslySetInnerHTML?: {
     __html: string;
   };
