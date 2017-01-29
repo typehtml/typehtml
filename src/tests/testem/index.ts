@@ -1,5 +1,5 @@
 /**
  * export all the tests
  */
-import * as basic from './basic';
-export { basic };
+export import _ = require('./intrinsic');
+export import __ = require('./componentFunction');

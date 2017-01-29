@@ -1,5 +1,7 @@
 /**
  * https://github.com/yelouafi/snabbdom-jsx/blob/5c358839cb208bf76023ea2c0967091a52f9bc70/snabbdom-jsx.js
+ *
+ * // TODO: consider bringing in https://github.com/yelouafi/snabbdom-jsx/pull/9/files
  */
 import { VNode, TextType } from '../vdom/vnode';
 import * as types from '../types';
@@ -40,7 +42,7 @@ function normalizeAttrs(attrs, nsURI, defNS, modules) {
   }
 }
 
-function buildFromStringTag(nsURI, defNS, modules, tag, attrs, children: types.CreateElementChildren): VNode {
+function buildFromStringTag(nsURI, defNS, modules, tag: string, attrs, children: types.CreateElementChildren): VNode {
   if (attrs.selector) {
     tag = tag + attrs.selector;
   }
@@ -61,16 +63,9 @@ function buildFromStringTag(nsURI, defNS, modules, tag, attrs, children: types.C
   };
 }
 
-function buildFromComponent(nsURI, defNS, modules, tag, attrs, children: types.CreateElementChildren) {
-  var res;
-  if (typeof tag === 'function')
-    res = tag(attrs, children);
-  else if (tag && typeof tag.view === 'function')
-    res = tag.view(attrs, children);
-  else if (tag && typeof tag.render === 'function')
-    res = tag.render(attrs, children);
-  else
-    throw new Error("JSX tag must be either a string, a function or an object with 'view' or 'render' methods");
+function buildFromFunctionComponent(nsURI, defNS, modules, tag: types.ComponentFunction<any>, attrs, children: types.CreateElementChildren) {
+  const props = Object.assign({}, attrs, { children });
+  const res = tag(props);
   res.key = attrs.key;
   return res;
 }
@@ -79,9 +74,13 @@ function buildFromComponent(nsURI, defNS, modules, tag, attrs, children: types.C
 function buildVnode(nsURI, defNS, modules, tag, attrs, children: types.CreateElementChildren): VNode {
   attrs = attrs || {};
   if (typeof tag === 'string') {
-    return buildFromStringTag(nsURI, defNS, modules, tag, attrs, children)
-  } else {
-    return buildFromComponent(nsURI, defNS, modules, tag, attrs, children)
+    return buildFromStringTag(nsURI, defNS, modules, tag, attrs, children);
+  }
+  else if (typeof tag === 'function') {
+    return buildFromFunctionComponent(nsURI, defNS, modules, tag, attrs, children);
+  }
+  else {
+    throw new Error("JSX tag must be either a string, a function or an object with 'view' or 'render' methods");
   }
 }
 

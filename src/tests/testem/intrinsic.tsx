@@ -1,7 +1,7 @@
 import * as Th from '../../index';
 import * as assert from 'assert';
 
-describe('h', () => {
+describe('render intrinsic', () => {
   let elm: HTMLDivElement;
   beforeEach(() => {
     elm = document.createElement('div');

@@ -30,7 +30,11 @@ export function createElement(
   /** intrinsic elements */
   if (typeof type === 'string') {
     return html(type, props, children);
-  };
+  }
+  /** TODO: clean it up */
+  else if (typeof type === 'function') {
+    return html(type, props, children);
+  }
 }
 
 /**
