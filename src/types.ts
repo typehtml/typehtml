@@ -182,7 +182,7 @@ export type Ref<T>
 export interface ThAttributes<T> {
   key?: Key;
   ref?: Ref<T>;
-  children?: CreateElementChildren;
+  children?: CreateElementChild | CreateElementChildren;
 }
 
 export interface HTMLAttributes<T> extends ThAttributes<T> {

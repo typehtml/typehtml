@@ -42,7 +42,9 @@ export function createElement(
    * If they did we always prefer them and remove the jsx children
    **/
   if (props.children) {
-    children = props.children;
+    children = Array.isArray(props.children)
+      ? NormalizeChildren.maybeFlatten(props.children)
+      : NormalizeChildren.maybeFlatten([props.children]);
     props = objWithoutProps(props, ['children']);
   }
 
