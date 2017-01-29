@@ -20,4 +20,5 @@ export { renderToString };
 /**
  * Takes JSX and renders it to a dom element
  */
-export declare function render(input: types.VNode, parentDom: Element): void;
+import { render } from './dom/render';
+export { render };

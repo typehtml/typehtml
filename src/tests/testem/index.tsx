@@ -1,6 +1,5 @@
 import * as Th from '../../index';
 import * as assert from 'assert';
-import { patch } from '../../vdom/patch';
 
 describe('h', () => {
   let elm: HTMLDivElement;
@@ -10,7 +9,7 @@ describe('h', () => {
 
   it('can create vnode with proper tag', () => {
     const x = <div>Hello World</div>;
-    patch(elm, x);
-    assert.equal(elm.innerHTML, 'Hello World');
+    Th.render(x, elm);
+    assert.equal(elm.innerHTML, '<div>Hello World</div>');
   });
 })
