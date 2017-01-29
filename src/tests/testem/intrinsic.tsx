@@ -55,7 +55,7 @@ describe('render intrinsic', () => {
     assert.equal(elm.innerHTML, '<div style="color: red; background-color: blue;">Hello World</div>');
   });
 
-  it.only('ref gets called', () => {
+  it.skip('ref gets called', () => {
     let ref: HTMLDivElement;
     const setRef = (div: HTMLDivElement) => ref = div;
     const x = <div ref={setRef}>Hello World</div>;
