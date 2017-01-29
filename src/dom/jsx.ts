@@ -27,11 +27,17 @@ function normalizeAttrs(attrs, nsURI, defNS, modules): types.VNodeData {
   }
   for (var key in attrs) {
     if (key !== 'key' && key !== 'classNames' && key !== 'selector') {
+      /**
+       * We use `-` to identify the module that should handle it
+       * So {on-click:foo} => {on : {click: foo}}
+       **/
       var idx = key.indexOf('-');
-      if (idx > 0)
+      if (idx > 0) {
         addAttr(key.slice(0, idx), key.slice(idx + 1), attrs[key]);
-      else if (!map[key])
+      }
+      else if (!map[key]) {
         addAttr(defNS, key, attrs[key]);
+      }
     }
   }
   return map;
