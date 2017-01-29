@@ -106,7 +106,7 @@ export function init(modules: Array<Partial<Module>>, domApi?: DOMAPI) {
         if (i.insert) insertedVnodeQueue.push(vnode);
       }
     } else {
-      vnode.elm = api.createTextNode(vnode.text as string);
+      vnode.elm = api.createTextNode(vnode.text);
     }
     return vnode.elm;
   }

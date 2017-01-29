@@ -1,10 +1,8 @@
+import { TextType } from '../types';
 export interface DOMAPI {
   createElement: (tagName: any) => HTMLElement;
   createElementNS: (namespaceURI: string, qualifiedName: string) => Element;
-  createTextNode: (text: string
-    | number
-    | boolean
-    | Symbol) => Text;
+  createTextNode: (text: TextType) => Text;
   insertBefore: (parentNode: Node, newNode: Node, referenceNode: Node | null) => void;
   removeChild: (node: Node, child: Node) => void;
   appendChild: (node: Node, child: Node) => void;
@@ -22,11 +20,7 @@ function createElementNS(namespaceURI: string, qualifiedName: string): Element {
   return document.createElementNS(namespaceURI, qualifiedName);
 }
 
-function createTextNode(text:
-  string
-  | number
-  | boolean
-  | Symbol): Text {
+function createTextNode(text: TextType): Text {
   return document.createTextNode(text as string);
 }
 
