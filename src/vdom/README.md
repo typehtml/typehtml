@@ -11,3 +11,4 @@ This is a fork of snabbdom. Reasons for fork:
 # Some docs
 
 * The core patching algorithm is in `snabbdom.ts`.
+* `sel` in snabbdom means `tag+id+classes`. Based on our `createElement` is always just `tag`
