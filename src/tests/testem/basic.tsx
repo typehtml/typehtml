@@ -24,4 +24,10 @@ describe('h', () => {
     Th.render(x, elm);
     assert.equal(elm.innerHTML, '<div class="hello">Hello World</div>');
   });
+
+  it('can render a tag with multiple classes', () => {
+    const x = <div className="hello world">Hello World</div>;
+    Th.render(x, elm);
+    assert.equal(elm.innerHTML, '<div class="hello world">Hello World</div>');
+  });
 })
