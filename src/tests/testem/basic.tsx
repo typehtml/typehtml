@@ -18,4 +18,10 @@ describe('h', () => {
     Th.render(x, elm);
     assert.equal(elm.innerHTML, '<div id="hello">Hello World</div>');
   });
+
+  it('can render a tag with a class', () => {
+    const x = <div className="hello">Hello World</div>;
+    Th.render(x, elm);
+    assert.equal(elm.innerHTML, '<div class="hello">Hello World</div>');
+  });
 })
