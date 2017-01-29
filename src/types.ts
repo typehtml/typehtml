@@ -1,10 +1,3 @@
-/** Stored in VNodeChildren */
-export type ThChildren =
-  | string
-  | VNode
-  | Array<string | VNode>
-  | null;
-
 /**
  * Everything that can be rendered
  * It is called based on JSX Transformer:
@@ -58,7 +51,7 @@ export interface ComponentClass<P> {
 
 // Base component interface JS classes
 export interface Component<P> {
-  props: Readonly<{ children?: ThChildren }> & Readonly<P>;
+  props: Readonly<{ children?: CreateElementChildren }> & Readonly<P>;
   constructor(props?: P);
   render(): VNode;
 
@@ -189,7 +182,7 @@ export type Ref<T>
 export interface ThAttributes<T> {
   key?: Key;
   ref?: Ref<T>;
-  children?: ThChildren[];
+  children?: CreateElementChildren;
 }
 
 export interface HTMLAttributes<T> extends ThAttributes<T> {

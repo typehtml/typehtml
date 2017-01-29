@@ -85,37 +85,3 @@ namespace NormalizeChildren {
     return array as any;
   }
 }
-
-/**
- * Maps props to something that h likes
- */
-function mapPropsToHProps(
-  _props: types.ThAttributes<any>,
-  children: types.ThChildren[]): { vnodeData: VNodeData, vnodeChildren: types.ThChildren[] } {
-
-  /** Expand the type of props to be the most permissive */
-  const props = _props as types.SVGAttributes<any>;
-
-  /** Normalize children, preferring the props version over nested */
-  const vnodeChildren = props != null && props.children ? props.children : children;
-
-  /** Map our props to VNode Data */
-  const VNodeData: VNodeData
-    = props != null
-      ? {
-        key: props.key || null,
-        hook: {
-          create: props.ref || null
-        },
-        props: {
-          /** TODO all other props */
-        },
-        on: {
-          /** TODO event props */
-        },
-        class: ''/** TODO: class names */
-      }
-      : null;
-
-  return { vnodeChildren, vnodeData: {} };
-}
