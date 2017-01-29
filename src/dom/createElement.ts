@@ -1,6 +1,5 @@
 import * as types from '../types';
 import { VNodeData, VNode } from '../types';
-import { h } from '../vdom/h';
 import { html, svg, buildFromComponentFunction, buildFromComponentClass } from './jsx';
 
 export function isComponentFunction(t: types.CreateElementTag<any>): t is types.ComponentFunction<any> {
