@@ -1,5 +1,6 @@
 import * as Th from '../../index';
 import * as assert from 'assert';
+import { observable, action } from 'mobx';
 
 describe('render intrinsic', () => {
   let elm: HTMLDivElement;
@@ -54,5 +55,28 @@ describe('render intrinsic', () => {
 
     Th.render(x, elm);
     assert.equal(ref.tagName, 'DIV');
+  });
+})
+
+describe('render intrinsic reactive', () => {
+  let elm: HTMLDivElement;
+  beforeEach(() => {
+    elm = document.createElement('div');
+  });
+
+  class State {
+    @observable foo = 123;
+    @action changeFoo() {
+      this.foo = 456;
+    }
+  }
+  let state = new State();
+  beforeEach(() => state = new State());
+
+  it('can re-render a tag', () => {
+    Th.render(() => <div>{state.foo}</div>, elm);
+    assert.equal(elm.innerHTML, '<div>123</div>');
+    state.changeFoo();
+    assert.equal(elm.innerHTML, '<div>456</div>');
   });
 })
