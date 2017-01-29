@@ -29,7 +29,9 @@ function sameVnode(vnode1: VNode, vnode2: VNode): boolean {
 If its the same then the call eventually comes to
 
 ```ts
-function patchVnode(oldVnode: VNode, vnode: VNode, insertedVnodeQueue: VNodeQueue) {
+patchVnode(oldVnode: VNode, vnode: VNode, insertedVnodeQueue: VNodeQueue) {
 ```
 
-This means we can use `sel` to store our component function and component classes too!
+The `patchVnode` really delegates most of the hard work to the module hooks. The only thing it handles internally is changes to the `text` property of a vnode.
+
+> This means we can use `sel` to store our component function and component classes too!
