@@ -16,4 +16,15 @@ describe('component class', () => {
     Th.render(<Sample />, elm);
     assert.equal(elm.innerHTML, '<div>Hello World</div>');
   });
+
+  it('can take props', () => {
+    class Sample {
+      constructor(public props: { text: string }) { }
+      render() {
+        return <div>{this.props.text}</div>;
+      }
+    }
+    Th.render(<Sample text="Hello World" />, elm);
+    assert.equal(elm.innerHTML, '<div>Hello World</div>');
+  });
 });
