@@ -26,7 +26,7 @@ function normalizeAttrs(attrs, nsURI, defNS, modules): types.VNodeData {
       map[mod] = attrs[mod];
   }
   for (var key in attrs) {
-    if (key !== 'key' && key !== 'classNames' && key !== 'selector') {
+    if (key !== 'key') {
       /**
        * We use `-` to identify the module that should handle it
        * So {on-click:foo} => {on : {click: foo}}
@@ -49,16 +49,9 @@ function normalizeAttrs(attrs, nsURI, defNS, modules): types.VNodeData {
 }
 
 function buildFromStringTag(nsURI, defNS, modules, tag: string, attrs, children: types.CreateElementChildren): VNode {
-  if (attrs.selector) {
-    tag = tag + attrs.selector;
-  }
-  if (attrs.classNames) {
-    var cns = attrs.classNames;
-    tag = tag + '.' + (
-      Array.isArray(cns) ? cns.join('.') : cns.replace(/\s+/g, '.')
-    );
-  }
-
+  /**
+   * TODO: add ref support
+   **/
   return {
     sel: tag,
     data: normalizeAttrs(attrs, nsURI, defNS, modules),
@@ -73,11 +66,20 @@ export function buildFromComponentClass(tag: types.ComponentClass<any>, attrs, c
   const props = Object.assign({}, attrs, { children });
   /**
    * TODO:
-   * - store this component instance somewhere
+   * - Don't create a component instance *here*. Instead store the class in VNode
    * - component lifecycle
    **/
+
+   /**
+    * This isn't quite right as we should reuse the last instance if any
+    * All this logic needs to be inside the vdom patch algorithm.
+    */
   const instance = new tag(props);
+  if (props.ref) {
+    props.ref(instance);
+  }
   const res = instance.render();
+
   res.key = attrs.key;
   return res;
 }
