@@ -18,7 +18,7 @@ function isPrimitive(val: any): val is TextType {
     val === undefined;
 }
 
-function normalizeAttrs(attrs, nsURI, defNS, modules) {
+function normalizeAttrs(attrs, nsURI, defNS, modules): types.VNodeData {
   var map = { ns: nsURI };
   for (var i = 0, len = modules.length; i < len; i++) {
     var mod = modules[i];
