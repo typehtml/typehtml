@@ -63,30 +63,15 @@ function buildFromStringTag(nsURI, defNS, modules, tag: string, attrs, children:
   };
 }
 
-function buildFromFunctionComponent(nsURI, defNS, modules, tag: types.ComponentFunction<any>, attrs, children: types.CreateElementChildren) {
+export function buildFromFunctionComponent(tag: types.ComponentFunction<any>, attrs, children: types.CreateElementChildren) {
   const props = Object.assign({}, attrs, { children });
   const res = tag(props);
   res.key = attrs.key;
   return res;
 }
-
-
-function buildVnode(nsURI, defNS, modules, tag, attrs, children: types.CreateElementChildren): VNode {
-  attrs = attrs || {};
-  if (typeof tag === 'string') {
-    return buildFromStringTag(nsURI, defNS, modules, tag, attrs, children);
-  }
-  else if (typeof tag === 'function') {
-    return buildFromFunctionComponent(nsURI, defNS, modules, tag, attrs, children);
-  }
-  else {
-    throw new Error("JSX tag must be either a string, a function or an object with 'view' or 'render' methods");
-  }
+export const html = (tag: string, attrs, children: types.CreateElementChildren) => {
+  return buildFromStringTag(undefined, 'props', modulesNS, tag, attrs, children);
 }
-
-export const html = (tag, attrs, children: types.CreateElementChildren) => {
-  return buildVnode(undefined, 'props', modulesNS, tag, attrs, children);
-};
 export const svg = (tag, attrs, children: types.CreateElementChildren) => {
-  return buildVnode(SVGNS, 'attrs', modulesNS, tag, attrs, children);
-};
+  return buildFromStringTag(SVGNS, 'attrs', modulesNS, tag, attrs, children);
+}

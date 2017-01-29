@@ -1,7 +1,7 @@
 import * as types from '../types';
 import { VNodeData, VNode } from '../vdom/vnode';
 import { h } from '../vdom/h';
-import { html, svg } from './jsx';
+import { html, svg, buildFromFunctionComponent } from './jsx';
 
 export function createElement<P extends types.HTMLAttributes<T>, T extends Element>(
   type: string,
@@ -26,14 +26,20 @@ export function createElement(
     children = NormalizeChildren.maybeFlatten(children);
   }
 
+  /** Normalize the props */
+  props = props || {};
 
   /** intrinsic elements */
   if (typeof type === 'string') {
+    /** TODO: svg */
     return html(type, props, children);
   }
-  /** TODO: clean it up */
+  /** function component */
   else if (typeof type === 'function') {
-    return html(type, props, children);
+    return buildFromFunctionComponent(type, props, children);
+  }
+  else {
+    throw new Error("JSX tag must be either a string, a function or an object with 'view' or 'render' methods");
   }
 }
 
