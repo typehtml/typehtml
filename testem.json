@@ -1,7 +1,7 @@
 {
   "framework": "mocha",
   "src_files": [
-    "lib/tests/testem/*.js"
+    "lib/**/*.js"
   ],
   "serve_files": [
     "scratch/tests.js"
@@ -9,7 +9,6 @@
   "before_tests": "mkdir -p scratch && browserify -d lib/tests/testem/index.js -o scratch/tests.js",
   "on_exit": "rm scratch/tests.js",
   "launch_in_dev": [
-    "firefox",
     "chrome"
   ]
 }
