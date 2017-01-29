@@ -1,5 +1,5 @@
 import { patch } from '../vdom/patch';
-import { VNode } from '../vdom/vnode';
+import { VNode } from '../types';
 
 export function render(input: VNode, dom: Element): VNode {
   /**

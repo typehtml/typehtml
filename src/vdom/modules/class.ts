@@ -1,10 +1,10 @@
-import {VNode, VNodeData} from '../vnode';
-import {Module} from './module';
+import { VNode, VNodeData } from '../../types';
+import { Module } from './module';
 
 function updateClass(oldVnode: VNode, vnode: VNode): void {
   var cur: any, name: string, elm: Element = vnode.elm as Element,
-      oldClass = (oldVnode.data as VNodeData).class,
-      klass = (vnode.data as VNodeData).class;
+    oldClass = (oldVnode.data as VNodeData).class,
+    klass = (vnode.data as VNodeData).class;
 
   if (!oldClass && !klass) return;
   if (oldClass === klass) return;
@@ -24,5 +24,5 @@ function updateClass(oldVnode: VNode, vnode: VNode): void {
   }
 }
 
-export const classModule = {create: updateClass, update: updateClass} as Module;
+export const classModule = { create: updateClass, update: updateClass } as Module;
 export default classModule;

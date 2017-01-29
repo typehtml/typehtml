@@ -3,8 +3,8 @@
  *
  * // TODO: consider bringing in https://github.com/yelouafi/snabbdom-jsx/pull/9/files
  */
-import { VNode, TextType } from '../vdom/vnode';
 import * as types from '../types';
+import { VNode, TextType } from '../types';
 
 const SVGNS = 'http://www.w3.org/2000/svg';
 const modulesNS = ['hook', 'on', 'style', 'class', 'props', 'attrs', 'dataset'];

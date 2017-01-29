@@ -1,5 +1,5 @@
-import {VNode, VNodeData} from '../vnode';
-import {Module} from './module';
+import { VNode, VNodeData } from '../../types';
+import { Module } from './module';
 
 var raf = (typeof window !== 'undefined' && window.requestAnimationFrame) || setTimeout;
 var nextFrame = function(fn: any) { raf(function() { raf(fn); }); };
@@ -10,8 +10,8 @@ function setNextFrame(obj: any, prop: string, val: any): void {
 
 function updateStyle(oldVnode: VNode, vnode: VNode): void {
   var cur: any, name: string, elm = vnode.elm,
-      oldStyle = (oldVnode.data as VNodeData).style,
-      style = (vnode.data as VNodeData).style;
+    oldStyle = (oldVnode.data as VNodeData).style,
+    style = (vnode.data as VNodeData).style;
 
   if (!oldStyle && !style) return;
   if (oldStyle === style) return;
@@ -62,7 +62,7 @@ function applyRemoveStyle(vnode: VNode, rm: () => void): void {
     return;
   }
   var name: string, elm = vnode.elm, i = 0, compStyle: CSSStyleDeclaration,
-      style = s.remove, amount = 0, applied: Array<string> = [];
+    style = s.remove, amount = 0, applied: Array<string> = [];
   for (name in style) {
     applied.push(name);
     (elm as any).style[name] = style[name];
@@ -70,10 +70,10 @@ function applyRemoveStyle(vnode: VNode, rm: () => void): void {
   compStyle = getComputedStyle(elm as Element);
   var props = (compStyle as any)['transition-property'].split(', ');
   for (; i < props.length; ++i) {
-    if(applied.indexOf(props[i]) !== -1) amount++;
+    if (applied.indexOf(props[i]) !== -1) amount++;
   }
-  (elm as Element).addEventListener('transitionend', function (ev: TransitionEvent) {
-    if (ev.target === elm) --amount;
+  (elm as Element).addEventListener('transitionend', function(ev: TransitionEvent) {
+    if (ev.target === elm)--amount;
     if (amount === 0) rm();
   });
 }

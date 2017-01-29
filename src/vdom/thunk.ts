@@ -1,4 +1,4 @@
-import {VNode, VNodeData} from './vnode';
+import {VNode, VNodeData} from '../types';
 import {h} from './h';
 
 export interface ThunkData extends VNodeData {

@@ -1,16 +1,16 @@
-import {VNode, VNodeData} from '../vnode';
-import {Module} from './module';
+import { VNode, VNodeData } from '../../types';
+import { Module } from './module';
 
 const NamespaceURIs = {
   "xlink": "http://www.w3.org/1999/xlink"
 };
 
 const booleanAttrs = ["allowfullscreen", "async", "autofocus", "autoplay", "checked", "compact", "controls", "declare",
-                "default", "defaultchecked", "defaultmuted", "defaultselected", "defer", "disabled", "draggable",
-                "enabled", "formnovalidate", "hidden", "indeterminate", "inert", "ismap", "itemscope", "loop", "multiple",
-                "muted", "nohref", "noresize", "noshade", "novalidate", "nowrap", "open", "pauseonexit", "readonly",
-                "required", "reversed", "scoped", "seamless", "selected", "sortable", "spellcheck", "translate",
-                "truespeed", "typemustmatch", "visible"];
+  "default", "defaultchecked", "defaultmuted", "defaultselected", "defer", "disabled", "draggable",
+  "enabled", "formnovalidate", "hidden", "indeterminate", "inert", "ismap", "itemscope", "loop", "multiple",
+  "muted", "nohref", "noresize", "noshade", "novalidate", "nowrap", "open", "pauseonexit", "readonly",
+  "required", "reversed", "scoped", "seamless", "selected", "sortable", "spellcheck", "translate",
+  "truespeed", "typemustmatch", "visible"];
 
 const booleanAttrsDict = Object.create(null);
 for (let i = 0, len = booleanAttrs.length; i < len; i++) {
@@ -19,8 +19,8 @@ for (let i = 0, len = booleanAttrs.length; i < len; i++) {
 
 function updateAttrs(oldVnode: VNode, vnode: VNode): void {
   var key: string, cur: any, old: any, elm: Element = vnode.elm as Element,
-      oldAttrs = (oldVnode.data as VNodeData).attrs,
-      attrs = (vnode.data as VNodeData).attrs, namespaceSplit: Array<string>;
+    oldAttrs = (oldVnode.data as VNodeData).attrs,
+    attrs = (vnode.data as VNodeData).attrs, namespaceSplit: Array<string>;
 
   if (!oldAttrs && !attrs) return;
   if (oldAttrs === attrs) return;
@@ -53,5 +53,5 @@ function updateAttrs(oldVnode: VNode, vnode: VNode): void {
   }
 }
 
-export const attributesModule = {create: updateAttrs, update: updateAttrs} as Module;
+export const attributesModule = { create: updateAttrs, update: updateAttrs } as Module;
 export default attributesModule;

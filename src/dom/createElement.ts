@@ -1,5 +1,5 @@
 import * as types from '../types';
-import { VNodeData, VNode } from '../vdom/vnode';
+import { VNodeData, VNode } from '../types';
 import { h } from '../vdom/h';
 import { html, svg, buildFromComponentFunction, buildFromComponentClass } from './jsx';
 

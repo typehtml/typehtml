@@ -1,4 +1,4 @@
-import {VNode, VNodeData} from '../vnode';
+import { VNode, VNodeData } from '../../types';
 
 function pre(vnode: VNode, newVnode: VNode): void {
   const attachData = (vnode.data as VNodeData).attachData;
@@ -39,7 +39,7 @@ export function attachTo(target: Element, vnode: VNode): VNode {
   if (vnode.data.hook === undefined) vnode.data.hook = {};
   const data = vnode.data;
   const hook = vnode.data.hook;
-  data.attachData = {target: target, placeholder: undefined, real: undefined};
+  data.attachData = { target: target, placeholder: undefined, real: undefined };
   hook.create = create;
   hook.prepatch = pre;
   hook.postpatch = post;

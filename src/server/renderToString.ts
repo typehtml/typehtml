@@ -1,4 +1,4 @@
-import { VNode } from '../vdom/vnode';
+import { VNode } from '../types';
 
 export function renderToString(input: VNode): string {
   return 'todo';

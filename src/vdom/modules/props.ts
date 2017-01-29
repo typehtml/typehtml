@@ -1,4 +1,4 @@
-import {VNode, VNodeData} from '../vnode';
+import {VNode, VNodeData} from '../../types';
 import {Module} from './module';
 
 function updateProps(oldVnode: VNode, vnode: VNode): void {

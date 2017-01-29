@@ -1,4 +1,5 @@
-import {vnode, VNode, VNodeData} from './vnode';
+import { vnode } from './vnode';
+import { VNode, VNodeData } from '../types';
 import * as is from './is';
 
 function addNS(data: any, children: Array<VNode> | undefined, sel: string | undefined): void {
