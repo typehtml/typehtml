@@ -7,9 +7,15 @@ describe('h', () => {
     elm = document.createElement('div');
   });
 
-  it('can create vnode with proper tag', () => {
+  it('can render a tag', () => {
     const x = <div>Hello World</div>;
     Th.render(x, elm);
     assert.equal(elm.innerHTML, '<div>Hello World</div>');
+  });
+
+  it('can render a tag with an id', () => {
+    const x = <div id="hello">Hello World</div>;
+    Th.render(x, elm);
+    assert.equal(elm.innerHTML, '<div id="hello">Hello World</div>');
   });
 })
