@@ -8,3 +8,6 @@ This is a fork of snabbdom. Reasons for fork:
 * No need for `selectors` (it complicates `renderToString`).
 * Different life cycle event names
 
+# Some docs
+
+* The core patching algorithm is in `snabbdom.ts`.
