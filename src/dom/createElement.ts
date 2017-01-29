@@ -3,20 +3,24 @@ import { VNodeData, VNode } from '../vdom/vnode';
 import { h } from '../vdom/h';
 import { html, svg, buildFromFunctionComponent } from './jsx';
 
+export function isComponentFunction(tag: types.CreateElementTag<any>): tag is types.ComponentFunction<any> {
+  return typeof tag === 'function';
+}
+
 export function createElement<P extends types.HTMLAttributes<T>, T extends Element>(
-  type: string,
+  tag: string,
   props?: types.ThAttributes<T> & P,
   ...children: types.CreateElementChildrenRaw[]): VNode;
 export function createElement<P>(
-  type: types.ComponentFunction<P>,
+  tag: types.ComponentFunction<P>,
   props?: types.ThAttributes<P> & P,
   ...children: types.CreateElementChildrenRaw[]): VNode;
 export function createElement<P>(
-  type: types.ComponentClass<P>,
+  tag: types.ComponentClass<P>,
   props?: types.ThAttributes<P> & P,
   ...children: types.CreateElementChildrenRaw[]): VNode;
 export function createElement(
-  type: any,
+  tag: types.CreateElementTag<any>,
   props?: any
 ): any {
   /** Normalize the children */
@@ -30,13 +34,14 @@ export function createElement(
   props = props || {};
 
   /** intrinsic elements */
-  if (typeof type === 'string') {
+  if (typeof tag === 'string') {
     /** TODO: svg */
-    return html(type, props, children);
+    return html(tag, props, children);
   }
+  /** TODO: class component */
   /** function component */
-  else if (typeof type === 'function') {
-    return buildFromFunctionComponent(type, props, children);
+  else if (isComponentFunction(tag)) {
+    return buildFromFunctionComponent(tag, props, children);
   }
   else {
     throw new Error("JSX tag must be either a string, a function or an object with 'view' or 'render' methods");

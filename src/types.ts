@@ -80,8 +80,8 @@ export interface Component<P> {
 // VNode
 // ----------------------------------------------------------------------
 
-/** The type passed to createElement */
-export type Type<P> = string | ComponentClass<P> | ComponentFunction<P>;
+/** The tag passed to createElement */
+export type CreateElementTag<P> = string | ComponentClass<P> | ComponentFunction<P>;
 
 export interface Refs {
   onComponentDidMount?: (domNode: Element) => void;
