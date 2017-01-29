@@ -76,57 +76,8 @@ export interface Component<P> {
   componentWillUnmount?(): void;
 }
 
-// ----------------------------------------------------------------------
-// VNode
-// ----------------------------------------------------------------------
-
 /** The tag passed to createElement */
 export type CreateElementTag<P> = string | ComponentClass<P> | ComponentFunction<P>;
-
-export interface Refs {
-  onComponentDidMount?: (domNode: Element) => void;
-  onComponentWillMount?(): void;
-  onComponentShouldUpdate?(lastProps, nextProps): boolean;
-  onComponentWillUpdate?(lastProps, nextProps): void;
-  onComponentDidUpdate?(lastProps, nextProps): void;
-  onComponentWillUnmount?(domNode: Element): void;
-}
-
-export const enum VNodeFlags {
-  Text = 1,
-  HtmlElement = 1 << 1,
-
-  ComponentClass = 1 << 2,
-  ComponentFunction = 1 << 3,
-  ComponentUnknown = 1 << 4,
-
-  HasKeyedChildren = 1 << 5,
-  HasNonKeyedChildren = 1 << 6,
-
-  SvgElement = 1 << 7,
-  MediaElement = 1 << 8,
-  InputElement = 1 << 9,
-  TextareaElement = 1 << 10,
-  SelectElement = 1 << 11,
-  Void = 1 << 12,
-  Element = HtmlElement | SvgElement | MediaElement | InputElement | TextareaElement | SelectElement,
-  Component = ComponentFunction | ComponentClass | ComponentUnknown
-}
-
-// ----------------------------------------------------------------------
-// vnode internal types
-// ----------------------------------------------------------------------
-
-export interface Styles {
-  [key: string]: number | string;
-}
-
-export interface IProps {
-  [index: string]: any;
-}
-export interface VType {
-  flags: VNodeFlags;
-}
 
 
 // ----------------------------------------------------------------------
@@ -160,15 +111,7 @@ export type ClipboardEventHandler<T> = EventHandler<ThClipboardEvent<T>>;
 // ----------------------------------------------------------------------
 export type Key = string | number;
 export type Ref<T>
-  = (instance: T) => any
-    | {
-      onComponentWillMount: (instance: T) => any,
-      onComponentDidMount: (instance: T) => any,
-      onComponentWillUnmount: (instance: T) => any,
-      onComponentShouldUpdate: (instance: T) => any,
-      onComponentWillUpdate: (instance: T) => any,
-      onComponentDidUpdate: (instance: T) => any
-    };
+  = (instance: T) => any;
 
 // ----------------------------------------------------------------------
 // Attributes
