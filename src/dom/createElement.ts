@@ -1,7 +1,7 @@
 import * as types from '../types';
 import { VNodeData, VNode } from '../vdom/vnode';
 import { h } from '../vdom/h';
-import { html, svg, buildFromFunctionComponent } from './jsx';
+import { html, svg, buildFromComponentFunction, buildFromComponentClass } from './jsx';
 
 export function isComponentFunction(t: types.CreateElementTag<any>): t is types.ComponentFunction<any> {
   return typeof t === 'function';
@@ -42,10 +42,13 @@ export function createElement(
     /** TODO: svg */
     return html(tag, props, children);
   }
-  /** TODO: class component */
+  /** class component */
+  else if (isComponentClass(tag)) {
+    return buildFromComponentClass(tag, props, children);
+  }
   /** function component */
   else if (isComponentFunction(tag)) {
-    return buildFromFunctionComponent(tag, props, children);
+    return buildFromComponentFunction(tag, props, children);
   }
   else {
     throw new Error("JSX tag must be either a string | function | class with a `render` prototype method");

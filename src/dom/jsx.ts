@@ -63,7 +63,19 @@ function buildFromStringTag(nsURI, defNS, modules, tag: string, attrs, children:
   };
 }
 
-export function buildFromFunctionComponent(tag: types.ComponentFunction<any>, attrs, children: types.CreateElementChildren) {
+export function buildFromComponentClass(tag: types.ComponentClass<any>, attrs, children: types.CreateElementChildren) {
+  const props = Object.assign({}, attrs, { children });
+  /**
+   * TODO:
+   * - store this component instance somewhere
+   * - component lifecycle
+   **/
+  const instance = new tag(props);
+  const res = instance.render();
+  res.key = attrs.key;
+  return res;
+}
+export function buildFromComponentFunction(tag: types.ComponentFunction<any>, attrs, children: types.CreateElementChildren) {
   const props = Object.assign({}, attrs, { children });
   const res = tag(props);
   res.key = attrs.key;
