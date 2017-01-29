@@ -44,31 +44,11 @@ export type CreateElementChildren =
   | null;
 
 // ----------------------------------------------------------------------
-// Elements
-// ----------------------------------------------------------------------
-
-/** Return from creating a native dom element */
-export interface DOMElement<T extends Element> extends VNode {
-  type: string;
-  ref: Ref<T>;
-}
-/** Return from creating a Function component */
-export interface ComponentFunctionElement<P> extends VNode {
-  type: ComponentFunction<P>;
-  ref: Ref<P>;
-}
-/** Return from creating a Class component */
-export interface ComponentClassElement<P> extends VNode {
-  type: ComponentClass<P>;
-  ref: Ref<P>;
-}
-
-// ----------------------------------------------------------------------
 // Elements creators
 // ----------------------------------------------------------------------
 
 export interface ComponentFunction<P> {
-  (props: P & { children?: ThChildren }): VNode;
+  (props?: P): VNode;
   defaultProps?: P;
   displayName?: string;
 }

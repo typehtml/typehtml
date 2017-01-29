@@ -1,20 +1,20 @@
 import * as types from '../types';
-import { VNodeData } from '../vdom/vnode';
+import { VNodeData, VNode } from '../vdom/vnode';
 import { h } from '../vdom/h';
 import { html, svg } from './jsx';
 
 export function createElement<P extends types.HTMLAttributes<T>, T extends Element>(
   type: string,
   props?: types.ThAttributes<T> & P,
-  ...children: types.CreateElementChildrenRaw[]): types.DOMElement<T>;
+  ...children: types.CreateElementChildrenRaw[]): VNode;
 export function createElement<P>(
   type: types.ComponentFunction<P>,
   props?: types.ThAttributes<P> & P,
-  ...children: types.CreateElementChildrenRaw[]): types.ComponentFunctionElement<P>;
+  ...children: types.CreateElementChildrenRaw[]): VNode;
 export function createElement<P>(
   type: types.ComponentClass<P>,
   props?: types.ThAttributes<P> & P,
-  ...children: types.CreateElementChildrenRaw[]): types.ComponentClassElement<P>;
+  ...children: types.CreateElementChildrenRaw[]): VNode;
 export function createElement(
   type: any,
   props?: any

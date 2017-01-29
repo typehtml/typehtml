@@ -70,7 +70,7 @@ function buildFromComponent(nsURI, defNS, modules, tag, attrs, children: types.C
   else if (tag && typeof tag.render === 'function')
     res = tag.render(attrs, children);
   else
-    throw "JSX tag must be either a string, a function or an object with 'view' or 'render' methods";
+    throw new Error("JSX tag must be either a string, a function or an object with 'view' or 'render' methods");
   res.key = attrs.key;
   return res;
 }
