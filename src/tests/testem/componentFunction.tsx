@@ -12,4 +12,10 @@ describe('component function', () => {
     Th.render(<Sample />, elm);
     assert.equal(elm.innerHTML, '<div>Hello World</div>');
   });
+
+  it('can render children', () => {
+    const Sample = ({ children }: { children?}) => <div>{children}</div>;
+    Th.render(<Sample>Hello World</Sample>, elm);
+    assert.equal(elm.innerHTML, '<div>Hello World</div>');
+  });
 })
