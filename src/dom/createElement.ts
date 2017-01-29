@@ -3,8 +3,12 @@ import { VNodeData, VNode } from '../vdom/vnode';
 import { h } from '../vdom/h';
 import { html, svg, buildFromFunctionComponent } from './jsx';
 
-export function isComponentFunction(tag: types.CreateElementTag<any>): tag is types.ComponentFunction<any> {
-  return typeof tag === 'function';
+export function isComponentFunction(t: types.CreateElementTag<any>): t is types.ComponentFunction<any> {
+  return typeof t === 'function';
+}
+
+export function isComponentClass(t: any): t is types.ComponentClass<any> {
+  return (t.prototype !== undefined) && (t.prototype.render !== undefined);
 }
 
 export function createElement<P extends types.HTMLAttributes<T>, T extends Element>(
@@ -44,7 +48,7 @@ export function createElement(
     return buildFromFunctionComponent(tag, props, children);
   }
   else {
-    throw new Error("JSX tag must be either a string, a function or an object with 'view' or 'render' methods");
+    throw new Error("JSX tag must be either a string | function | class with a `render` prototype method");
   }
 }
 
