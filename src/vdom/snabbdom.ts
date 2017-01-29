@@ -5,7 +5,7 @@ import * as is from './is';
 import htmlDomApi, { DOMAPI } from './htmldomapi';
 import { VNode, Key, VNodeData, Hooks } from '../types';
 
-function isUndef(s: any): boolean { return s === undefined; }
+function isUndef(s: any): s is undefined { return s === undefined; }
 function isDef(s: any): boolean { return s !== undefined; }
 
 type VNodeQueue = Array<VNode>;
@@ -231,7 +231,11 @@ export function init(modules: Array<Partial<Module>>, domApi?: DOMAPI) {
   }
 
   function patchVnode(oldVnode: VNode, vnode: VNode, insertedVnodeQueue: VNodeQueue) {
-    let i: any, hook: any;
+    let
+      /** Used to store any intermediate variables we check if present or not */
+      i: any,
+      /** Hooks if any */
+      hook: Hooks;
     if (isDef(i = vnode.data) && isDef(hook = i.hook) && isDef(i = hook.prepatch)) {
       i(oldVnode, vnode);
     }
