@@ -13,6 +13,12 @@ describe('render intrinsic', () => {
     assert.equal(elm.innerHTML, '<div>Hello World</div>');
   });
 
+  it('can render children as props', () => {
+    const x = <div children={["Hello World"]}/>;
+    Th.render(x, elm);
+    assert.equal(elm.innerHTML, '<div>Hello World</div>');
+  });
+
   it('can render a tag with an id', () => {
     const x = <div id="hello">Hello World</div>;
     Th.render(x, elm);
@@ -35,5 +41,14 @@ describe('render intrinsic', () => {
     const x = <div style={{color: 'red', backgroundColor: 'blue'}}>Hello World</div>;
     Th.render(x, elm);
     assert.equal(elm.innerHTML, '<div style="color: red; background-color: blue;">Hello World</div>');
+  });
+
+  it.skip('ref gets called', () => {
+    let ref: HTMLDivElement;
+    const setRef = (div: HTMLDivElement) => ref = div;
+    const x = <div ref={setRef}>Hello World</div>;
+
+    Th.render(x, elm);
+    assert.equal(ref.tagName, 'DIV');
   });
 })

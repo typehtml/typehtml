@@ -1,6 +1,7 @@
 import * as types from '../types';
 import { VNodeData, VNode } from '../types';
 import { html, svg, buildFromComponentFunction, buildFromComponentClass } from './jsx';
+import { objWithoutProps } from './utils';
 
 export function isComponentFunction(t: types.CreateElementTag<any>): t is types.ComponentFunction<any> {
   return typeof t === 'function';
@@ -35,6 +36,15 @@ export function createElement(
 
   /** Normalize the props */
   props = props || {};
+
+  /**
+   * Maybe the children came in props.
+   * If they did we always prefer them and remove the jsx children
+   **/
+  if (props.children) {
+    children = props.children;
+    props = objWithoutProps(props, ['children']);
+  }
 
   /** intrinsic elements */
   if (typeof tag === 'string') {
