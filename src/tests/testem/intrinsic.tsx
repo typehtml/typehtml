@@ -8,57 +8,49 @@ describe('render intrinsic', () => {
   });
 
   it('can render a tag', () => {
-    const x = <div>Hello World</div>;
-    Th.render(x, elm);
+    Th.render(() => <div>Hello World</div>, elm);
     assert.equal(elm.innerHTML, '<div>Hello World</div>');
   });
 
   it('can render children as props', () => {
-    const x = <div children={["Hello World"]} />;
-    Th.render(x, elm);
+    Th.render(() => <div children={["Hello World"]} />, elm);
     assert.equal(elm.innerHTML, '<div>Hello World</div>');
   });
 
   it('can render nested children as props', () => {
-    const x = <div children={<div>Hello World</div>} />;
-    Th.render(x, elm);
+    Th.render(() => <div children={<div>Hello World</div>} />, elm);
     assert.equal(elm.innerHTML, '<div><div>Hello World</div></div>');
   });
 
   it('can render text and vnodes children as props', () => {
-    const x = <div children={[<div children="Hello" />, "Hello World"]} />;
-    Th.render(x, elm);
+    Th.render(() => <div children={[<div children="Hello" />, "Hello World"]} />, elm);
     assert.equal(elm.innerHTML, '<div><div>Hello</div>Hello World</div>');
   });
 
   it('can render a tag with an id', () => {
-    const x = <div id="hello">Hello World</div>;
-    Th.render(x, elm);
+    Th.render(() => <div id="hello">Hello World</div>, elm);
     assert.equal(elm.innerHTML, '<div id="hello">Hello World</div>');
   });
 
   it('can render a tag with a class', () => {
-    const x = <div className="hello">Hello World</div>;
-    Th.render(x, elm);
+    Th.render(() => <div className="hello">Hello World</div>, elm);
     assert.equal(elm.innerHTML, '<div class="hello">Hello World</div>');
   });
 
   it('can render a tag with multiple classes', () => {
-    const x = <div className="hello world">Hello World</div>;
-    Th.render(x, elm);
+    Th.render(() => <div className="hello world">Hello World</div>, elm);
     assert.equal(elm.innerHTML, '<div class="hello world">Hello World</div>');
   });
 
   it('can render a tag with styles', () => {
-    const x = <div style={{ color: 'red', backgroundColor: 'blue' }}>Hello World</div>;
-    Th.render(x, elm);
+    Th.render(() => <div style={{ color: 'red', backgroundColor: 'blue' }}>Hello World</div>, elm);
     assert.equal(elm.innerHTML, '<div style="color: red; background-color: blue;">Hello World</div>');
   });
 
   it.skip('ref gets called', () => {
     let ref: HTMLDivElement;
     const setRef = (div: HTMLDivElement) => ref = div;
-    const x = <div ref={setRef}>Hello World</div>;
+    const x = () => <div ref={setRef}>Hello World</div>;
 
     Th.render(x, elm);
     assert.equal(ref.tagName, 'DIV');

@@ -1,7 +1,8 @@
+import { autorun } from 'mobx';
 import { patch } from '../vdom/patch';
 import { VNode } from '../types';
 
-export function render(input: VNode, dom: Element): VNode {
+export function render(input: () => VNode, dom: Element): void {
   /**
    * Since snabbdom replaces the input dom element with the vnode
    * vs.
@@ -11,5 +12,11 @@ export function render(input: VNode, dom: Element): VNode {
    **/
   const renderTarget = document.createElement('div');
   dom.appendChild(renderTarget);
-  return patch(renderTarget, input);
+
+  let lastVNode: VNode | Element = renderTarget;
+  autorun(() => {
+    const nextVNode = input();
+    patch(lastVNode, nextVNode);
+    lastVNode = nextVNode;
+  });
 }
