@@ -30,4 +30,10 @@ describe('h', () => {
     Th.render(x, elm);
     assert.equal(elm.innerHTML, '<div class="hello world">Hello World</div>');
   });
+
+  it('can render a tag with styles', () => {
+    const x = <div style={{color: 'red', backgroundColor: 'blue'}}>Hello World</div>;
+    Th.render(x, elm);
+    assert.equal(elm.innerHTML, '<div style="color: red; background-color: blue;">Hello World</div>');
+  });
 })
