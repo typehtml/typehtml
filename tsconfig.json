@@ -7,7 +7,8 @@
       "es6",
       "dom"
     ],
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   },
   "include": [
     "src"
